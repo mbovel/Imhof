@@ -12,7 +12,7 @@ public class PointGeoTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void constructorFailsOnInvalidLatitude() {
-        new PointGeo(0, 1.962314);
+		new PointGeo(0, 1.962314);
     }
 
     @Test
