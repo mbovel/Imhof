@@ -1,9 +1,9 @@
-package ch.epfl.imhof;
+package ch.epfl.imhof; 
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
+ 
 public class PointGeoTest {
     @Test  (expected = IllegalArgumentException.class)
     public void constructorFailsOnInvalidLongitude() {
