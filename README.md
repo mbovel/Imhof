@@ -5,6 +5,7 @@
 ### Java
 
 - [How java import works](http://stackoverflow.com/a/12620773)
+- [Linking to an external URL in Javadoc?](http://stackoverflow.com/a/10683345)
 
 ### Eclipse
 
