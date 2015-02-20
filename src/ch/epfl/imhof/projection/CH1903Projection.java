@@ -1,7 +1,7 @@
 package ch.epfl.imhof.projection;
 
-import ch.epfl.imhof.*;
-import ch.epfl.imhof.geometry.*;
+import ch.epfl.imhof.geometry.Point;
+import ch.epfl.imhof.PointGeo;
 import java.lang.Math;
 
 public final class CH1903Projection implements Projection {
