@@ -18,7 +18,7 @@ public final class PointGeo {
     static private final double LATITUDE_UPPER_BOUND = java.lang.Math.PI / 2;
 
     /**
-     * Construct a point, given its longitude and latitude
+     * Constructs a point, given its longitude and latitude
      * 
      * @param longitude
      *            point's longitude, in radians
