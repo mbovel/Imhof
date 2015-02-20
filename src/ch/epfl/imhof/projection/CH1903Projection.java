@@ -5,44 +5,62 @@ import ch.epfl.imhof.PointGeo;
 import java.lang.Math;
 
 public final class CH1903Projection implements Projection {
-
-    // /!\ Il y a une erreur dans la methode project mais j'arrive absolument
-    // pas à la trouver ... =(
-
     public Point project(PointGeo point) {
-        double long1, lat1, x, y;
-        double longitude = Math.toDegrees(point.longitude());
-        double latitude = Math.toDegrees(point.latitude());
+        double lambda_1, phi_1, x, y;
+        double lambda = Math.toDegrees(point.longitude());
+        double phi = Math.toDegrees(point.latitude());
 
-        long1 = (1 / 10000) * ((longitude * 3600) - 26782.5);
-        lat1 = ((1 / 10000) * ((latitude * 3600) - 169028.66));
-        x = (600072.37 + (211455.93 * long1) - (10938.51 * long1 * lat1)
-                - (0.36 * long1 * (Math.pow(lat1, 2.))) - (44.54 * (Math.pow(
-                long1, 3.))));
-        y = (200147.07 + (308807.95 * lat1) + (3745.25 * (Math.pow(long1, 2.)))
-                + (76.63 * (Math.pow(lat1, 2.)))
-                - (194.56 * (Math.pow(long1, 2.)) * lat1) + (119.79 * (Math
-                .pow(lat1, 3.))));
+        // Implementation of the algorithm described here:
+        // http://cs108.epfl.ch/p01_points.html#unnumbered-3
+        // The longitude lambda and the latitude phi are in degrees
+        // @formatter:off
+        lambda_1 = (1 / 10000.0) * (lambda * 3600.0 - 26782.5);
+        
+           phi_1 = (1 / 10000.0) * (phi * 3600.0 - 169028.66);
+        
+               x =   600072.37
+                   + 211455.93 * lambda_1
+                   - 10938.51 * lambda_1 * phi_1
+                   - 0.36 * lambda_1 * Math.pow(phi_1, 2.0)
+                   - 44.54 * Math.pow(lambda_1, 3.0);
+        
+               y =   200147.07
+                   + 308807.95 * phi_1
+                   + 3745.25 * Math.pow(lambda_1, 2.0)
+                   + 76.63 * Math.pow(phi_1, 2.0)
+                   - 194.56 * Math.pow(lambda_1, 2.0) * phi_1
+                   + 119.79 * Math.pow(phi_1, 3.0);
+        // @formatter:on
 
-        return (new Point(x, y));
+        return new Point(x, y);
     }
 
     public PointGeo inverse(Point point) {
-        double long0, lat0, x1, y1, longitude, latitude;
+        double lambda_0, phi_0, x_1, y_1, lambda, phi;
 
-        x1 = ((point.x() - 600000) / 1000000);
-        y1 = ((point.y() - 200000) / 1000000);
-        long0 = (2.6779094 + (4.728982 * x1) + (0.791484 * x1 * y1)
-                + (0.1306 + x1 + (Math.pow(y1, 2.))) - (0.0436 * (Math.pow(x1,
-                3.))));
-        lat0 = (16.9023892 + (3.238272 * y1) - (0.270978 * (Math.pow(x1, 2.)))
-                - (0.002528 * (Math.pow(y1, 2.)))
-                - (0.0447 * (Math.pow(x1, 2.)) * y1) - (0.0140 * (Math.pow(y1,
-                3.))));
-        longitude = long0 * (100 / 36);
-        latitude = lat0 * (100 / 36);
+        // @formatter:off
+             x_1 = (point.x() - 600000.0) / 1000000.0;
+       
+             y_1 = (point.y() - 200000.0) / 1000000.0;
+        
+        lambda_0 =   2.6779094
+                   + 4.728982 * x_1
+                   + 0.791484 * x_1 * y_1
+                   + 0.1306 * x_1 * Math.pow(y_1, 2.0)
+                   - 0.0436 * Math.pow(x_1, 3.0);
+        
+           phi_0 =   16.9023892
+                   + 3.238272 * y_1
+                   - 0.270978 * Math.pow(x_1, 2.0)
+                   - 0.002528 * Math.pow(y_1, 2.0)
+                   - 0.0447 * Math.pow(x_1, 2.0) * y_1
+                   - 0.0140 * Math.pow(y_1, 3.0);
+        
+          lambda = lambda_0 * (100.0 / 36.0);
+        
+             phi = phi_0 * (100.0 / 36.0);
+        // @formatter:on
 
-        return (new PointGeo(Math.toRadians(longitude),
-                Math.toRadians(latitude)));
+        return new PointGeo(Math.toRadians(lambda), Math.toRadians(phi));
     }
 }
