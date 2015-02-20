@@ -4,7 +4,25 @@ import ch.epfl.imhof.geometry.Point;
 import ch.epfl.imhof.PointGeo;
 import java.lang.Math;
 
+/**
+ * A way to transform a point in spherical coordinates ( {@link PointGeo}) to a
+ * point in cartesian coordinates ({@link Point}) and the opposite using a a
+ * “CH1903 projection”, including WGS 84 conversion.
+ * 
+ * @see <a href="http://cs108.epfl.ch/p01_points.html#unnumbered-3" lang="fr">
+ *      Projection Suisse, CS-108 course, EPFL</a> (in french)
+ * @author Matthieu Bovel (250300)
+ * @author Matteo Besançon (245826)
+ */
 public final class CH1903Projection implements Projection {
+    /**
+     * Transforms a point in spherical coordinates to a point in cartesian
+     * coordinates using a “CH1903 projection”.
+     * 
+     * @param point
+     *            a point in spherical coordinates
+     * @return a point in cartesian coordinates
+     */
     public Point project(PointGeo point) {
         double lambda_1, phi_1, x, y;
         double lambda = Math.toDegrees(point.longitude());
@@ -35,6 +53,14 @@ public final class CH1903Projection implements Projection {
         return new Point(x, y);
     }
 
+    /**
+     * Transforms a point in cartesian coordinates to a point in spherical
+     * coordinates using a “CH1903 projection”.
+     * 
+     * @param point
+     *            a point in cartesian coordinates
+     * @return a point in spherical coordinates
+     */
     public PointGeo inverse(Point point) {
         double lambda_0, phi_0, x_1, y_1, lambda, phi;
 
