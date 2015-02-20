@@ -14,13 +14,16 @@ public final class PointGeo {
         if (longitude < LONGITUDE_LOWER_BOUND) {
             throw new IllegalArgumentException("longitude should be at least "
                     + LONGITUDE_LOWER_BOUND);
-        } else if (longitude > LONGITUDE_UPPER_BOUND) {
+        }
+        else if (longitude > LONGITUDE_UPPER_BOUND) {
             throw new IllegalArgumentException("longitude should be at most "
                     + LONGITUDE_UPPER_BOUND);
-        } else if (latitude < LATITUDE_LOWER_BOUND) {
+        }
+        else if (latitude < LATITUDE_LOWER_BOUND) {
             throw new IllegalArgumentException("longitude should be at least "
                     + LATITUDE_LOWER_BOUND);
-        } else if (latitude > LATITUDE_UPPER_BOUND) {
+        }
+        else if (latitude > LATITUDE_UPPER_BOUND) {
             throw new IllegalArgumentException("longitude should be at most "
                     + LATITUDE_UPPER_BOUND);
         }
