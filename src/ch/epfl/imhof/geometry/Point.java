@@ -3,7 +3,6 @@ package ch.epfl.imhof.geometry;
 /**
  * A point, represented by its cartesian coordinates.
  * 
- * @author Matthieu Bovel (250300)
  * @author Matteo Besançon (245826)
  */
 public final class Point {
