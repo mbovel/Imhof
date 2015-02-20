@@ -1,8 +1,14 @@
 [Project home page](http://cs108.epfl.ch)
 
-## Eclipse How-to
+## Useful links
 
-- Display hidden files: ["How can I get Eclipse to show .* files?", Stack Overflow](http://stackoverflow.com/a/98634)
-- Fix Markdown titles colors: ["How can I edit the markdown font colors in Eclipse Luna?", Stack Overflow](http://stackoverflow.com/a/28504207>)
-- Disable formatter for some code sections: ["How to turn off the Eclipse code formatter for certain sections of Java code?"](http://stackoverflow.com/a/3353765)
-- Change default @author for comments block: ["Default @author for Javadoc"](http://www.javahotchocolate.com/notes/eclipse.html#author)
+### Java
+
+- [How java import works](http://stackoverflow.com/a/12620773)
+
+### Eclipse
+
+- [How can I get Eclipse to show .* files?](http://stackoverflow.com/a/98634)
+- [How can I edit the markdown font colors in Eclipse Luna?](http://stackoverflow.com/a/28504207>)
+- [How to turn off the Eclipse code formatter for certain sections of Java code?](http://stackoverflow.com/a/3353765)
+- [Default @author for Javadoc](http://www.javahotchocolate.com/notes/eclipse.html#author)
