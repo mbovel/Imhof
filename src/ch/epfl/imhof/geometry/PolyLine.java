@@ -29,19 +29,19 @@ public abstract class PolyLine {
 	}
 
 	/**
-	 *@return true if the polyline is closed
+	 * @return true if the polyline is closed
 	 */
 	public abstract boolean isClosed();
-	
+
 	/**
-	 *@return the List of point
+	 * @return the List of point
 	 */
 	public List<Point> points() {
 		return (points);
 	}
 
 	/**
-	 *@return the first point of the list
+	 * @return the first point of the list
 	 */
 	public Point firstPoint() {
 		return (points.get(0));

@@ -10,15 +10,18 @@ import java.util.List;
 public final class OpenPolyLine extends PolyLine {
 
 	/**
-	 * construct an open polyline by calling the constructor from the super class PolyLine
+	 * construct an open polyline by calling the constructor from the super
+	 * class PolyLine
 	 * 
-	 *@param list of point of the polyline
+	 * @param list
+	 *            of point of the polyline
 	 */
 	public OpenPolyLine(List<Point> points) {
 		super(points);
 	}
+
 	/**
-	 *@return return false because the Polyline isn't closed
+	 * @return return false because the Polyline isn't closed
 	 */
 	public boolean isClosed() {
 		return (false);
