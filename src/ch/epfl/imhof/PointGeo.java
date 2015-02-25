@@ -9,65 +9,62 @@ package ch.epfl.imhof;
  */
 public final class PointGeo {
 
-    private final double longitude;
-    private final double latitude;
+	private final double longitude;
+	private final double latitude;
 
-    static private final double LONGITUDE_LOWER_BOUND = -java.lang.Math.PI;
-    static private final double LONGITUDE_UPPER_BOUND = java.lang.Math.PI;
-    static private final double LATITUDE_LOWER_BOUND = -java.lang.Math.PI / 2;
-    static private final double LATITUDE_UPPER_BOUND = java.lang.Math.PI / 2;
+	static private final double LONGITUDE_LOWER_BOUND = -java.lang.Math.PI;
+	static private final double LONGITUDE_UPPER_BOUND = java.lang.Math.PI;
+	static private final double LATITUDE_LOWER_BOUND = -java.lang.Math.PI / 2;
+	static private final double LATITUDE_UPPER_BOUND = java.lang.Math.PI / 2;
 
-    /**
-     * Constructs a point, given its longitude and latitude
-     * 
-     * @param longitude
-     *            point's longitude, in radians
-     * @param latitude
-     *            point's latitude, in radians
-     * @throws IllegalArgumentException
-     *             if longitude is smaller than -PI
-     * @throws IllegalArgumentException
-     *             if longitude is bigger than PI
-     * @throws IllegalArgumentException
-     *             if latitude is smaller than -PI/2
-     * @throws IllegalArgumentException
-     *             if latitude is bigger than PI/2
-     */
-    public PointGeo(double longitude, double latitude)
-            throws IllegalArgumentException {
-        if (longitude < LONGITUDE_LOWER_BOUND) {
-            throw new IllegalArgumentException("longitude should be at least "
-                    + LONGITUDE_LOWER_BOUND);
-        }
-        else if (longitude > LONGITUDE_UPPER_BOUND) {
-            throw new IllegalArgumentException("longitude should be at most "
-                    + LONGITUDE_UPPER_BOUND);
-        }
-        else if (latitude < LATITUDE_LOWER_BOUND) {
-            throw new IllegalArgumentException("longitude should be at least "
-                    + LATITUDE_LOWER_BOUND);
-        }
-        else if (latitude > LATITUDE_UPPER_BOUND) {
-            throw new IllegalArgumentException("longitude should be at most "
-                    + LATITUDE_UPPER_BOUND);
-        }
+	/**
+	 * Constructs a point, given its longitude and latitude
+	 * 
+	 * @param longitude
+	 *            point's longitude, in radians
+	 * @param latitude
+	 *            point's latitude, in radians
+	 * @throws IllegalArgumentException
+	 *             if longitude is smaller than -PI
+	 * @throws IllegalArgumentException
+	 *             if longitude is bigger than PI
+	 * @throws IllegalArgumentException
+	 *             if latitude is smaller than -PI/2
+	 * @throws IllegalArgumentException
+	 *             if latitude is bigger than PI/2
+	 */
+	public PointGeo(double longitude, double latitude)
+			throws IllegalArgumentException {
+		if (longitude < LONGITUDE_LOWER_BOUND) {
+			throw new IllegalArgumentException("longitude should be at least "
+					+ LONGITUDE_LOWER_BOUND);
+		} else if (longitude > LONGITUDE_UPPER_BOUND) {
+			throw new IllegalArgumentException("longitude should be at most "
+					+ LONGITUDE_UPPER_BOUND);
+		} else if (latitude < LATITUDE_LOWER_BOUND) {
+			throw new IllegalArgumentException("longitude should be at least "
+					+ LATITUDE_LOWER_BOUND);
+		} else if (latitude > LATITUDE_UPPER_BOUND) {
+			throw new IllegalArgumentException("longitude should be at most "
+					+ LATITUDE_UPPER_BOUND);
+		}
 
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
 
-    /**
-     * @return point's longitude
-     */
-    public double longitude() {
-        return longitude;
-    }
+	/**
+	 * @return point's longitude
+	 */
+	public double longitude() {
+		return longitude;
+	}
 
-    /**
-     * @return point's latitude
-     */
-    public double latitude() {
-        return latitude;
-    }
+	/**
+	 * @return point's latitude
+	 */
+	public double latitude() {
+		return latitude;
+	}
 
 }
