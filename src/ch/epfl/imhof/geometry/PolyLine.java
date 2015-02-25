@@ -9,7 +9,7 @@ import java.util.List;
  *
  */
 public abstract class PolyLine {
-	private List<Point> points;
+	private final List<Point> points;
 
 	/**
 	 * Constructs a Polyline given a list of point
