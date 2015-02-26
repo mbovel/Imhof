@@ -1,7 +1,6 @@
 package ch.epfl.imhof.geometry;
 
 import java.util.List;
-import java.util.Random;
 
 public final class ClosedPolyLine extends PolyLine {
 
@@ -29,8 +28,20 @@ public final class ClosedPolyLine extends PolyLine {
 	public boolean containsPoint(Point p) {
 		int indice = 0;
 		for (int i = 0; i != points.size(); ++i) {
-			
+			Point p1 = points.get(i);
+			Point p2 = points.get(indiceGen(i + 1));
+
+			if (p1.y() <= p.y()) {
+				if (p2.y() > p.y() && isLeft(p, p1, p2)) {
+					++indice;
+				}
+			}
+
+			else if (p2.y() <= p.y() && isLeft(p, p2, p1)) {
+				--indice;
+			}
 		}
+		return (indice != 0);
 	}
 
 	private boolean isLeft(Point p, Point p1, Point p2) {
