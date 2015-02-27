@@ -11,7 +11,7 @@ public final class OpenPolyLine extends PolyLine {
 
     /**
      * construct an open polyline by calling the constructor from the super
-     * class PolyLine
+     * class {@link PolyLine}
      * 
      * @param points
      *            list of point of the polyline

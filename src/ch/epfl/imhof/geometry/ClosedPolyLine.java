@@ -10,7 +10,7 @@ public final class ClosedPolyLine extends PolyLine {
 
     /**
      * construct an open polyline by calling the constructor from the super
-     * class {@link Polyline}
+     * class {@link PolyLine}
      * 
      * @param points
      *            list of points of the closedpolyline
