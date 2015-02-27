@@ -6,6 +6,7 @@
 
 - [How java import works](http://stackoverflow.com/a/12620773)
 - [Linking to an external URL in Javadoc?](http://stackoverflow.com/a/10683345)
+- [Is ArrayList.size() method cached?](http://stackoverflow.com/questions/2856835/is-arraylist-size-method-cached)
 
 ### Eclipse
 

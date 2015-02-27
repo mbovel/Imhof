@@ -24,6 +24,6 @@ public final class OpenPolyLine extends PolyLine {
      * @return return false because the Polyline isn't closed
      */
     public boolean isClosed() {
-        return (false);
+        return false;
     }
 }
