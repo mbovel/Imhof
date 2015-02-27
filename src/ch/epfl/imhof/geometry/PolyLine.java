@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Polyline are represented by a list of points
  * 
- * @author matteo113
+ * @author Matteo Besançon (245826)
  *
  */
 public abstract class PolyLine {

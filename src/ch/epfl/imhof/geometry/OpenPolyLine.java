@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * 
- * @author matteo113
+ * @author Matteo Besançon (245826)
  *
  */
 public final class OpenPolyLine extends PolyLine {
