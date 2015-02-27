@@ -9,8 +9,8 @@ import java.lang.Math;
  * point in cartesian coordinates ({@link Point}) and the opposite using a a
  * “CH1903 projection”, including WGS 84 conversion.
  * 
- * @see <a href="http://cs108.epfl.ch/p01_points.html#unnumbered-3" lang="fr">
- *      Projection Suisse, CS-108 course, EPFL</a> (in french)
+ * @see <a href="http://cs108.epfl.ch/p01_points.html#unnumbered-3">Projection
+ *      Suisse, CS-108 course, EPFL (in french)</a>
  * @author Matthieu Bovel (250300)
  * @author Matteo Besançon (245826)
  */
