@@ -9,42 +9,42 @@ import java.util.List;
  *
  */
 public abstract class PolyLine {
-	protected final List<Point> points;
+    protected final List<Point> points;
 
-	/**
-	 * Constructs a Polyline given a list of point
-	 * 
-	 * @param points
-	 *            list of all points in the polyLine
-	 * 
-	 * @throws IllegalArgumentException
-	 *             if points is empty
-	 */
+    /**
+     * Constructs a Polyline given a list of points
+     * 
+     * @param points
+     *            list of all points in the polyLine
+     * 
+     * @throws IllegalArgumentException
+     *             if points is empty
+     */
 
-	public PolyLine(List<Point> points) throws IllegalArgumentException {
-		if (points.isEmpty()) {
-			throw new IllegalArgumentException("Polyline size must not be null");
-		}
-		this.points = points;
-	}
+    public PolyLine(List<Point> points) throws IllegalArgumentException {
+        if (points.isEmpty()) {
+            throw new IllegalArgumentException("Polyline size must not be null");
+        }
+        this.points = points;
+    }
 
-	/**
-	 * @return true if the polyline is closed
-	 */
-	public abstract boolean isClosed();
+    /**
+     * @return true if the polyline is closed
+     */
+    public abstract boolean isClosed();
 
-	/**
-	 * @return the List of point
-	 */
-	public List<Point> points() {
-		return (points);
-	}
+    /**
+     * @return the List of points
+     */
+    public List<Point> points() {
+        return (points);
+    }
 
-	/**
-	 * @return the first point of the list
-	 */
-	public Point firstPoint() {
-		return (points.get(0));
-	}
+    /**
+     * @return the first point of the list
+     */
+    public Point firstPoint() {
+        return (points.get(0));
+    }
 
 }
