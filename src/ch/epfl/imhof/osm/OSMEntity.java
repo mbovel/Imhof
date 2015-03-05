@@ -1,10 +1,14 @@
-/**
- * @author Matteo Besançon (245826)
- */
 package ch.epfl.imhof.osm;
 
 import ch.epfl.imhof.Attributes;
 
+/**
+ * @author Matteo Besançon (245826)
+ * 
+ *         Represents an OSM entity with an identity (long) and an object
+ *         Attributes which contains a map of attribute.
+ *
+ */
 public class OSMEntity {
 	private long id;
 	private Attributes attributes;

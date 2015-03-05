@@ -1,5 +1,10 @@
 package ch.epfl.imhof.osm;
 
-public class OSMNode {
+/**
+ * @author Matteo Besançon (245826)
+ *
+ */
+public class OSMNode extends OSMEntity {
 
+	
 }
