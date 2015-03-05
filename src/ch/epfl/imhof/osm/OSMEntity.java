@@ -3,8 +3,6 @@
  */
 package ch.epfl.imhof.osm;
 
-import java.security.KeyStore.Entry.Attribute;
-
 import ch.epfl.imhof.Attributes;
 
 public class OSMEntity {
