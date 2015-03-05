@@ -9,9 +9,9 @@ import ch.epfl.imhof.Attributes;
  *         Attributes which contains a map of attribute.
  *
  */
-public class OSMEntity {
-	private long id;
-	private Attributes attributes;
+public abstract class OSMEntity {
+	private final long id;
+	private final Attributes attributes;
 
 	/**
 	 * create a new osm object given its identification and attributes

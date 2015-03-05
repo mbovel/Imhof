@@ -8,9 +8,9 @@ import ch.epfl.imhof.*;
  *         Represents an OSM node with an identity (long), an object Attributes
  *         which contains a map of attribute and a position (PointGeo).
  */
-public class OSMNode extends OSMEntity {
+public final class OSMNode extends OSMEntity {
 
-	private PointGeo position;
+	private final PointGeo position;
 
 	/**
 	 * Create a new osm node given its identification, attributes and position.

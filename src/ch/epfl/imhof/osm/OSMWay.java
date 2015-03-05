@@ -1,5 +1,6 @@
 package ch.epfl.imhof.osm;
 
+import java.util.Collections;
 import java.util.List;
 
 import ch.epfl.imhof.Attributes;
@@ -11,7 +12,7 @@ import ch.epfl.imhof.Attributes;
  * @author Matteo Besançon (245826)
  *
  */
-public class OSMWay extends OSMEntity {
+public final class OSMWay extends OSMEntity {
 
 	private List<OSMNode> nodes;
 
@@ -32,7 +33,7 @@ public class OSMWay extends OSMEntity {
 			throws IllegalArgumentException {
 
 		super(id, attributes);
-		this.nodes = nodes;
+		this.nodes = Collections.unmodifiableList(nodes);
 
 		if (nodes.size() < 2) {
 			throw new IllegalArgumentException(

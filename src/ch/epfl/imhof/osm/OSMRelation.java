@@ -4,6 +4,6 @@
 package ch.epfl.imhof.osm;
 
 
-public class OSMRelation {
+public final class OSMRelation {
 
 }
