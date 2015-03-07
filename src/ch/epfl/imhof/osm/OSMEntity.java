@@ -70,4 +70,22 @@ public abstract class OSMEntity {
 		return attributes.get(key);
 	}
 
+	public abstract static class Builder {
+		private final long id;
+		private final Attributes atributes;
+		private boolean isComplete;
+		
+		public Builder(long id){
+			this.id=id;
+		}
+		
+		public void setAttribute(String key, String value){
+			
+		}
+		
+		public void setIncomplete(){
+			isComplete=false;
+		}
+	}
+
 }

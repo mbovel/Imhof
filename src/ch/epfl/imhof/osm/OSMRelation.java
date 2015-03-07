@@ -4,6 +4,9 @@
 package ch.epfl.imhof.osm;
 
 
-public final class OSMRelation {
+public final class OSMRelation extends OSMEntity{
+	private Li
+	
 
 }
+
