@@ -1,8 +1,8 @@
 package ch.epfl.imhof;
 
 public final class Attributed<T> {
-    private T value;
-    private Attributes attributes;
+    private final T value;
+    private final Attributes attributes;
     
     public Attributed(T value, Attributes attributes) {
         this.value = value;
@@ -13,19 +13,23 @@ public final class Attributed<T> {
         return this.value;
     }
     
-    boolean hasAttribute(String attributeName) {
+    public Attributes attributes() {
+        return this.attributes;
+    }
+    
+    public boolean hasAttribute(String attributeName) {
         return this.attributes.contains(attributeName);
     }
     
-    String attributeValue(String attributeName) {
+    public String attributeValue(String attributeName) {
         return this.attributeValue(attributeName);
     }
     
-    String attributeValue(String attributeName, String defaultValue) {
+    public String attributeValue(String attributeName, String defaultValue) {
         return this.attributeValue(attributeName, defaultValue);
     }
     
-    int attributeValue(String attributeName, int defaultValue) {
+    public int attributeValue(String attributeName, int defaultValue) {
         return this.attributeValue(attributeName, defaultValue);
     }
 }
