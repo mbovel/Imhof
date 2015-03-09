@@ -19,6 +19,52 @@ public abstract class PolyLine {
     protected final List<Point> points;
 
     /**
+     * Constructs a {@link PolyLine} given a list of points.
+     * 
+     * @param points
+     *            list of all points in the PolyLine
+     * 
+     * @throws IllegalArgumentException
+     *             if points List is empty
+     */
+
+    public PolyLine(List<Point> points) throws IllegalArgumentException {
+        if (points.isEmpty()) {
+            throw new IllegalArgumentException("Points list cannot be empty");
+        }
+
+        this.points = Collections
+                .unmodifiableList(new ArrayList<Point>(points));
+    }
+
+    /**
+     * Returns <code>true</code> if the last point is connected to the first
+     * one. It is <code>true</code> in the case of a ({@link ClosedPolyLine} or
+     * <code>false</code> in the case of a ( {@link OpenPolyLine}).
+     * 
+     * @return false
+     */
+    public abstract boolean isClosed();
+
+    /**
+     * Returns the list of points of this polyline.
+     * 
+     * @return the list of points
+     */
+    public List<Point> points() {
+        return points;
+    }
+
+    /**
+     * Return the first point of this polyline.
+     * 
+     * @return the first point of this polyline.
+     */
+    public Point firstPoint() {
+        return points.get(0);
+    }
+
+    /**
      * Helper class that aids in the construction of {@link PolyLine PolyLines}.
      * 
      * @author Matthieu Bovel (250300)
@@ -64,52 +110,6 @@ public abstract class PolyLine {
         public ClosedPolyLine buildClosed() {
             return new ClosedPolyLine(this.points);
         }
-    }
-
-    /**
-     * Constructs a {@link PolyLine} given a list of points.
-     * 
-     * @param points
-     *            list of all points in the PolyLine
-     * 
-     * @throws IllegalArgumentException
-     *             if points List is empty
-     */
-
-    public PolyLine(List<Point> points) throws IllegalArgumentException {
-        if (points.isEmpty()) {
-            throw new IllegalArgumentException("Points list cannot be empty");
-        }
-
-        this.points = Collections
-                .unmodifiableList(new ArrayList<Point>(points));
-    }
-
-    /**
-     * Returns <code>true</code> if the last point is connected to the first
-     * one. It is <code>true</code> in the case of a ({@link ClosedPolyLine} or
-     * <code>false</code> in the case of a ( {@link OpenPolyLine}).
-     * 
-     * @return false
-     */
-    public abstract boolean isClosed();
-
-    /**
-     * Returns the list of points of this polyline.
-     * 
-     * @return the list of points
-     */
-    public List<Point> points() {
-        return points;
-    }
-
-    /**
-     * Return the first point of this polyline.
-     * 
-     * @return the first point of this polyline.
-     */
-    public Point firstPoint() {
-        return points.get(0);
     }
 
 }
