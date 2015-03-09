@@ -20,8 +20,8 @@ public final class OpenPolyLine extends PolyLine {
     }
 
     /**
-     * Returns true if the last point is connected to the first one. This is
-     * always false for an {@link OpenPolyLine}.
+     * Returns <code>true</code> if the last point is connected to the first
+     * one. This is always <code>false</code> for an <code>OpenPolyLine</code>.
      * 
      * @see ch.epfl.imhof.geometry.PolyLine#isClosed()
      * @return false

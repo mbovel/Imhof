@@ -86,9 +86,9 @@ public abstract class PolyLine {
     }
 
     /**
-     * Returns true if the last point is connected to the first one. It is true
-     * in the case of a ({@link ClosedPolyLine} or false in the case of a (
-     * {@link OpenPolyLine}).
+     * Returns <code>true</code> if the last point is connected to the first
+     * one. It is <code>true</code> in the case of a ({@link ClosedPolyLine} or
+     * <code>false</code> in the case of a ( {@link OpenPolyLine}).
      * 
      * @return false
      */
