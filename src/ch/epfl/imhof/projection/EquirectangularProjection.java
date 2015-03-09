@@ -12,7 +12,7 @@ import ch.epfl.imhof.PointGeo;
  *      Equirectangular projection, Wikipedia</a>
  * @author Matteo Besançon (245826)
  */
-public class EquirectangularProjection implements Projection {
+public final class EquirectangularProjection implements Projection {
     /**
      * Transforms a point in spherical coordinates to a point in cartesian
      * coordinates using a simple Equirectangular projection.
