@@ -6,8 +6,8 @@ import java.util.List;
 import ch.epfl.imhof.Attributes;
 
 /**
- * An OSM way is a list of nodes represented by its identification, attributes
- * and a List<Node>.
+ * Represents an <code>OSMWay</code> with an identits (<code>id</code>), an
+ * {@link Attributes} and a {@link List} of {@link OSMNode}.
  * 
  * @author Matteo Besançon (245826)
  *
@@ -17,22 +17,23 @@ public final class OSMWay extends OSMEntity {
 	private final List<OSMNode> nodes;
 
 	/**
-	 * Create a new osm way given its identification, attributes and a list of
-	 * nodes.
+	 * Construct a new <code>OSMWay</code> given its identification,
+	 * <code>attributes</code> and <code>nodes</code>.
 	 * 
 	 * @param id
-	 *            identification of the osm way.
+	 *            <code>OSMWay</code>'s identification.
 	 * @param nodes
-	 *            list of the nodes making the way.
+	 *            <code>OSMWay</code>'s {@link List} of {@link OSMNode}.
 	 * @param attributes
-	 *            attributes of the osm way.
+	 *            <code>OSMWay</code>'s attributes ({@link Attributes}).
+	 * 
 	 * @throws IllegalArgumentException
-	 *             if the list of nodes contains strictly less than two nodes.
+	 *             if the <code>nodes</code> contains strictly less than two
+	 *             nodes.
 	 */
 	public OSMWay(long id, List<OSMNode> nodes, Attributes attributes)
 			throws IllegalArgumentException {
 
-		
 		super(id, attributes);
 		if (nodes.size() < 2) {
 			throw new IllegalArgumentException(
@@ -43,41 +44,45 @@ public final class OSMWay extends OSMEntity {
 	}
 
 	/**
-	 * returns the number of nodes in the osm way /!\ it will count two times
-	 * the first node if the way is closed.
+	 * Returns the number of nodes in the <code>OSMWay</code> /!\ it will counts
+	 * two times the first node if the <code>OSMWay</code> is closed.
 	 * 
-	 * @return the number of nodes in the osm way.
+	 * @return the number of <code>OSMNodes</code> in the field
+	 *         <code>nodes</code> the <code>OSMWay</code>.
 	 */
 	public int nodesCount() {
 		return nodes.size();
 	}
 
 	/**
-	 * returns the list of all the nodes that made the osm way.
+	 * Returns a {@link List} of all the <code>OSMNode</code>.
 	 * 
-	 * @return the list of all the nodes that made the osm way.
+	 * @return the field <code>nodes</code> of the <code>OSMWay</code>.
 	 */
 	public List<OSMNode> nodes() {
 		return nodes;
 	}
 
 	/**
-	 * return true if the osm way is closed. Formally it tests if the first
-	 * nodes of the list is the same than the last with the method equals.
+	 * Returns <code>true</code> if the <code>OSMWay</code> is closed. More
+	 * formally it tests if the first <code>OSMNode</code> of <code>nodes</code>
+	 * is the same than the last one with the method equals.
 	 * 
-	 * @return true if the osm way is closed.
+	 * @return <code>true</code> if the <code>OSMWay</code> is closed.
 	 */
 	public boolean isClosed() {
 		return nodes.get(0).equals(nodes.get(nodes.size() - 1));
 	}
 
 	/**
-	 * return the list of all the nodes that made the osm way without repeating
-	 * two times the same node if the first one is the same than the last one.
+	 * Returns a <code>List</code> of all the <code>OSMNode</code> constituing
+	 * the <code>OSMWay</code> without repeating two times the same node if the
+	 * first of the <code>List</code> is the same than the last one.
 	 * 
-	 * @return the list of all the nodes that made the osm way without repeating
-	 *         two times the same node if the first one is the same than the
-	 *         last one.
+	 * @return a <code>List</code> of all the <code>OSMNode</code> constituing
+	 *         the <code>OSMWay</code> without repeating two times the same node
+	 *         if the first of the <code>List</code> is the same than the last
+	 *         one.
 	 */
 	public List<OSMNode> nonRepeatingNodes() {
 		if (isClosed()) {
@@ -89,34 +94,63 @@ public final class OSMWay extends OSMEntity {
 	}
 
 	/**
-	 * return the first node of the list of nodes of the way.
+	 * Returns the first <code>OSMNode</code> of the field <code>nodes</code>.
 	 * 
-	 * @return the first node of the list of nodes of the way.
+	 * @return the first <code>OSMNode</code> of the field <code>nodes</code>.
 	 */
 	public OSMNode firstNode() {
 		return nodes.get(0);
 	}
 
 	/**
-	 * return the last node of the list of nodes of the way.
+	 * Returns the last <code>OSMNode</code> of the field <code>nodes</code>.
 	 * 
-	 * @return the last node of the list of nodes of the way.
+	 * @return the last <code>OSMNode</code> of the field <code>nodes</code>.
 	 */
 	public OSMNode lastNode() {
 		return nodes.get(nodes.size() - 1);
 	}
 
+	/**
+	 * A Class that helps in the construction of {@link OSMWay}.
+	 * 
+	 * @author Matteo Besançon (245826)
+	 *
+	 */
 	public final static class Builder extends OSMEntity.Builder {
 		private List<OSMNode> nodes;
 
+		/**
+		 * Constructs an <code>OSMWay.Builder</code> with the <code>id</code> of
+		 * the futur <code>OSMWay</code>.
+		 * 
+		 * @param id
+		 *            the futur <code>OSMWay</code>'s identification.
+		 */
 		public Builder(long id) {
 			super(id);
 		}
 
+		/**
+		 * Adds a new <code>OSMNode</code> to <code>nodes</code>.
+		 * 
+		 * @param newNode
+		 *            a futur <code>OSMWay</code>'s node.
+		 */
 		public void addNode(OSMNode newNode) {
 			nodes.add(newNode);
 		}
 
+		/**
+		 * Constructs a new <code>OSMWay</code> instance using the data provided
+		 * by the <code>OSMWay.Builder</code>.
+		 * 
+		 * @return the new <code>OSMWay</code>.
+		 * 
+		 * @throws IllegalStateException
+		 *             if the <code>OSMWay</code> is not complete (
+		 *             <code>incomplete = true</code>).
+		 */
 		public OSMWay build() throws IllegalStateException {
 			if (incomplete) {
 				throw new IllegalStateException(

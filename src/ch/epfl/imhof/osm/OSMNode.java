@@ -5,8 +5,8 @@ import ch.epfl.imhof.*;
 /**
  * @author Matteo Besançon (245826)
  *
- *         Represents an <code>OSMNode</code> with an identity (<code>id</code>)
- *         and an {@link Attributes}.
+ *         Represents an <code>OSMNode</code> with an identity (<code>id</code>
+ *         ), a <code>position</code> and an {@link Attributes}.
  */
 public final class OSMNode extends OSMEntity {
 
@@ -39,7 +39,7 @@ public final class OSMNode extends OSMEntity {
 	}
 
 	/**
-	 * Classe that helps in the construction of {@link OSMNode}.
+	 * A class that helps in the construction of {@link OSMNode}.
 	 * 
 	 * @author Matteo Besançon (245826)
 	 *
@@ -68,7 +68,7 @@ public final class OSMNode extends OSMEntity {
 		 * @return the new <code>OSMNode</code>.
 		 * 
 		 * @throws IllegalStateException
-		 *             when the <code>OSMNode</code> is not complete (
+		 *             if the <code>OSMNode</code> is not complete (
 		 *             <code>incomplete = true</code>).
 		 */
 		public OSMNode build() throws IllegalStateException {

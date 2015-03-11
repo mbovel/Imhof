@@ -90,10 +90,11 @@ public abstract class OSMEntity {
 		 */
 
 		/**
-		 * Construct an OSMEntity.Builder with an <code>id</code>.
+		 * Constructs an <code>OSMEntity.Builder</code> with the <code>id</code> of the futur
+		 * <code>OSMEntity</code>.
 		 * 
 		 * @param id
-		 *            the future OSMEntity's identification.
+		 *            the future <code>OSMEntity</code>'s identification.
 		 */
 		public Builder(long id) {
 			this.id = id;
