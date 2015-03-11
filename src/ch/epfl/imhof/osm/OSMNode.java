@@ -5,22 +5,23 @@ import ch.epfl.imhof.*;
 /**
  * @author Matteo Besançon (245826)
  *
- *         Represents an OSM node with an identity (long), an object Attributes
- *         which contains a map of attribute and a position (PointGeo).
+ *         Represents an <code>OSMNode</code> with an identity (<code>id</code>)
+ *         and an {@link Attributes}.
  */
 public final class OSMNode extends OSMEntity {
 
 	private final PointGeo position;
 
 	/**
-	 * Create a new osm node given its identification, attributes and position.
+	 * Construct a new <code>OSMNode</code> given its identification,
+	 * <code>atributes</code> and <code>position</code>.
 	 * 
 	 * @param id
-	 *            identification of the osm node
+	 *            <code>OSMNode</code>'s identification.
 	 * @param position
-	 *            position of the osm node
+	 *            <code>OSMNode</code>'s position ({@link PointGeo}).
 	 * @param attributes
-	 *            all the attributes of the osm node
+	 *            <code>OSMNode</code>'s attributes ({@link Attributes}).
 	 */
 	public OSMNode(long id, PointGeo position, Attributes attributes) {
 		super(id, attributes);
@@ -29,22 +30,47 @@ public final class OSMNode extends OSMEntity {
 	}
 
 	/**
-	 * return the position of the node
+	 * Returns the <code>position</code> of the <code>OSMNode</code>.
 	 * 
-	 * @return the position of the node
+	 * @return the <code>position</code> of the <code>OSMNode</code>.
 	 */
 	public PointGeo position() {
 		return position;
 	}
 
+	/**
+	 * Classe that helps in the construction of {@link OSMNode}.
+	 * 
+	 * @author Matteo Besançon (245826)
+	 *
+	 */
 	public final static class Builder extends OSMEntity.Builder {
 		private final PointGeo position;
 
+		/**
+		 * Constructs an <code>OSMNode.Builder</code> with the <code>id</code>
+		 * and the <code>position</code> of the futur <code>OSMNode</code>.
+		 * 
+		 * @param id
+		 *            the futur <code>OSMNode</code>'s identification.
+		 * @param position
+		 *            the futur <code>OSMNode</code>'s <code>position</code>.
+		 */
 		public Builder(long id, PointGeo position) {
 			super(id);
 			this.position = position;
 		}
 
+		/**
+		 * Constructs a new <code>OSMNode</code> instance using the data
+		 * provided by the <code>OSMNode.Builder</code>.
+		 * 
+		 * @return the new <code>OSMNode</code>.
+		 * 
+		 * @throws IllegalStateException
+		 *             when the <code>OSMNode</code> is not complete (
+		 *             <code>incomplete = true</code>).
+		 */
 		public OSMNode build() throws IllegalStateException {
 			if (incomplete) {
 				throw new IllegalStateException(

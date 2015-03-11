@@ -129,7 +129,7 @@ public final class Attributes {
     }
 
     /**
-     * Class that aids in the construction of {@link Attributes}.
+     * Class that helps in the construction of {@link Attributes}.
      * 
      * @author Matthieu Bovel (250300)
      *
