@@ -71,26 +71,26 @@ public abstract class OSMEntity {
 	}
 
 	public abstract static class Builder {
-		private final long id;
-		private Attributes.Builder attributes = new Attributes.Builder();
-		private boolean isComplete=true;
-		
-		public Builder(long id){
-			this.id=id;
+		protected final long id;
+		protected Attributes.Builder attributes = new Attributes.Builder();
+		protected boolean incomplete;
+
+		public Builder(long id) {
+			this.id = id;
 		}
-		
-		public void setAttribute(String key, String value){
+
+		public void setAttribute(String key, String value) {
 			attributes.put(key, value);
 		}
-		
-		public void setIncomplete(){
-			isComplete=false;
+
+		public void setIncomplete() {
+			incomplete = true;
 		}
-		
-		public boolean isIncomplete(){
-			return isComplete;
+
+		public boolean isIncomplete() {
+			return incomplete;
 		}
-	
+
 	}
 
 }
