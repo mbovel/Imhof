@@ -104,4 +104,24 @@ public final class OSMWay extends OSMEntity {
 	public OSMNode lastNode() {
 		return nodes.get(nodes.size() - 1);
 	}
+
+	public final static class Builder extends OSMEntity.Builder {
+		private List<OSMNode> nodes;
+
+		public Builder(long id) {
+			super(id);
+		}
+
+		public void addNode(OSMNode newNode) {
+			nodes.add(newNode);
+		}
+
+		public OSMWay build() throws IllegalStateException {
+			if (incomplete) {
+				throw new IllegalStateException(
+						"The OSMWay is not complete yet.");
+			}
+			return new OSMWay(this.id, this.nodes, this.attributes.build());
+		}
+	}
 }

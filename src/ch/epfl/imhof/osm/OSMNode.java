@@ -36,18 +36,19 @@ public final class OSMNode extends OSMEntity {
 	public PointGeo position() {
 		return position;
 	}
-	
-	public final static class Builder extends OSMEntity.Builder{
+
+	public final static class Builder extends OSMEntity.Builder {
 		private final PointGeo position;
-		
-		public Builder(long id, PointGeo position){
+
+		public Builder(long id, PointGeo position) {
 			super(id);
-			this.position=position;
+			this.position = position;
 		}
-		
-		public OSMNode build() throws IllegalStateException{
-			if(incomplete){
-				throw new IllegalStateException("the OSMNode is not complete yet.");
+
+		public OSMNode build() throws IllegalStateException {
+			if (incomplete) {
+				throw new IllegalStateException(
+						"the OSMNode is not complete yet.");
 			}
 			return new OSMNode(this.id, this.position, this.attributes.build());
 		}
