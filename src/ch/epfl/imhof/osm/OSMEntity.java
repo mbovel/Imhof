@@ -90,11 +90,11 @@ public abstract class OSMEntity {
 		 */
 
 		/**
-		 * Constructs an <code>OSMEntity.Builder</code> with the <code>id</code> of the futur
+		 * Constructs an <code>OSMEntity.Builder</code> with the <code>id</code> of the future
 		 * <code>OSMEntity</code>.
 		 * 
 		 * @param id
-		 *            the future <code>OSMEntity</code>'s identification.
+		 *            the futuree <code>OSMEntity</code>'s identification.
 		 */
 		public Builder(long id) {
 			this.id = id;
@@ -123,7 +123,7 @@ public abstract class OSMEntity {
 		/**
 		 * Returns the value of <code>incomplete</code>.
 		 * 
-		 * @return <code>true</code> if the futur <code>OSMEntity</code> is not
+		 * @return <code>true</code> if the future <code>OSMEntity</code> is not
 		 *         complete.
 		 */
 		public boolean isIncomplete() {

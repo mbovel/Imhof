@@ -49,12 +49,12 @@ public final class OSMNode extends OSMEntity {
 
 		/**
 		 * Constructs an <code>OSMNode.Builder</code> with the <code>id</code>
-		 * and the <code>position</code> of the futur <code>OSMNode</code>.
+		 * and the <code>position</code> of the future <code>OSMNode</code>.
 		 * 
 		 * @param id
-		 *            the futur <code>OSMNode</code>'s identification.
+		 *            the future <code>OSMNode</code>'s identification.
 		 * @param position
-		 *            the futur <code>OSMNode</code>'s <code>position</code>.
+		 *            the future <code>OSMNode</code>'s <code>position</code>.
 		 */
 		public Builder(long id, PointGeo position) {
 			super(id);

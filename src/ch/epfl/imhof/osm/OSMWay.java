@@ -122,10 +122,10 @@ public final class OSMWay extends OSMEntity {
 
 		/**
 		 * Constructs an <code>OSMWay.Builder</code> with the <code>id</code> of
-		 * the futur <code>OSMWay</code>.
+		 * the future <code>OSMWay</code>.
 		 * 
 		 * @param id
-		 *            the futur <code>OSMWay</code>'s identification.
+		 *            the future <code>OSMWay</code>'s identification.
 		 */
 		public Builder(long id) {
 			super(id);
@@ -135,7 +135,7 @@ public final class OSMWay extends OSMEntity {
 		 * Adds a new <code>OSMNode</code> to <code>nodes</code>.
 		 * 
 		 * @param newNode
-		 *            a futur <code>OSMWay</code>'s node.
+		 *            a future <code>OSMWay</code>'s node.
 		 */
 		public void addNode(OSMNode newNode) {
 			nodes.add(newNode);
