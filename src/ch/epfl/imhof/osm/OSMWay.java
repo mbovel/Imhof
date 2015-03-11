@@ -14,7 +14,7 @@ import ch.epfl.imhof.Attributes;
  */
 public final class OSMWay extends OSMEntity {
 
-	private List<OSMNode> nodes;
+	private final List<OSMNode> nodes;
 
 	/**
 	 * Create a new osm way given its identification, attributes and a list of
@@ -32,13 +32,14 @@ public final class OSMWay extends OSMEntity {
 	public OSMWay(long id, List<OSMNode> nodes, Attributes attributes)
 			throws IllegalArgumentException {
 
+		
 		super(id, attributes);
-		this.nodes = Collections.unmodifiableList(nodes);
-
 		if (nodes.size() < 2) {
 			throw new IllegalArgumentException(
 					"nodes must contain at least two ellements");
 		}
+		this.nodes = Collections.unmodifiableList(nodes);
+
 	}
 
 	/**
