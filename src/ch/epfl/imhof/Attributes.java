@@ -128,6 +128,56 @@ public final class Attributes {
         return builder.build();
     }
 
+    @Override
+    public boolean equals(Object b) {
+        if (b == null || b.getClass() != this.getClass())
+            return false;
+
+        // Should use EqualsBuilder
+        return b.hashCode() == this.hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        // Should use HashCodeBuilder
+        return this.toString().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("{\n");
+
+        for (Map.Entry<String, String> entry : this.attributes.entrySet()) {
+            builder.append("\t\"");
+            escapeJsonString(entry.getKey(), builder);
+            builder.append("\": \"");
+            escapeJsonString(entry.getValue(), builder);
+            builder.append("\"\n");
+        }
+
+        builder.append("}");
+
+        return builder.toString();
+    }
+
+    private static void escapeJsonString(String toEscape, StringBuilder builder) {
+        for (int i = 0; i < toEscape.length(); i++) {
+            char c = toEscape.charAt(i);
+            switch (c) {
+            case '\\':
+                builder.append("\\\\");
+                break;
+            case '"':
+                builder.append("\\\"");
+                break;
+            default:
+                builder.append(c);
+            }
+        }
+    }
+
     /**
      * Class that helps in the construction of {@link Attributes}.
      * 
@@ -135,7 +185,7 @@ public final class Attributes {
      *
      */
     public static class Builder {
-        private Map<String, String> attributes;
+        private Map<String, String> attributes = new HashMap<String, String>();
 
         /**
          * Adds an attribute (<code>key</code>/<code>value</code> strings) to
@@ -146,8 +196,9 @@ public final class Attributes {
          * @param value
          *            attribute's value
          */
-        public void put(String key, String value) {
+        public Builder put(String key, String value) {
             this.attributes.put(key, value);
+            return this;
         }
 
         /**
