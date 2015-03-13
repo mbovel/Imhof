@@ -28,7 +28,6 @@ public final class OSMNode extends OSMEntity {
     public OSMNode(long id, PointGeo position, Attributes attributes) {
         super(id, attributes);
         this.position = position;
-
     }
 
     /**
