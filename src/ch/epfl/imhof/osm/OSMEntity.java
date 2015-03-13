@@ -19,9 +19,9 @@ public abstract class OSMEntity {
      * {@link Attributes} object.
      * 
      * @param id
-     *            unique open street map id of the <code>OSMEntity</code>.
+     *            unique open street map id of the <code>OSMEntity</code>
      * @param attributes
-     *            attributes of the <code>OSMEntity</code>.
+     *            attributes of the <code>OSMEntity</code>
      */
     public OSMEntity(long id, Attributes attributes) {
         this.attributes = attributes;
@@ -31,7 +31,7 @@ public abstract class OSMEntity {
     /**
      * Returns the identification of the <code>OSMEntity</code>.
      * 
-     * @return the id of the <code>OSMEntity</code>.
+     * @return the id of the <code>OSMEntity</code>
      */
     public long id() {
         return id;
@@ -40,7 +40,7 @@ public abstract class OSMEntity {
     /**
      * Returns the <code>attributes</code> of this <code>OSMEntity</code>.
      * 
-     * @return the <code>attributes</code> of this <code>OSMEntity</code>.
+     * @return the <code>attributes</code> of this <code>OSMEntity</code>
      */
     public Attributes attributes() {
         return attributes;
@@ -51,9 +51,9 @@ public abstract class OSMEntity {
      * given key.
      * 
      * @param key
-     *            the key of the attribute searched in <code>attributes</code>.
+     *            the key of the attribute searched in <code>attributes</code>
      * @return <code>true</code> if this OSM entity has an attribute with the
-     *         given key.
+     *         given key
      */
     public boolean hasAttribute(String key) {
         return attributes.contains(key);
@@ -61,13 +61,13 @@ public abstract class OSMEntity {
 
     /**
      * Returns the value which correspond to a specified key or
-     * <code>null</code> if <code>attributes</code> doesn't contain this key
+     * <code>null</code> if <code>attributes</code> doesn't contain this key.
      * 
      * @param key
-     *            the <code>key</code> of the value to be returned.
+     *            the <code>key</code> of the value to be returned
      * @return the value which correspond to a specified <code>key</code> or
      *         <code>null</code> if <code>attributes</code> doesn't contain this
-     *         key.
+     *         key
      */
     public String attributeValue(String key) {
         return attributes.get(key);
@@ -89,7 +89,7 @@ public abstract class OSMEntity {
          * of the future <code>OSMEntity</code>.
          * 
          * @param id
-         *            the futuree <code>OSMEntity</code>'s identification.
+         *            the futuree <code>OSMEntity</code>'s identification
          */
         public Builder(long id) {
             this.id = id;
@@ -118,7 +118,7 @@ public abstract class OSMEntity {
          * Returns the value of <code>incomplete</code>.
          * 
          * @return <code>true</code> if the future <code>OSMEntity</code> is not
-         *         complete.
+         *         complete
          */
         public boolean isIncomplete() {
             return incomplete;

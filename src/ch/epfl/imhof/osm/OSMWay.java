@@ -21,15 +21,15 @@ public final class OSMWay extends OSMEntity {
 	 * <code>attributes</code> and <code>nodes</code>.
 	 * 
 	 * @param id
-	 *            <code>OSMWay</code>'s identification.
+	 *            <code>OSMWay</code>'s identification
 	 * @param nodes
-	 *            <code>OSMWay</code>'s {@link List} of {@link OSMNode}.
+	 *            <code>OSMWay</code>'s {@link List} of {@link OSMNode}
 	 * @param attributes
-	 *            <code>OSMWay</code>'s attributes ({@link Attributes}).
+	 *            <code>OSMWay</code>'s attributes ({@link Attributes})
 	 * 
 	 * @throws IllegalArgumentException
 	 *             if the <code>nodes</code> contains strictly less than two
-	 *             nodes.
+	 *             nodes
 	 */
 	public OSMWay(long id, List<OSMNode> nodes, Attributes attributes)
 			throws IllegalArgumentException {
@@ -48,7 +48,7 @@ public final class OSMWay extends OSMEntity {
 	 * two times the first node if the <code>OSMWay</code> is closed.
 	 * 
 	 * @return the number of <code>OSMNodes</code> in the field
-	 *         <code>nodes</code> the <code>OSMWay</code>.
+	 *         <code>nodes</code> the <code>OSMWay</code>
 	 */
 	public int nodesCount() {
 		return nodes.size();
@@ -57,7 +57,7 @@ public final class OSMWay extends OSMEntity {
 	/**
 	 * Returns a {@link List} of all the <code>OSMNode</code>.
 	 * 
-	 * @return the field <code>nodes</code> of the <code>OSMWay</code>.
+	 * @return the field <code>nodes</code> of the <code>OSMWay</code>
 	 */
 	public List<OSMNode> nodes() {
 		return nodes;
@@ -68,7 +68,7 @@ public final class OSMWay extends OSMEntity {
 	 * formally it tests if the first <code>OSMNode</code> of <code>nodes</code>
 	 * is the same than the last one with the method equals.
 	 * 
-	 * @return <code>true</code> if the <code>OSMWay</code> is closed.
+	 * @return <code>true</code> if the <code>OSMWay</code> is closed
 	 */
 	public boolean isClosed() {
 		return nodes.get(0).equals(nodes.get(nodes.size() - 1));
@@ -82,7 +82,7 @@ public final class OSMWay extends OSMEntity {
 	 * @return a <code>List</code> of all the <code>OSMNode</code> constituing
 	 *         the <code>OSMWay</code> without repeating two times the same node
 	 *         if the first of the <code>List</code> is the same than the last
-	 *         one.
+	 *         one
 	 */
 	public List<OSMNode> nonRepeatingNodes() {
 		if (isClosed()) {
@@ -96,7 +96,7 @@ public final class OSMWay extends OSMEntity {
 	/**
 	 * Returns the first <code>OSMNode</code> of the field <code>nodes</code>.
 	 * 
-	 * @return the first <code>OSMNode</code> of the field <code>nodes</code>.
+	 * @return the first <code>OSMNode</code> of the field <code>nodes</code>
 	 */
 	public OSMNode firstNode() {
 		return nodes.get(0);
@@ -105,7 +105,7 @@ public final class OSMWay extends OSMEntity {
 	/**
 	 * Returns the last <code>OSMNode</code> of the field <code>nodes</code>.
 	 * 
-	 * @return the last <code>OSMNode</code> of the field <code>nodes</code>.
+	 * @return the last <code>OSMNode</code> of the field <code>nodes</code>
 	 */
 	public OSMNode lastNode() {
 		return nodes.get(nodes.size() - 1);
@@ -125,7 +125,7 @@ public final class OSMWay extends OSMEntity {
 		 * the future <code>OSMWay</code>.
 		 * 
 		 * @param id
-		 *            the future <code>OSMWay</code>'s identification.
+		 *            the future <code>OSMWay</code>'s identification
 		 */
 		public Builder(long id) {
 			super(id);
@@ -135,7 +135,7 @@ public final class OSMWay extends OSMEntity {
 		 * Adds a new <code>OSMNode</code> to <code>nodes</code>.
 		 * 
 		 * @param newNode
-		 *            a future <code>OSMWay</code>'s node.
+		 *            a future <code>OSMWay</code>'s node
 		 */
 		public void addNode(OSMNode newNode) {
 			nodes.add(newNode);
@@ -145,11 +145,11 @@ public final class OSMWay extends OSMEntity {
 		 * Constructs a new <code>OSMWay</code> instance using the data provided
 		 * by the <code>OSMWay.Builder</code>.
 		 * 
-		 * @return the new <code>OSMWay</code>.
+		 * @return the new <code>OSMWay</code>
 		 * 
 		 * @throws IllegalStateException
 		 *             if the <code>OSMWay</code> is not complete (
-		 *             <code>incomplete = true</code>).
+		 *             <code>incomplete = true</code>)
 		 */
 		public OSMWay build() throws IllegalStateException {
 			if (incomplete) {
