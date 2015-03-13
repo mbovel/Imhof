@@ -1,7 +1,13 @@
 package ch.epfl.imhof.osm;
 
-import org.junit.Test;
+import java.util.ArrayList;
 
-public class OSMRelationTest {
+import ch.epfl.imhof.Attributes;
 
+public class OSMRelationTest extends OSMEntityTest {
+    @Override
+    public OSMEntity newEntity(long id, Attributes attributes) {
+        return new OSMRelation(id, new ArrayList<OSMRelation.Member>(),
+                attributes);
+    }
 }
