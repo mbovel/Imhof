@@ -60,14 +60,14 @@ public final class PointGeo {
      * @return point's longitude
      */
     public double longitude() {
-        return longitude;
+        return this.longitude;
     }
 
     /**
      * @return point's latitude
      */
     public double latitude() {
-        return latitude;
+        return this.latitude;
     }
 
 }

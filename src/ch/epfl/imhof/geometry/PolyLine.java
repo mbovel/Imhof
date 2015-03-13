@@ -73,7 +73,7 @@ public abstract class PolyLine {
         private List<Point> points;
 
         /**
-         * Construct a new empty an empty {@link PolyLine} builder.
+         * Construct a new empty {@link PolyLine} builder.
          */
         public Builder() {
             this.points = new ArrayList<Point>();
