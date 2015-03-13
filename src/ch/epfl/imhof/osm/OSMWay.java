@@ -1,5 +1,6 @@
 package ch.epfl.imhof.osm;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public final class OSMWay extends OSMEntity {
 			throw new IllegalArgumentException(
 					"nodes must contain at least two ellements");
 		}
-		this.nodes = Collections.unmodifiableList(nodes);
+		this.nodes = Collections.unmodifiableList(new ArrayList<OSMNode>(nodes));
 
 	}
 
