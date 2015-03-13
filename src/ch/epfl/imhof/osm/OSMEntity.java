@@ -22,9 +22,18 @@ public abstract class OSMEntity {
      *            unique open street map id of the <code>OSMEntity</code>
      * @param attributes
      *            attributes of the <code>OSMEntity</code>
+     * @throws IllegalArgumentException
+     *             if id is negative or non null
      */
-    public OSMEntity(long id, Attributes attributes) {
+    public OSMEntity(long id, Attributes attributes)
+            throws IllegalArgumentException {
         this.attributes = attributes;
+
+        if (id < 1) {
+            throw new IllegalArgumentException(
+                    "id must be a positive non null integer");
+        }
+        
         this.id = id;
     }
 
