@@ -14,7 +14,6 @@ import ch.epfl.imhof.Attributes;
  *
  */
 public final class OSMWay extends OSMEntity {
-
 	private final List<OSMNode> nodes;
 
 	/**
@@ -34,14 +33,14 @@ public final class OSMWay extends OSMEntity {
 	 */
 	public OSMWay(long id, List<OSMNode> nodes, Attributes attributes)
 			throws IllegalArgumentException {
-
 		super(id, attributes);
+		
 		if (nodes.size() < 2) {
 			throw new IllegalArgumentException(
 					"nodes must contain at least two ellements");
 		}
+		
 		this.nodes = Collections.unmodifiableList(new ArrayList<OSMNode>(nodes));
-
 	}
 
 	/**
