@@ -4,7 +4,7 @@ import ch.epfl.imhof.Attributes;
 
 /**
  * Abstract class to represent an open street map entity.
- * 
+ * <p>
  * An open street map entity has a unique id (<code>long</code>) and some
  * attributes ({@link Attributes}).
  * 

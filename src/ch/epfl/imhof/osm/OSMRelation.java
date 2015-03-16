@@ -8,7 +8,7 @@ import ch.epfl.imhof.Attributes;
 
 /**
  * Represents an open street map relation.
- * 
+ * <p>
  * An open street map relation is a group of other open street map nodes,
  * relations or ways, with an id and some attributes.
  * 

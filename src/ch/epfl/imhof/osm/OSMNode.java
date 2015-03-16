@@ -4,8 +4,8 @@ import ch.epfl.imhof.*;
 
 /**
  * Represents an open street map node.
- * 
- * An open street map node has with a unique id (<code>long</code>), a position
+ * <p>
+ * An open street map node has a unique id (<code>long</code>), a position
  * ({@link PointGeo}) and some attributes ({@link Attributes}).
  * 
  * @author Matteo Besançon (245826)
