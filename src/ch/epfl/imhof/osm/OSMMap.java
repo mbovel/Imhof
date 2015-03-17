@@ -25,6 +25,37 @@ public final class OSMMap {
 	}
 	
 	public static class Builder{
+		private List<OSMWay> ways;
+		private List<OSMRelation> relations;
+		private List<OSMNode> nodes;
 		
+		
+		public void addNode (OSMNode newnode){
+			nodes.add(newnode);
+		}
+		
+		public OSMNode nodeForId (long id){
+			
+		}
+		
+		public void addWay (OSMWay newWay){
+			ways.add(newWay);
+		}
+		
+		public OSMWay wayForId (long id){
+			
+		}
+		
+		public void addRelation (OSMRelation newrelation){
+			relations.add(newrelation);
+		}
+		
+		public OSMRelation relatiuonForId (long id){
+			
+		}
+		
+		public OSMMap build(){
+			
+		}
 	}
 }
