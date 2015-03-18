@@ -29,13 +29,17 @@ public final class OSMMap {
 		private List<OSMRelation> relations;
 		private List<OSMNode> nodes;
 		
-		
 		public void addNode (OSMNode newnode){
 			nodes.add(newnode);
 		}
 		
 		public OSMNode nodeForId (long id){
-			
+			for (OSMNode osmNode : nodes) {
+				if (id == osmNode.id()){
+					return osmNode;
+				}
+			}
+			return null;
 		}
 		
 		public void addWay (OSMWay newWay){
@@ -43,7 +47,12 @@ public final class OSMMap {
 		}
 		
 		public OSMWay wayForId (long id){
-			
+			for (OSMWay osmWay : ways) {
+				if (id == osmWay.id()){
+					return osmWay;
+				}
+			}
+			return null;
 		}
 		
 		public void addRelation (OSMRelation newrelation){
@@ -51,11 +60,16 @@ public final class OSMMap {
 		}
 		
 		public OSMRelation relatiuonForId (long id){
-			
+			for (OSMRelation osmRelation : relations){
+				if (id == osmRelation.id()){
+					return osmRelation;
+				}
+			}
+			return null;
 		}
 		
 		public OSMMap build(){
-			
+			return new OSMMap(this.ways, this.relations);
 		}
 	}
 }
