@@ -63,7 +63,7 @@ public final class OSMNode extends OSMEntity {
         }
 
         /**
-         * Constructs a new <code>OSMNode</code> instance using the data
+         * Constructs a new <code>OSMNode</code> instance using the datas
          * provided by the <code>OSMNode.Builder</code>.
          * 
          * @return the new <code>OSMNode</code>

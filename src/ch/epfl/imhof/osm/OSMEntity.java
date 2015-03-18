@@ -98,7 +98,7 @@ public abstract class OSMEntity {
          * of the future <code>OSMEntity</code>.
          * 
          * @param id
-         *            the futuree <code>OSMEntity</code>'s identification
+         *            the future <code>OSMEntity</code>'s identification
          */
         public Builder(long id) {
             this.id = id;
