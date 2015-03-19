@@ -21,7 +21,7 @@ public final class OSMMapReader {
 	private OSMMapReader() {
 	}
 	
-	public static} OSMMAp readOSMFile(String fileName, boolean unGZip) throws IOException, SAXException{
+	public static OSMMAp readOSMFile(String fileName, boolean unGZip) throws IOException, SAXException{
 		OSMMap.Builder mapBuilder = new OSMMap.Builder();
 		
 		try (InputStream i = new FileInputStream(fileName)) {
