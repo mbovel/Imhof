@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="CGImap 0.3.3 (11716 thorn-01.openstreetmap.org)"
+	copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright"
+	license="http://opendatacommons.org/licenses/odbl/1-0/">
+	<bounds minlat="46.2916800" minlon="6.9857800" maxlat="46.2935300"
+		maxlon="6.9919600" />
+	<node id="256186062" visible="true" version="5" changeset="8473503"
+		timestamp="2011-06-18T13:46:34Z" user="hromain" uid="39569" lat="46.2882902"
+		lon="6.9874716" />
+</osm>

@@ -28,10 +28,9 @@ public final class OSMMap {
      *            {@link OSMRelation}).
      */
     public OSMMap(Collection<OSMWay> ways, Collection<OSMRelation> relations) {
-        this.ways = Collections.unmodifiableList(new ArrayList<OSMWay>(
-                ways));
-        this.relations = Collections.unmodifiableList(new ArrayList<OSMRelation>(
-                relations));
+        this.ways = Collections.unmodifiableList(new ArrayList<OSMWay>(ways));
+        this.relations = Collections
+                .unmodifiableList(new ArrayList<OSMRelation>(relations));
     }
 
     /**
@@ -61,7 +60,7 @@ public final class OSMMap {
     public static class Builder {
         private List<OSMWay> ways;
         private List<OSMRelation> relations;
-        private List<OSMNode> nodes;
+        private List<OSMNode> nodes = new ArrayList<OSMNode>();
 
         /**
          * Adds a new node to the future <code>OSMMap</code>.
@@ -87,6 +86,7 @@ public final class OSMMap {
          */
         public OSMNode nodeForId(long id) {
             for (OSMNode osmNode : nodes) {
+                System.out.println(id);
                 if (id == osmNode.id()) {
                     return osmNode;
                 }
