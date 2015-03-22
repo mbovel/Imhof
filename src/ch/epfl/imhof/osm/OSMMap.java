@@ -58,9 +58,9 @@ public final class OSMMap {
      *
      */
     public static class Builder {
-        private List<OSMWay> ways;
-        private List<OSMRelation> relations;
         private List<OSMNode> nodes = new ArrayList<OSMNode>();
+        private List<OSMWay> ways = new ArrayList<OSMWay>();
+        private List<OSMRelation> relations = new ArrayList<OSMRelation>();
 
         /**
          * Adds a new node to the future <code>OSMMap</code>.
@@ -86,7 +86,6 @@ public final class OSMMap {
          */
         public OSMNode nodeForId(long id) {
             for (OSMNode osmNode : nodes) {
-                System.out.println(id);
                 if (id == osmNode.id()) {
                     return osmNode;
                 }
@@ -147,7 +146,7 @@ public final class OSMMap {
          *         identification or <code>null</code> if no relation
          *         corresponds to the given id.
          */
-        public OSMRelation relatiuonForId(long id) {
+        public OSMRelation relationForId(long id) {
             for (OSMRelation osmRelation : relations) {
                 if (id == osmRelation.id()) {
                     return osmRelation;

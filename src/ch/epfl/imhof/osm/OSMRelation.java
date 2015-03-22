@@ -121,7 +121,7 @@ public final class OSMRelation extends OSMEntity {
      *
      */
     public final static class Builder extends OSMEntity.Builder {
-        private List<Member> members;
+        private List<Member> members = new ArrayList<Member>();
 
         /**
          * Constructs an <code>OSMRelation.Builder</code> with the
@@ -146,6 +146,11 @@ public final class OSMRelation extends OSMEntity {
          */
         public void addMember(Member.Type type, String role, OSMEntity newMember) {
             members.add(new Member(type, role, newMember));
+        }
+        
+        // Doc to do
+        public void addMember(Member member) {
+            members.add(member);
         }
 
         /**

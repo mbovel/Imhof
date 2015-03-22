@@ -121,7 +121,7 @@ public final class OSMWay extends OSMEntity {
      *
      */
     public final static class Builder extends OSMEntity.Builder {
-        private List<OSMNode> nodes;
+        private List<OSMNode> nodes = new ArrayList<OSMNode>();
 
         /**
          * Constructs an <code>OSMWay.Builder</code> with the <code>id</code> of
@@ -160,6 +160,15 @@ public final class OSMWay extends OSMEntity {
                         "The OSMWay is not complete yet.");
             }
             return new OSMWay(this.id, this.nodes, this.attributes.build());
+        }
+        
+        /*
+         * TODO doc
+         * 
+         * @see ch.epfl.imhof.osm.OSMEntity.Builder#isIncomplete()
+         */
+        public boolean isIncomplete() {
+            return incomplete || this.nodes.size() < 2;
         }
     }
 }
