@@ -21,14 +21,14 @@ public final class Graph<N> {
         return this.neighbors.get(n);
     }
     
-    public class Builder {
+    public static class Builder<N> {
         private Map<N, Set<N>> neighbors;
         
-        void addNode(N n) {
+        public void addNode(N n) {
             this.neighbors.put(n, new HashSet<N>());
         }
         
-        void addEdge(N n1, N n2) throws IllegalArgumentException{
+        public void addEdge(N n1, N n2) throws IllegalArgumentException{
             if(!this.neighbors.containsKey(n1)) {
                 throw new IllegalArgumentException("n1 should first be added with #addNode(N n)");
             }
@@ -41,7 +41,7 @@ public final class Graph<N> {
             this.neighbors.get(n2).add(n1);
         }
         
-        Graph<N> build() {
+        public Graph<N> build() {
             return new Graph<N>(this.neighbors);
         }
     }
