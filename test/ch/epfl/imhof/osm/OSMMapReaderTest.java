@@ -11,11 +11,16 @@ import org.xml.sax.SAXException;
 
 public class OSMMapReaderTest {
     private static final double DELTA = 0.000001;
-    private static final String LAUSANNE_FILE = "test/data/big/lausanne.osm";
     private static final String NODE_OK_FILE = "test/data/node_ok.osm";
     private static final String NODE_MISSING_ID_FILE = "test/data/node_missing_id.osm";
     private static final String WAY_OK_FILE = "test/data/way_ok.osm";
     private static final String RELATION_OK_FILE = "test/data/relation_ok.osm";
+    private static final String LAUSANNE_FILE = "test/data/big/lausanne.osm";
+    private static final String LAUSANNE_GZ_FILE = "test/data/big/lausanne.osm.gz";
+    private static final String BERNE_FILE = "test/data/big/berne.osm";
+    private static final String BERNE_GZ_FILE = "test/data/big/berne.osm.gz";
+    private static final String INTERLAKEN_FILE = "test/data/big/interlaken.osm";
+    private static final String INTERLAKEN_GZ_FILE = "test/data/big/interlaken.osm.gz";
 
     private static void checkNode(OSMNode node, long id, double latDeg,
             double lonDeg) {
@@ -79,5 +84,35 @@ public class OSMMapReaderTest {
         // http://stackoverflow.com/a/1816676
         assumeTrue(new File(LAUSANNE_FILE).isFile());
         OSMMapReader.readOSMFileToBuilder(LAUSANNE_FILE, false);
+    }
+
+    @Test
+    public void lausanneGzIsCorrectlyParsed() throws IOException, SAXException {
+        assumeTrue(new File(LAUSANNE_GZ_FILE).isFile());
+        OSMMapReader.readOSMFileToBuilder(LAUSANNE_GZ_FILE, true);
+    }
+
+    @Test
+    public void berneIsCorrectlyParsed() throws IOException, SAXException {
+        assumeTrue(new File(BERNE_FILE).isFile());
+        OSMMapReader.readOSMFileToBuilder(BERNE_FILE, false);
+    }
+
+    @Test
+    public void berneGzIsCorrectlyParsed() throws IOException, SAXException {
+        assumeTrue(new File(BERNE_GZ_FILE).isFile());
+        OSMMapReader.readOSMFileToBuilder(BERNE_GZ_FILE, true);
+    }
+
+    @Test
+    public void interlakIsCorrectlyParsed() throws IOException, SAXException {
+        assumeTrue(new File(INTERLAKEN_FILE).isFile());
+        OSMMapReader.readOSMFileToBuilder(INTERLAKEN_FILE, false);
+    }
+
+    @Test
+    public void interlakGzIsCorrectlyParsed() throws IOException, SAXException {
+        assumeTrue(new File(INTERLAKEN_GZ_FILE).isFile());
+        OSMMapReader.readOSMFileToBuilder(INTERLAKEN_GZ_FILE, true);
     }
 }
