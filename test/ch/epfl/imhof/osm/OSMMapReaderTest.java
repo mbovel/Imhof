@@ -71,6 +71,8 @@ public class OSMMapReaderTest {
 
     @Test
     public void lausanneIsCorrectlyParsed() throws IOException, SAXException {
+        // Conditionally ignoring tests in JUnit 4
+        // http://stackoverflow.com/a/1689309
         // Class Assume
         // http://junit.sourceforge.net/javadoc/org/junit/Assume.html
         // How do I check if a file exists in Java?
