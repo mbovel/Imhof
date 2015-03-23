@@ -51,7 +51,7 @@ public final class OSMMapReader {
         private State state = State.IN_ROOT;
         private OSMMap.Builder mapBuilder = new OSMMap.Builder();
         OSMNode.Builder nodeBuilder;
-        OSMRelation.Builder relationBuilder;
+        OSMRelation.Builder relBuilder;
         OSMWay.Builder wayBuilder;
         private Attributes currentAtts;
         private String currentEl;
@@ -76,14 +76,13 @@ public final class OSMMapReader {
                 switch (currentEl) {
                 case "node":
                     nodeBuilder = parseNodeEl();
-                    mapBuilder.addNode(nodeBuilder.build());
                     break;
                 case "way":
                     wayBuilder = parseWayEl();
                     this.state = State.IN_WAY;
                     break;
                 case "relation":
-                    relationBuilder = parseRelationEl();
+                    relBuilder = parseRelationEl();
                     this.state = State.IN_RELATION;
                     break;
                 }
@@ -110,15 +109,15 @@ public final class OSMMapReader {
                 case "member":
                     OSMRelation.Member member = parseMemberEl();
                     if (member == null) {
-                        relationBuilder.setIncomplete();
+                        relBuilder.setIncomplete();
                     }
                     else {
-                        relationBuilder.addMember(member);
+                        relBuilder.addMember(member);
                     }
                     break;
                 case "tag":
                     OSMAttr attr = parseTagEl();
-                    relationBuilder.setAttribute(attr.key(), attr.value());
+                    relBuilder.setAttribute(attr.key(), attr.value());
                     break;
                 }
                 break;
@@ -130,20 +129,22 @@ public final class OSMMapReader {
             currentEl = qName;
             switch (state) {
             case IN_ROOT:
+                if (currentEl.equals("node")) {
+                    mapBuilder.addNode(nodeBuilder.build());
+                }
                 break;
             case IN_WAY:
                 // Incomplete Way is silently ignored
                 if (currentEl.equals("way") && !wayBuilder.isIncomplete()) {
-                    this.mapBuilder.addWay(wayBuilder.build());
-                    this.state = State.IN_ROOT;
+                    mapBuilder.addWay(wayBuilder.build());
+                    state = State.IN_ROOT;
                 }
                 break;
             case IN_RELATION:
                 // Incomplete Relation is silently ignored
-                if (currentEl.equals("relation")
-                        && !relationBuilder.isIncomplete()) {
-                    this.mapBuilder.addRelation(relationBuilder.build());
-                    this.state = State.IN_ROOT;
+                if (currentEl.equals("relation") && !relBuilder.isIncomplete()) {
+                    mapBuilder.addRelation(relBuilder.build());
+                    state = State.IN_ROOT;
                 }
                 break;
             }
