@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Represents an open street map Map.
@@ -54,22 +56,23 @@ public final class OSMMap {
     /**
      * A class that helps in the creation of an {@link OSMMap}.
      * 
+     * @author Matthieu Bovel (250300)
      * @author Matteo Besançon (245826)
      *
      */
     public static class Builder {
-        private List<OSMNode> nodes = new ArrayList<OSMNode>();
-        private List<OSMWay> ways = new ArrayList<OSMWay>();
-        private List<OSMRelation> relations = new ArrayList<OSMRelation>();
+        private Map<Long, OSMNode> nodes = new HashMap<Long, OSMNode>();
+        private Map<Long, OSMWay> ways = new HashMap<Long, OSMWay>();
+        private Map<Long, OSMRelation> relations = new HashMap<Long, OSMRelation>();
 
         /**
          * Adds a new node to the future <code>OSMMap</code>.
          * 
-         * @param newNode
-         *            the future <code>OSMMap</code>'s node.
+         * @param node
+         *            a node to add to the future <code>OSMMap</code>.
          */
-        public void addNode(OSMNode newNode) {
-            nodes.add(newNode);
+        public void addNode(OSMNode node) {
+            nodes.put(node.id(), node);
         }
 
         /**
@@ -85,12 +88,7 @@ public final class OSMMap {
          *         to the given id.
          */
         public OSMNode nodeForId(long id) {
-            for (OSMNode osmNode : nodes) {
-                if (id == osmNode.id()) {
-                    return osmNode;
-                }
-            }
-            return null;
+            return nodes.get(id);
         }
 
         /**
@@ -99,8 +97,8 @@ public final class OSMMap {
          * @param newWay
          *            the future <code>OSMMap</code>'s way.
          */
-        public void addWay(OSMWay newWay) {
-            ways.add(newWay);
+        public void addWay(OSMWay way) {
+            ways.put(way.id(), way);
         }
 
         /**
@@ -116,22 +114,17 @@ public final class OSMMap {
          *         the given id.
          */
         public OSMWay wayForId(long id) {
-            for (OSMWay osmWay : ways) {
-                if (id == osmWay.id()) {
-                    return osmWay;
-                }
-            }
-            return null;
+            return ways.get(id);
         }
 
         /**
          * Adds a new relation to the future <code>OSMMap</code>.
          * 
-         * @param newrelation
+         * @param relation
          *            the future <code>OSMMap</code>'s relation.
          */
-        public void addRelation(OSMRelation newrelation) {
-            relations.add(newrelation);
+        public void addRelation(OSMRelation relation) {
+            relations.put(relation.id(), relation);
         }
 
         /**
@@ -147,12 +140,7 @@ public final class OSMMap {
          *         corresponds to the given id.
          */
         public OSMRelation relationForId(long id) {
-            for (OSMRelation osmRelation : relations) {
-                if (id == osmRelation.id()) {
-                    return osmRelation;
-                }
-            }
-            return null;
+            return relations.get(id);
         }
 
         /**
@@ -162,7 +150,7 @@ public final class OSMMap {
          * @return the new <code>OSMMap</code>.
          */
         public OSMMap build() {
-            return new OSMMap(this.ways, this.relations);
+            return new OSMMap(this.ways.values(), this.relations.values());
         }
     }
 }
