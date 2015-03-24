@@ -22,7 +22,7 @@ public final class Polygon {
      *            a List of {@link ClosedPolyLine ClosedPolyLines} representing
      *            holes in the polygon
      */
-    Polygon(ClosedPolyLine shell, List<ClosedPolyLine> holes) {
+    public Polygon(ClosedPolyLine shell, List<ClosedPolyLine> holes) {
         this.shell = shell;
         this.holes = Collections
                 .unmodifiableList(new ArrayList<ClosedPolyLine>(holes));
@@ -34,7 +34,7 @@ public final class Polygon {
      * @param shell
      *            shell of the polygon
      */
-    Polygon(ClosedPolyLine shell) {
+    public Polygon(ClosedPolyLine shell) {
         this(shell, new ArrayList<ClosedPolyLine>());
     }
 
