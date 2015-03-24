@@ -3,6 +3,8 @@
  */
 package ch.epfl.imhof;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ch.epfl.imhof.geometry.PolyLine;
@@ -12,34 +14,38 @@ import ch.epfl.imhof.geometry.Polygon;
  * @author Matthieu Bovel (250300)
  */
 public final class Map {
-    public Map(List<Attributed<PolyLine>> ls, List<Attributed<Polygon>> ps) {
-        // TODO Auto-generated constructor stub
-    }
+    private final List<Attributed<PolyLine>> polyLines;
+    private final List<Attributed<Polygon>> polygons;
 
-    public List<Attributed<Polygon>> polygons() {
-        // TODO Auto-generated method stub
-        return null;
+    public Map(List<Attributed<PolyLine>> polyLines,
+            List<Attributed<Polygon>> polygons) {
+        this.polyLines = Collections
+                .unmodifiableList(new ArrayList<>(polyLines));
+        this.polygons = Collections.unmodifiableList(new ArrayList<>(polygons));
     }
 
     public List<Attributed<PolyLine>> polyLines() {
-        // TODO Auto-generated method stub
-        return null;
+        return polyLines;
+    }
+
+    public List<Attributed<Polygon>> polygons() {
+        return polygons;
     }
 
     static public class Builder {
-        public void addPolygon(Attributed<Polygon> ap) {
-            // TODO Auto-generated method stub
+        private List<Attributed<PolyLine>> polyLines = new ArrayList<>();
+        private List<Attributed<Polygon>> polygons = new ArrayList<>();
 
+        public void addPolyLine(Attributed<PolyLine> polyLine) {
+            this.polyLines.add(polyLine);
         }
 
-        public void addPolyLine(Attributed<PolyLine> al) {
-            // TODO Auto-generated method stub
-
+        public void addPolygon(Attributed<Polygon> polygon) {
+            this.polygons.add(polygon);
         }
 
         public Map build() {
-            // TODO Auto-generated method stub
-            return null;
+            return new Map(polyLines, polygons);
         }
     }
 }
