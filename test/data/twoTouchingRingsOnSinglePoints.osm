@@ -11,36 +11,30 @@ v<?xml version="1.0" encoding="UTF-8" ?>
 	<node id="5" lat="46.282523" lon="6.990770"/>
 	<node id="6" lat="46.281405" lon="6.987797"/>
 	
+	<node id="7" lat="46.280044" lon="6.987291"/>
+	<node id="8" lat="46.281093" lon="6.989844"/>
 	
-	<!-- outer way 1 -->
+	
+	<!-- outer way  -->
 	<way id="100">
 		<nd ref="1" />
 		<nd ref="2" />
+		<nd ref="3" />
+		<nd ref="7" />
+		<nd ref="6" />
+		<nd ref="1" />
 	</way>
 	
-	<!-- outer way 2 -->
+	<!-- outer way  -->
 	<way id="101">
-		<nd ref="2" />
-		<nd ref="3" />
-	</way>
-	
-	<!-- outer way 3 -->
-	<way id="102">
 		<nd ref="3" />
 		<nd ref="4" />
-	</way>
-	
-	<!-- outer way 4 -->
-	<way id="103">
-		<nd ref="4" />
-		<nd ref="5" />
-	</way>
-	
-	<!-- outer way 5 -->
-	<way id="104">
 		<nd ref="5" />
 		<nd ref="6" />
+		<nd ref="8" />
+		<nd ref="3" />
 	</way>
+	
 	
 	
 	<relation id="1000">
@@ -48,9 +42,6 @@ v<?xml version="1.0" encoding="UTF-8" ?>
   		<tag k="building" v="houseboat" />
   		<member type="way" id="100" role="outer" />
   		<member type="way" id="101" role="outer" />
-  		<member type="way" id="102" role="outer" />
-  		<member type="way" id="103" role="outer" />
-  		<member type="way" id="104" role="outer" />
 	</relation>
 	
 	
