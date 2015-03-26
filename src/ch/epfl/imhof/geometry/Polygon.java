@@ -56,4 +56,26 @@ public final class Polygon {
     public List<ClosedPolyLine> holes() {
         return this.holes;
     }
+    
+    public static final class Builder {
+        private List<ClosedPolyLine> holes;
+        private final ClosedPolyLine shell;
+        
+        public Builder(ClosedPolyLine shell) {
+            this.shell = shell;
+        }
+        
+        public void addHole(ClosedPolyLine hole) {
+            this.holes.add(hole);
+        }
+        
+        public ClosedPolyLine shell() {
+            return shell;
+        }
+
+        public Polygon build() {
+            return new Polygon(shell, holes);
+        }
+        
+    }
 }
