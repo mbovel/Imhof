@@ -58,7 +58,7 @@ public final class Polygon {
     }
     
     public static final class Builder {
-        private List<ClosedPolyLine> holes;
+        private List<ClosedPolyLine> holes = new ArrayList<ClosedPolyLine>();
         private final ClosedPolyLine shell;
         
         public Builder(ClosedPolyLine shell) {
@@ -76,6 +76,5 @@ public final class Polygon {
         public Polygon build() {
             return new Polygon(shell, holes);
         }
-        
     }
 }
