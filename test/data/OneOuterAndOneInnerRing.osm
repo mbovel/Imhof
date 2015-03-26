@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <osm version="0.6">
+	
+	<!-- inner points  -->
 	<node id="1" lat="46.276359" lon="6.982522"/>
 	<node id="2" lat="46.275953" lon="6.982747"/>
 	<node id="3" lat="46.276129" lon="6.983385"/>
 	<node id="4" lat="46.276531" lon="6.983122"/>
 	
+	<!-- outer points  -->
 	<node id="5" lat="46.276685" lon="6.979780"/>
 	<node id="6" lat="46.273352" lon="6.979394"/>
 	<node id="7" lat="46.274772" lon="6.985241"/>
 	<node id="8" lat="46.278053" lon="6.984629"/>
 	
-	
+	<!-- inner way  -->
 	<way id="9">
 		<nd ref="1" />
 		<nd ref="2" />
@@ -18,6 +21,7 @@
 		<nd ref="4" />
 	</way>
 	
+	<!-- outer way  -->
 	<way id="10">
 		<nd ref="5" />
 		<nd ref="6" />
