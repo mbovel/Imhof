@@ -30,7 +30,7 @@ public final class OSMMapReader {
         return mapBuilder.build();
     }
     
-    public static OSMMap.Builder readOSMFileToBuilder(String fileName,
+    private static OSMMap.Builder readOSMFileToBuilder(String fileName,
             boolean unGZip, OSMMap.Builder mapBuilder) throws SAXException,
             IOException {
         InputStream input = new FileInputStream(fileName);
@@ -62,7 +62,7 @@ public final class OSMMapReader {
             this.mapBuilder = mapBuilder;
         }
         
-        public OSMMap.Builder mapBuilder() {
+        protected OSMMap.Builder mapBuilder() {
             return this.mapBuilder;
         }
         
