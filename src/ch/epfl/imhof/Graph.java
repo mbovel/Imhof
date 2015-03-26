@@ -22,7 +22,7 @@ public final class Graph<N> {
     }
     
     public static class Builder<N> {
-        private Map<N, Set<N>> neighbors;
+        private Map<N, Set<N>> neighbors = new HashMap<N, Set<N>>();
         
         public void addNode(N n) {
             this.neighbors.put(n, new HashSet<N>());
