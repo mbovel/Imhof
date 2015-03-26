@@ -13,16 +13,19 @@
 		<nd ref="2" />
 		<nd ref="3" />
 		<nd ref="4" />
+		<nd ref="1" />
 	</way>
 	<way id="10">
 		<nd ref="5" />
 		<nd ref="6" />
 		<nd ref="7" />
 		<nd ref="8" />
+		<nd ref="5" />
 	</way>
 	<relation id="11">
 		<member type="way" ref="9" role="outer" />
 		<member type="way" ref="10" role="inner" />
+		<tag k="building" v="house" /><!-- kind of a strange house, I know... -->
 		<tag k="type" v="multipolygon" />
 	</relation>
 </osm>
