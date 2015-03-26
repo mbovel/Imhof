@@ -43,14 +43,14 @@ public final class Attributed<T> {
     }
 
     public String attributeValue(String attributeName) {
-        return this.attributeValue(attributeName);
+        return this.attributes.get(attributeName);
     }
 
     public String attributeValue(String attributeName, String defaultValue) {
-        return this.attributeValue(attributeName, defaultValue);
+        return this.attributes.get(attributeName, defaultValue);
     }
 
     public int attributeValue(String attributeName, int defaultValue) {
-        return this.attributeValue(attributeName, defaultValue);
+        return this.attributes.get(attributeName, defaultValue);
     }
 }
