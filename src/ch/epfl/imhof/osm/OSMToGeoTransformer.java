@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ch.epfl.imhof.osm;
 
 import java.util.ArrayList;
@@ -9,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import ch.epfl.imhof.Attributed;
 import ch.epfl.imhof.Attributes;
@@ -63,7 +59,7 @@ public final class OSMToGeoTransformer {
         return mapBuilder.build();
     }
     
-    public void transformWay(OSMWay way, Map.Builder mapBuilder) {
+    private void transformWay(OSMWay way, Map.Builder mapBuilder) {
         boolean isClosed = way.isClosed();
         Attributes atts;
         List<Point> points;
@@ -120,27 +116,25 @@ public final class OSMToGeoTransformer {
         return !way.attributes().keepOnlyKeys(surfaceAtts).isEmpty();
     }
     
-    public void transformRel(OSMRelation rel, Map.Builder mapBuilder) {
+    private void transformRel(OSMRelation rel, Map.Builder mapBuilder) {
         // Conversion of multipolygons
         // http://cs108.epfl.ch/p06_osm-to-geo.html#sec-1-2
         // Relation:multipolygon
-        // http://wiki.openstreetmap.org/wiki/Relation:multipolygon
-        
-        // Ways in the relation are selected.
-        Stream<OSMWay> ways = rel.members()
-                .stream()
-                .filter(member -> member.type() == OSMRelation.Member.Type.WAY)
-                .map(member -> (OSMWay) member.member());
+        // http://wiki.openstreetmap.org/wiki/Relation:multipolygons
         
         // 1. Ways are separated in two sets depending on their role.
-        Stream<OSMWay> innerWays = filterByRole(ways, "inner");
-        Stream<OSMWay> outerWays = filterByRole(ways, "outer");
+        List<OSMWay> innerWays = getWaysByRole(rel, "inner");
+        List<OSMWay> outerWays = getWaysByRole(rel, "outer");
         
         // 2. Ways in each of these sets are grouped depending on their first
         // and last nodes to make PolyLines that we'll call "rings". Outer rings
         // are sorted by area.
         List<ClosedPolyLine> innerRings = makeRings(innerWays);
         List<ClosedPolyLine> outerRings = sortByArea(makeRings(outerWays));
+        
+        System.out.println(innerRings.size());
+        System.out.println(outerRings.size());
+        
         
         // Return if there is no outer ring
         if (outerRings.isEmpty()) {
@@ -173,8 +167,13 @@ public final class OSMToGeoTransformer {
         });
     }
     
-    private static Stream<OSMWay> filterByRole(Stream<OSMWay> ways, String role) {
-        return ways.filter(way -> way.attributeValue("role") == role);
+    private static List<OSMWay> getWaysByRole(OSMRelation rel, String role) {
+        return rel.members()
+                .stream()
+                .filter(member -> member.type() == OSMRelation.Member.Type.WAY)
+                .filter(member -> member.role().equals(role))
+                .map(member -> (OSMWay) member.member())
+                .collect(Collectors.toList());
     }
     
     private static List<ClosedPolyLine> sortByArea(List<ClosedPolyLine> list) {
@@ -182,9 +181,9 @@ public final class OSMToGeoTransformer {
         return list;
     }
     
-    private List<ClosedPolyLine> makeRings(Stream<OSMWay> ways) {
+    private List<ClosedPolyLine> makeRings(List<OSMWay> ways) {
         Graph<OSMNode> graph = makeGraphFromWays(ways);
-        Set<OSMNode> toDo = graph.nodes();
+        Set<OSMNode> toDo = new HashSet<OSMNode>(graph.nodes());
         List<ClosedPolyLine> polyLines = new ArrayList<ClosedPolyLine>();
         
         while (!toDo.isEmpty()) {
@@ -198,18 +197,22 @@ public final class OSMToGeoTransformer {
         return polyLines;
     }
     
-    private static Graph<OSMNode> makeGraphFromWays(Stream<OSMWay> ways) {
+    private static Graph<OSMNode> makeGraphFromWays(List<OSMWay> ways) {
         Graph.Builder<OSMNode> graphBuilder = new Graph.Builder<OSMNode>();
         
-        ways.forEach(way -> {
-            OSMNode last = way.nodes().get(way.nodes().size() - 1);
+        for (OSMWay way : ways) {
+            OSMNode prevNode = null;
             
-            way.nodes().stream().reduce(last, (current, prev) -> {
-                graphBuilder.addNode(current);
-                graphBuilder.addEdge(prev, current);
-                return current;
-            });
-        });
+            for (OSMNode node : way.nodes()) {
+                graphBuilder.addNode(node);
+                
+                if (prevNode != null) {
+                    graphBuilder.addEdge(prevNode, node);
+                }
+                
+                prevNode = node;
+            }
+        }
         
         return graphBuilder.build();
     }
@@ -247,13 +250,13 @@ public final class OSMToGeoTransformer {
         return s.iterator().next();
     }
     
-    public List<Point> transformNodes(List<OSMNode> nodes) {
+    private List<Point> transformNodes(List<OSMNode> nodes) {
         return nodes.stream()
                 .map(node -> transformNode(node))
                 .collect(Collectors.toList());
     }
     
-    public Point transformNode(OSMNode node) {
+    private Point transformNode(OSMNode node) {
         return projection.project(node.position());
     }
 }
