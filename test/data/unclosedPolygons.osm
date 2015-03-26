@@ -1,0 +1,57 @@
+v<?xml version="1.0" encoding="UTF-8" ?>
+<osm version="0.6">
+	
+	<!-- inner points -->
+	<node id="1" lat="46.280451" lon="6.985277"/>
+	<node id="2" lat="46.278534" lon="6.985985"/>
+	
+	<node id="3" lat="46.279585" lon="6.988763"/>
+	<node id="4" lat="46.280710" lon="6.991435"/>
+	
+	<node id="5" lat="46.282523" lon="6.990770"/>
+	<node id="6" lat="46.281405" lon="6.987797"/>
+	
+	
+	<!-- outer way 1 -->
+	<way id="100">
+		<nd ref="1" />
+		<nd ref="2" />
+	</way>
+	
+	<!-- outer way 2 -->
+	<way id="101">
+		<nd ref="2" />
+		<nd ref="3" />
+	</way>
+	
+	<!-- outer way 3 -->
+	<way id="102">
+		<nd ref="3" />
+		<nd ref="4" />
+	</way>
+	
+	<!-- outer way 4 -->
+	<way id="103">
+		<nd ref="4" />
+		<nd ref="5" />
+	</way>
+	
+	<!-- outer way 5 -->
+	<way id="104">
+		<nd ref="5" />
+		<nd ref="6" />
+	</way>
+	
+	
+	<relation id="1000">
+  		<tag k="type" v="multipolygon" />
+  		<tag k="building" v="houseboat" />
+  		<member type="way" id="100" role="outer" />
+  		<member type="way" id="101" role="outer" />
+  		<member type="way" id="102" role="outer" />
+  		<member type="way" id="103" role="outer" />
+  		<member type="way" id="104" role="outer" />
+	</relation>
+	
+	
+</osm>
