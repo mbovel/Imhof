@@ -1,6 +1,6 @@
 package ch.epfl.imhof.osm;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.junit.Assume.assumeTrue;
 
 import java.io.File;
@@ -12,46 +12,46 @@ import org.xml.sax.SAXException;
 public class OSMMapReaderTest {
     private static final double DELTA = 0.000001;
     
-    @Test
-    public void nodeIsCorrectlyParsed() throws IOException, SAXException {
-        final OSMMap.Builder mapBuilder = readOSMFileToBuilder("test/data/node_ok.osm");
-        checkNode(mapBuilder.nodeForId(1), 1, 47.0, 7.0);
-    }
-    
-    @Test(expected = OSMMissingAttributeException.class)
-    public void missingIDThrowsException() throws IOException, SAXException {
-        readOSMFile("test/data/node_missing_id.osm");
-    }
-    
     // Could add missingLonThrowsException
     
     // Could add missingLatThrowsException
     
     @Test
     public void wayIsCorrectlyParsed() throws IOException, SAXException {
-        final OSMMap.Builder mapBuilder = readOSMFileToBuilder("test/data/way_ok.osm");
+        OSMMap map = readOSMFile("test/data/simpleWay.osm");
+        OSMWay way = map.ways().get(0);
         
-        final OSMWay way = mapBuilder.wayForId(3);
+        assertEquals(3, way.id());
+        assertEquals("unclassified", way.attributeValue("highway"));
         
-        assertEquals(way.id(), 3);
-        assertEquals(way.attributeValue("highway"), "unclassified");
-        
-        checkNode(way.firstNode(), 1, 47.0, 7.0);
-        checkNode(way.lastNode(), 2, 47.0, 6.0);
+        checkNode(way.nodes().get(0), 1, 47.0, 7.0);
+        checkNode(way.nodes().get(1), 2, 47.0, 6.0);
     }
     
     @Test
     public void relationIsCorrectlyParsed() throws IOException, SAXException {
-        final OSMMap.Builder mapBuilder = readOSMFileToBuilder("test/data/relation_ok.osm");
+        OSMMap map = readOSMFile("test/data/simpleRelation.osm");
+        OSMRelation relation = map.relations().get(0);
         
-        final OSMRelation relation = mapBuilder.relationForId(11);
+        assertEquals(11, relation.id());
+        assertEquals("multipolygon", relation.attributeValue("type"));
         
-        assertEquals(relation.id(), 11);
-        assertEquals(relation.attributeValue("type"), "multipolygon");
+        OSMWay way9 = (OSMWay) relation.members().get(0).member();
+        OSMWay way10 = (OSMWay) relation.members().get(1).member();
         
-        final OSMWay aWay = (OSMWay) relation.members().get(0).member();
+        assertTrue(way9.isClosed());
+        assertEquals(9L, way9.id());
+        checkNode(way9.nodes().get(0), 1, 47, 7);
+        checkNode(way9.nodes().get(1), 2, 47, 6);
+        checkNode(way9.nodes().get(2), 3, 46, 6);
+        checkNode(way9.nodes().get(3), 4, 46, 7);
         
-        assertEquals(aWay.id(), 9);
+        assertTrue(way10.isClosed());
+        assertEquals(10L, way10.id());
+        checkNode(way10.nodes().get(0), 5, 46.8, 6.8);
+        checkNode(way10.nodes().get(1), 6, 46.8, 6.2);
+        checkNode(way10.nodes().get(2), 7, 46.2, 6.2);
+        checkNode(way10.nodes().get(3), 8, 46.2, 6.8);
     }
     
     @Test
@@ -84,20 +84,11 @@ public class OSMMapReaderTest {
         readOSMFile("test/data/big/interlaken.osm.gz");
     }
     
-    private static void readOSMFile(final String fileName) throws IOException,
-            SAXException {
-        assumeFileExists(fileName);
-        final boolean unGZip = fileExtension(fileName).equals("gz");
-        OSMMapReader.readOSMFile(fileName, unGZip);
-    }
-    
-    private static OSMMap.Builder readOSMFileToBuilder(final String fileName)
+    protected static OSMMap readOSMFile(final String fileName)
             throws IOException, SAXException {
         assumeFileExists(fileName);
-        final OSMMap.Builder mapBuilder = new OSMMap.Builder();
         final boolean unGZip = fileExtension(fileName).equals("gz");
-        OSMMapReader.readOSMFileToBuilder(fileName, unGZip, mapBuilder);
-        return mapBuilder;
+        return OSMMapReader.readOSMFile(fileName, unGZip);
     }
     
     private static void assumeFileExists(final String fileName) {
@@ -118,8 +109,10 @@ public class OSMMapReaderTest {
     
     private static void checkNode(final OSMNode node, final long id,
             final double latDeg, final double lonDeg) {
-        assertEquals(node.id(), id);
-        assertEquals(node.position().latitude(), Math.toRadians(latDeg), DELTA);
-        assertEquals(node.position().longitude(), Math.toRadians(lonDeg), DELTA);
+        assertEquals("check node's id", id, node.id());
+        assertEquals("check nodes's latitude", Math.toRadians(latDeg),
+            node.position().latitude(), DELTA);
+        assertEquals("check node's longitude", Math.toRadians(lonDeg),
+            node.position().longitude(), DELTA);
     }
 }
