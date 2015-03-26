@@ -20,6 +20,7 @@
 		<nd ref="6" />
 		<nd ref="7" />
 		<nd ref="8" />
+		<nd ref="5" />
 	</way>
 	
 	<!-- outer way 2 -->
@@ -28,6 +29,7 @@
 		<nd ref="10" />
 		<nd ref="11" />
 		<nd ref="12" />
+		<nd ref="9" />
 	</way>
 	
 	<relation id="1000">

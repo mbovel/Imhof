@@ -19,12 +19,14 @@
 	<way id="100">
 		<nd ref="1" />
 		<nd ref="2" />
+		<nd ref="3" />
 	</way>
 	
 	<!-- outer way 2 -->
 	<way id="101">
 		<nd ref="3" />
 		<nd ref="4" />
+		<nd ref="1" />
 	</way>
 	
 	<!-- inner way 1 -->
@@ -33,6 +35,7 @@
 		<nd ref="6" />
 		<nd ref="7" />
 		<nd ref="8" />
+		<nd ref="5" />
 	</way>
 	
 	

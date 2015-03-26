@@ -24,6 +24,8 @@ v<?xml version="1.0" encoding="UTF-8" ?>
 		<nd ref="2" />
 		<nd ref="3" />
 		<nd ref="4" />
+		<nd ref="1" />
+		
 	</way>
 	
 	<!-- inner way 1 -->
@@ -32,6 +34,7 @@ v<?xml version="1.0" encoding="UTF-8" ?>
 		<nd ref="6" />
 		<nd ref="7" />
 		<nd ref="10" />
+		<nd ref="5" />
 	</way>
 	
 	<!-- inner way 2 -->
@@ -40,6 +43,7 @@ v<?xml version="1.0" encoding="UTF-8" ?>
 		<nd ref="8" />
 		<nd ref="9" />
 		<nd ref="10" />
+		<nd ref="7" />
 	</way>
 	
 	
