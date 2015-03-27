@@ -1,8 +1,8 @@
 package ch.epfl.imhof;
 
 import java.util.Collections;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public final class Attributes {
     private final Map<String, String> attributes;
-
+    
     /**
      * Constructs a new <code>Attributes</code> object from a
      * <code>Map<String, String></code>.
@@ -22,10 +22,9 @@ public final class Attributes {
      * @param attributes
      */
     public Attributes(Map<String, String> attributes) {
-        this.attributes = Collections
-                .unmodifiableMap(new HashMap<>(attributes));
+        this.attributes = Collections.unmodifiableMap(new HashMap<>(attributes));
     }
-
+    
     /**
      * Returns <code>true</code> if this set of attributes contains no
      * attributes.
@@ -34,9 +33,9 @@ public final class Attributes {
      *         attributes.
      */
     public Boolean isEmpty() {
-        return this.attributes.isEmpty();
+        return attributes.isEmpty();
     }
-
+    
     /**
      * Returns <code>true</code> if this set of attributes contains the
      * specified attribute key.
@@ -47,9 +46,9 @@ public final class Attributes {
      *         specified attribute key
      */
     public Boolean contains(String key) {
-        return this.attributes.containsKey(key);
+        return attributes.containsKey(key);
     }
-
+    
     /**
      * Returns the value of the specified attribute key, specified as a string,
      * or null if the attribute was not found.
@@ -60,9 +59,9 @@ public final class Attributes {
      *         <code>null</code> if not found
      */
     public String get(String key) {
-        return this.attributes.get(key);
+        return attributes.get(key);
     }
-
+    
     /**
      * Returns the string value to which the specified key is mapped, or
      * <code>defaultValue</code> if this map contains no mapping for the given
@@ -77,9 +76,9 @@ public final class Attributes {
      *         to the given key
      */
     public String get(String key, String defaultValue) {
-        return this.attributes.getOrDefault(key, defaultValue);
+        return attributes.getOrDefault(key, defaultValue);
     }
-
+    
     /**
      * Returns the integer value to which the specified key is mapped, or
      * <code>defaultValue</code> if this map contains no mapping for the given
@@ -94,21 +93,22 @@ public final class Attributes {
      *         mapped to the given key.
      */
     public int get(String key, int defaultValue) {
-        if (!this.attributes.containsKey(key))
+        if (!attributes.containsKey(key)) {
             return defaultValue;
-
+        }
+        
         int i;
-
+        
         try {
-            i = Integer.parseInt(this.attributes.get(key));
+            i = Integer.parseInt(attributes.get(key));
         }
         catch (NumberFormatException e) {
             return defaultValue;
         }
-
+        
         return i;
     }
-
+    
     /**
      * Constructs a new <code>Attributes</code> object from this one containing
      * only the attributes whose key are in <code>keys</code>.
@@ -120,14 +120,16 @@ public final class Attributes {
      */
     public Attributes keepOnlyKeys(Set<String> keysToKeep) {
         Builder builder = new Builder();
-
+        
         for (String key : keysToKeep) {
-            builder.put(key, this.attributes.get(key));
+            if (attributes.containsKey(key)) {
+                builder.put(key, attributes.get(key));
+            }
         }
-
+        
         return builder.build();
     }
-
+    
     /**
      * Class that helps in the construction of {@link Attributes}.
      * 
@@ -135,8 +137,8 @@ public final class Attributes {
      *
      */
     public static class Builder {
-        private Map<String, String> attributes = new HashMap<String, String>();
-
+        private final Map<String, String> attributes = new HashMap<String, String>();
+        
         /**
          * Adds an attribute (<code>key</code>/<code>value</code> strings) to
          * the future {@link Attributes} object.
@@ -147,10 +149,10 @@ public final class Attributes {
          *            attribute's value
          */
         public Builder put(String key, String value) {
-            this.attributes.put(key, value);
+            attributes.put(key, value);
             return this;
         }
-
+        
         /**
          * Constructs a new <code>Attributes</code> instance using data provided
          * with {@link #put}.
@@ -158,7 +160,7 @@ public final class Attributes {
          * @return the new <code>Attributes</code>.
          */
         public Attributes build() {
-            return new Attributes(this.attributes);
+            return new Attributes(attributes);
         }
     }
 }
