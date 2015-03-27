@@ -63,7 +63,7 @@ public final class OSMMapReader {
         }
         
         protected OSMMap.Builder mapBuilder() {
-            return this.mapBuilder;
+            return mapBuilder;
         }
         
         @Override
@@ -82,14 +82,15 @@ public final class OSMMapReader {
                     switch (currentEl) {
                         case "node":
                             nodeBuilder = parseNodeEl();
+                            state = State.IN_NODE;
                             break;
                         case "way":
                             wayBuilder = parseWayEl();
-                            this.state = State.IN_WAY;
+                            state = State.IN_WAY;
                             break;
                         case "relation":
                             relBuilder = parseRelationEl();
-                            this.state = State.IN_RELATION;
+                            state = State.IN_RELATION;
                             break;
                     }
                     break;
@@ -255,8 +256,8 @@ public final class OSMMapReader {
         }
         
         private class OSMAttr {
-            private String key;
-            private String value;
+            private final String key;
+            private final String value;
             
             OSMAttr(String key, String value) {
                 this.key = key;
@@ -273,7 +274,7 @@ public final class OSMMapReader {
         }
         
         private enum State {
-            IN_ROOT, IN_WAY, IN_RELATION
+            IN_ROOT, IN_NODE, IN_WAY, IN_RELATION
         };
     }
 }
