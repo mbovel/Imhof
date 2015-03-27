@@ -144,15 +144,15 @@ public class OSMToGeoTransformerTest {
         }
     }
     
-    private static void printGraph(Graph<OSMNode> g) {
-        System.out.println(g + ":");
-        
-        for (OSMNode node : g.nodes()) {
-            System.out.println("  " + node.id());
-            
-            for (OSMNode neighbor : g.neighborsOf(node)) {
-                System.out.println("    -> " + neighbor.id());
-            }
-        }
-    }
+    // private static void printGraph(Graph<OSMNode> g) {
+    // System.out.println(g + ":");
+    //
+    // for (OSMNode node : g.nodes()) {
+    // System.out.println("  " + node.id());
+    //
+    // for (OSMNode neighbor : g.neighborsOf(node)) {
+    // System.out.println("    -> " + neighbor.id());
+    // }
+    // }
+    // }
 }

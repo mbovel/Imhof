@@ -120,15 +120,15 @@ public class GraphTest {
     
     // TODO builder add doesn't replace
     
-    private static <N> void printGraph(Graph<N> g) {
-        System.out.println(g + ":");
-        
-        for(N node : g.nodes()) {
-            System.out.println("  " + node);
-            
-            for(N neighbor : g.neighborsOf(node)) {
-                System.out.println("    -> " + neighbor);
-            }
-        }
-    }
+//    private static <N> void printGraph(Graph<N> g) {
+//        System.out.println(g + ":");
+//        
+//        for(N node : g.nodes()) {
+//            System.out.println("  " + node);
+//            
+//            for(N neighbor : g.neighborsOf(node)) {
+//                System.out.println("    -> " + neighbor);
+//            }
+//        }
+//    }
 }
