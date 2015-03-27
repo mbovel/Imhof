@@ -141,16 +141,21 @@ public final class OSMMapReader {
                     break;
                 case IN_WAY:
                     // Incomplete Way is silently ignored
-                    if (currentEl.equals("way") && !wayBuilder.isIncomplete()) {
-                        mapBuilder.addWay(wayBuilder.build());
+                    if (currentEl.equals("way")) {
+                        if (!wayBuilder.isIncomplete()) {
+                            mapBuilder.addWay(wayBuilder.build());
+                        }
+                        
                         state = State.IN_ROOT;
                     }
                     break;
                 case IN_RELATION:
                     // Incomplete Relation is silently ignored
-                    if (currentEl.equals("relation")
-                            && !relBuilder.isIncomplete()) {
-                        mapBuilder.addRelation(relBuilder.build());
+                    if (currentEl.equals("relation")) {
+                        if (!relBuilder.isIncomplete()) {
+                            mapBuilder.addRelation(relBuilder.build());
+                        }
+                        
                         state = State.IN_ROOT;
                     }
                     break;
