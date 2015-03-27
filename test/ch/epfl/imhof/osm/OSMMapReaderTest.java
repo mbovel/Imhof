@@ -12,6 +12,11 @@ import org.xml.sax.SAXException;
 public class OSMMapReaderTest {
     private static final double DELTA = 0.000001;
     
+    @Test(expected = OSMMapReader.OSMMissingAttributeException.class)
+    public void missingIDThrowsException() throws IOException, SAXException {
+        readOSMFile("test/data/nodeMissingId.osm");
+    }
+    
     // Could add missingLonThrowsException
     
     // Could add missingLatThrowsException
