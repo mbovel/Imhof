@@ -22,16 +22,7 @@ public final class Attributes {
      * @param attributes
      */
     public Attributes(Map<String, String> attributes) {
-        // This an optimization trick to avoid creating large amounts of
-        // HashMaps for nothing. Not keeping these useless empty HashMaps in
-        // memory make the method OSMMapReader.ReadOSMFile 1.15 times faster.
-        if (attributes.isEmpty()) {
-            this.attributes = null;
-        }
-        else {
-            this.attributes = Collections.unmodifiableMap(new HashMap<>(
-                attributes));
-        }
+        this.attributes = Collections.unmodifiableMap(new HashMap<>(attributes));
     }
     
     /**
@@ -42,10 +33,6 @@ public final class Attributes {
      *         attributes.
      */
     public Boolean isEmpty() {
-        if (attributes == null) {
-            return true;
-        }
-        
         return attributes.isEmpty();
     }
     
@@ -59,10 +46,6 @@ public final class Attributes {
      *         specified attribute key
      */
     public Boolean contains(String key) {
-        if (attributes == null) {
-            return false;
-        }
-        
         return attributes.containsKey(key);
     }
     
@@ -76,10 +59,6 @@ public final class Attributes {
      *         <code>null</code> if not found
      */
     public String get(String key) {
-        if (attributes == null) {
-            return null;
-        }
-        
         return attributes.get(key);
     }
     
@@ -97,10 +76,6 @@ public final class Attributes {
      *         to the given key
      */
     public String get(String key, String defaultValue) {
-        if (attributes == null) {
-            return defaultValue;
-        }
-        
         return attributes.getOrDefault(key, defaultValue);
     }
     
@@ -118,7 +93,7 @@ public final class Attributes {
      *         mapped to the given key.
      */
     public int get(String key, int defaultValue) {
-        if (attributes == null || !attributes.containsKey(key)) {
+        if (!attributes.containsKey(key)) {
             return defaultValue;
         }
         
@@ -144,10 +119,6 @@ public final class Attributes {
      *         with the given keys.
      */
     public Attributes keepOnlyKeys(Set<String> keysToKeep) {
-        if (attributes == null) {
-            return new Attributes(new HashMap<>());
-        }
-        
         Builder builder = new Builder();
         
         for (String key : keysToKeep) {
