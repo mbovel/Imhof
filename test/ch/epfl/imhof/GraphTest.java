@@ -3,7 +3,6 @@ package ch.epfl.imhof;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -119,7 +118,9 @@ public class GraphTest {
         //printGraph(graph);
     }
     
-    protected static <N> void printGraph(Graph<N> g) {
+    // TODO builder add doesn't replace
+    
+    private static <N> void printGraph(Graph<N> g) {
         System.out.println(g + ":");
         
         for(N node : g.nodes()) {
