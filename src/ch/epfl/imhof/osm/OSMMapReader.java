@@ -10,6 +10,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -277,4 +278,15 @@ public final class OSMMapReader {
             IN_ROOT, IN_NODE, IN_WAY, IN_RELATION
         };
     }
+    
+    public static class OSMMissingAttributeException extends SAXParseException {
+        // What is a serialVersionUID and why should I use it?
+        // http://stackoverflow.com/a/285809
+        private static final long serialVersionUID = 1L;
+
+        public OSMMissingAttributeException(String el, String attr, Locator locator) {
+            super("Missing attribute `" + attr + "` on element `" + el +  "`", locator);
+        }
+    }
+
 }
