@@ -50,9 +50,9 @@ public final class OSMMapReader {
     
     static private class XMLHandler extends DefaultHandler {
         private final OSMMap.Builder mapBuilder;
-        OSMNode.Builder              nodeBuilder;
-        OSMRelation.Builder          relBuilder;
-        OSMWay.Builder               wayBuilder;
+        private OSMNode.Builder      nodeBuilder;
+        private OSMRelation.Builder  relBuilder;
+        private OSMWay.Builder       wayBuilder;
         private Locator              locator;
         private Attributes           currentAtts;
         private String               currentEl;
