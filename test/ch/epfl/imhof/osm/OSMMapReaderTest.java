@@ -18,7 +18,7 @@ public class OSMMapReaderTest {
     
     @Test
     public void wayIsCorrectlyParsed() throws IOException, SAXException {
-        OSMMap map = readOSMFile("test/data/simpleWay.osm");
+        OSMMap map = readOSMFile("test/data/simpleOpenWay.osm");
         OSMWay way = map.ways().get(0);
         
         assertEquals(3, way.id());

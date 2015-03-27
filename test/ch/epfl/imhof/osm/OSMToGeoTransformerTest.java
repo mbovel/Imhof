@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import ch.epfl.imhof.Attributed;
 import ch.epfl.imhof.Graph;
 import ch.epfl.imhof.Map;
 import ch.epfl.imhof.geometry.Point;
@@ -25,21 +26,76 @@ public class OSMToGeoTransformerTest {
     private static final double DELTA = 0.000001;
     
     @Test
+    public void worksWithSimpleOpenWay() throws IOException, SAXException {
+        Map map = transform("test/data/simpleOpenWay.osm");
+        
+        assertTrue(map.polygons().isEmpty());
+        
+        Attributed<PolyLine> result = map.polyLines().get(0);
+        
+        checkPolyLine(
+            result.value(),
+            new Point(47.0, 7.0),
+            new Point(47.0, 6.0));
+        
+        assertEquals("unclassified", result.attributeValue("highway"));
+    }
+    
+    /**
+     * @see <a href="http://wiki.openstreetmap.org/wiki/Key:highway">Key:highway, OpenStreetMap Wiki</a>
+     * @throws IOException
+     * @throws SAXException
+     */
+    @Test
+    public void worksWithSimpleClosedWay() throws IOException, SAXException {
+        Map map = transform("test/data/simpleClosedWay.osm");
+        
+        assertTrue(map.polygons().isEmpty());
+        
+        Attributed<PolyLine> result = map.polyLines().get(0);
+        
+        checkPolyLine(
+            result.value(),
+            new Point(47.0, 7.0),
+            new Point(47.0, 6.0));
+        
+        assertEquals("service", result.attributeValue("highway"));
+    }
+    
+    @Test
+    public void worksWithSimpleArea() throws IOException, SAXException {
+        Map map = transform("test/data/simpleArea.osm");
+        
+        assertTrue(map.polyLines().isEmpty());
+        
+        Attributed<Polygon> result = map.polygons().get(0);
+        
+        checkPolyLine(
+            result.value().shell(),
+            new Point(47.0, 7.0),
+            new Point(47.0, 6.0));
+        
+        assertTrue(result.value().holes().isEmpty());
+        
+        assertEquals("park", result.attributeValue("leisure"));
+    }
+    
+    @Test
     public void worksWithSimpleRelation() throws IOException, SAXException {
         Map map = transform("test/data/simpleRelation.osm");
         
         assertTrue(map.polyLines().isEmpty());
         
-        Polygon result = map.polygons().get(0).value();
+        Attributed<Polygon> result = map.polygons().get(0);
         
         checkPolyLine(
-            result.shell(),
+            result.value().shell(),
             new Point(47.0, 7.0),
             new Point(47.0, 6.0),
             new Point(46.0, 6.0),
             new Point(46.0, 7.0));
         
-        PolyLine hole = result.holes().get(0);
+        PolyLine hole = result.value().holes().get(0);
         
         checkPolyLine(
             hole,
@@ -47,6 +103,8 @@ public class OSMToGeoTransformerTest {
             new Point(46.8, 6.2),
             new Point(46.2, 6.2),
             new Point(46.2, 6.8));
+        
+        assertEquals("house", result.attributeValue("building"));
     }
     
     private static Map transform(String path) throws IOException, SAXException {
