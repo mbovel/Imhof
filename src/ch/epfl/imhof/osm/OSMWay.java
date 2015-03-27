@@ -17,7 +17,7 @@ import ch.epfl.imhof.Attributes;
  */
 public final class OSMWay extends OSMEntity {
     private final List<OSMNode> nodes;
-
+    
     /**
      * Construct a new <code>OSMWay</code> given its identification,
      * <code>attributes</code> and <code>nodes</code>.
@@ -36,16 +36,16 @@ public final class OSMWay extends OSMEntity {
     public OSMWay(long id, List<OSMNode> nodes, Attributes attributes)
             throws IllegalArgumentException {
         super(id, attributes);
-
+        
         if (nodes.size() < 2) {
             throw new IllegalArgumentException(
-                    "nodes must contain at least two ellements");
+                "nodes must contain at least two ellements");
         }
-
+        
         this.nodes = Collections
-                .unmodifiableList(new ArrayList<OSMNode>(nodes));
+            .unmodifiableList(new ArrayList<OSMNode>(nodes));
     }
-
+    
     /**
      * Returns the number of nodes in the <code>OSMWay</code> /!\ it will counts
      * two times the first node if the <code>OSMWay</code> is closed.
@@ -56,7 +56,7 @@ public final class OSMWay extends OSMEntity {
     public int nodesCount() {
         return nodes.size();
     }
-
+    
     /**
      * Returns a {@link List} of all the <code>OSMNode</code>.
      * 
@@ -65,7 +65,7 @@ public final class OSMWay extends OSMEntity {
     public List<OSMNode> nodes() {
         return nodes;
     }
-
+    
     /**
      * Returns <code>true</code> if the <code>OSMWay</code> is closed. More
      * formally it tests if the first <code>OSMNode</code> of <code>nodes</code>
@@ -76,7 +76,7 @@ public final class OSMWay extends OSMEntity {
     public boolean isClosed() {
         return nodes.get(0).equals(nodes.get(nodes.size() - 1));
     }
-
+    
     /**
      * Returns a <code>List</code> of all the <code>OSMNode</code> constituing
      * the <code>OSMWay</code> without repeating two times the same node if the
@@ -91,11 +91,11 @@ public final class OSMWay extends OSMEntity {
         if (isClosed()) {
             return nodes.subList(0, nodes.size() - 1);
         }
-
-        else
+        else {
             return nodes;
+        }
     }
-
+    
     /**
      * Returns the first <code>OSMNode</code> of the field <code>nodes</code>.
      * 
@@ -104,7 +104,7 @@ public final class OSMWay extends OSMEntity {
     public OSMNode firstNode() {
         return nodes.get(0);
     }
-
+    
     /**
      * Returns the last <code>OSMNode</code> of the field <code>nodes</code>.
      * 
@@ -113,7 +113,7 @@ public final class OSMWay extends OSMEntity {
     public OSMNode lastNode() {
         return nodes.get(nodes.size() - 1);
     }
-
+    
     /**
      * A Class that helps in the construction of {@link OSMWay}.
      * 
@@ -121,8 +121,8 @@ public final class OSMWay extends OSMEntity {
      *
      */
     public final static class Builder extends OSMEntity.Builder {
-        private List<OSMNode> nodes = new ArrayList<OSMNode>();
-
+        private final List<OSMNode> nodes = new ArrayList<OSMNode>();
+        
         /**
          * Constructs an <code>OSMWay.Builder</code> with the <code>id</code> of
          * the future <code>OSMWay</code>.
@@ -133,7 +133,7 @@ public final class OSMWay extends OSMEntity {
         public Builder(long id) {
             super(id);
         }
-
+        
         /**
          * Adds a new <code>OSMNode</code> to <code>nodes</code>.
          * 
@@ -143,7 +143,7 @@ public final class OSMWay extends OSMEntity {
         public void addNode(OSMNode newNode) {
             nodes.add(newNode);
         }
-
+        
         /**
          * Constructs a new <code>OSMWay</code> instance using the data provided
          * by the <code>OSMWay.Builder</code>.
@@ -154,12 +154,13 @@ public final class OSMWay extends OSMEntity {
          *             if the <code>OSMWay</code> is not complete (
          *             <code>incomplete = true</code>)
          */
+        @Override
         public OSMWay build() throws IllegalStateException {
             if (incomplete) {
                 throw new IllegalStateException(
-                        "The OSMWay is not complete yet.");
+                    "The OSMWay is not complete yet.");
             }
-            return new OSMWay(this.id, this.nodes, this.attributes.build());
+            return new OSMWay(id, nodes, attributes.build());
         }
         
         /*
@@ -167,8 +168,9 @@ public final class OSMWay extends OSMEntity {
          * 
          * @see ch.epfl.imhof.osm.OSMEntity.Builder#isIncomplete()
          */
+        @Override
         public boolean isIncomplete() {
-            return incomplete || this.nodes.size() < 2;
+            return incomplete || nodes.size() < 2;
         }
     }
 }
