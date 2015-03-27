@@ -93,6 +93,14 @@ public final class OSMMapReader {
                             break;
                     }
                     break;
+                case IN_NODE:
+                    switch (currentEl) {
+                        case "tag":
+                            OSMAttr attr = parseTagEl();
+                            nodeBuilder.setAttribute(attr.key(), attr.value());
+                            break;
+                    }
+                    break;
                 case IN_WAY:
                     switch (currentEl) {
                         case "nd":
@@ -135,8 +143,14 @@ public final class OSMMapReader {
             currentEl = qName;
             switch (state) {
                 case IN_ROOT:
+                    break;
+                case IN_NODE:
                     if (currentEl.equals("node")) {
-                        mapBuilder.addNode(nodeBuilder.build());
+                        if (!nodeBuilder.isIncomplete()) {
+                            mapBuilder.addNode(nodeBuilder.build());
+                        }
+                        
+                        state = State.IN_ROOT;
                     }
                     break;
                 case IN_WAY:
