@@ -40,14 +40,14 @@ public class OSMMapReaderTest {
         OSMWay way10 = (OSMWay) relation.members().get(1).member();
         
         assertTrue(way9.isClosed());
-        assertEquals(9L, way9.id());
+        assertEquals(1012362340L, way9.id());
         checkNode(way9.nodes().get(0), 1, 47, 7);
         checkNode(way9.nodes().get(1), 2, 47, 6);
         checkNode(way9.nodes().get(2), 3, 46, 6);
         checkNode(way9.nodes().get(3), 4, 46, 7);
         
         assertTrue(way10.isClosed());
-        assertEquals(10L, way10.id());
+        assertEquals(1012362341L, way10.id());
         checkNode(way10.nodes().get(0), 5, 46.8, 6.8);
         checkNode(way10.nodes().get(1), 6, 46.8, 6.2);
         checkNode(way10.nodes().get(2), 7, 46.2, 6.2);
@@ -56,32 +56,48 @@ public class OSMMapReaderTest {
     
     @Test
     public void lausanneIsCorrectlyParsed() throws IOException, SAXException {
-        readOSMFile("test/data/big/lausanne.osm");
+        checkListsSizes("test/data/big/lausanne.osm", 139901, 3704);
     }
     
     @Test
     public void lausanneGzIsCorrectlyParsed() throws IOException, SAXException {
-        readOSMFile("test/data/big/lausanne.osm.gz");
+        checkListsSizes("test/data/big/lausanne.osm.gz", 139901, 3704);
     }
     
     @Test
     public void berneIsCorrectlyParsed() throws IOException, SAXException {
-        readOSMFile("test/data/big/berne.osm");
+        checkListsSizes("test/data/big/berne.osm", 161980, 2436);
     }
     
     @Test
     public void berneGzIsCorrectlyParsed() throws IOException, SAXException {
-        readOSMFile("test/data/big/berne.osm.gz");
+        checkListsSizes("test/data/big/berne.osm.gz", 161980, 2436);
     }
     
     @Test
     public void interlakIsCorrectlyParsed() throws IOException, SAXException {
-        readOSMFile("test/data/big/interlaken.osm");
+        checkListsSizes("test/data/big/interlaken.osm", 77946, 973);
     }
     
     @Test
     public void interlakGzIsCorrectlyParsed() throws IOException, SAXException {
-        readOSMFile("test/data/big/interlaken.osm.gz");
+        checkListsSizes("test/data/big/interlaken.osm.gz", 77946, 973);
+    }
+    
+    protected static void checkListsSizes(final String fileName,
+            int exceptedWaysN, int exceptedRelsN) throws IOException,
+            SAXException {
+        OSMMap map = readOSMFile(fileName);
+        
+        assertEquals(
+            "check number of OSMWays in " + fileName,
+            exceptedWaysN,
+            map.ways().size());
+        
+        assertEquals(
+            "check number of OSMRelations in " + fileName,
+            exceptedRelsN,
+            map.relations().size());
     }
     
     protected static OSMMap readOSMFile(final String fileName)
@@ -110,9 +126,11 @@ public class OSMMapReaderTest {
     private static void checkNode(final OSMNode node, final long id,
             final double latDeg, final double lonDeg) {
         assertEquals("check node's id", id, node.id());
-        assertEquals("check nodes's latitude", Math.toRadians(latDeg),
-            node.position().latitude(), DELTA);
-        assertEquals("check node's longitude", Math.toRadians(lonDeg),
-            node.position().longitude(), DELTA);
+        assertEquals("check nodes's latitude", Math.toRadians(latDeg), node
+            .position()
+            .latitude(), DELTA);
+        assertEquals("check node's longitude", Math.toRadians(lonDeg), node
+            .position()
+            .longitude(), DELTA);
     }
 }
