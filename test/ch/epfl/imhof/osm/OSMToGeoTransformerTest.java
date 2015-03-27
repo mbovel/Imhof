@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import ch.epfl.imhof.Attributed;
-import ch.epfl.imhof.Graph;
 import ch.epfl.imhof.Map;
 import ch.epfl.imhof.geometry.Point;
 import ch.epfl.imhof.geometry.PolyLine;
@@ -42,7 +41,12 @@ public class OSMToGeoTransformerTest {
     }
     
     /**
-     * @see <a href="http://wiki.openstreetmap.org/wiki/Key:highway">Key:highway, OpenStreetMap Wiki</a>
+     * That's wrong according to official OpenStreetMap Documentation: no way
+     * with tag highway should be transformed to
+     * 
+     * @see <a
+     *      href="http://wiki.openstreetmap.org/wiki/Key:highway">Key:highway,
+     *      OpenStreetMap Wiki</a>
      * @throws IOException
      * @throws SAXException
      */
@@ -70,14 +74,28 @@ public class OSMToGeoTransformerTest {
         
         Attributed<Polygon> result = map.polygons().get(0);
         
-        checkPolyLine(
-            result.value().shell(),
-            new Point(47.0, 7.0),
-            new Point(47.0, 6.0));
+        checkPolyLine(result.value().shell(), new Point(47.0, 7.0), new Point(
+            47.0,
+            6.0));
         
         assertTrue(result.value().holes().isEmpty());
         
         assertEquals("park", result.attributeValue("leisure"));
+    }
+    
+    @Test
+    public void worksWithLausanne() throws IOException, SAXException {
+        checkListsSizes("test/data/big/lausanne.osm", 80165, 47976);
+    }
+    
+    @Test
+    public void worksWithBerne() throws IOException, SAXException {
+        checkListsSizes("test/data/big/berne.osm", 87389, 68373);
+    }
+    
+    @Test
+    public void worksWithInterlaken() throws IOException, SAXException {
+        checkListsSizes("test/data/big/interlaken.osm", 56336, 17903);
     }
     
     @Test
@@ -88,12 +106,9 @@ public class OSMToGeoTransformerTest {
         
         Attributed<Polygon> result = map.polygons().get(0);
         
-        checkPolyLine(
-            result.value().shell(),
-            new Point(47.0, 7.0),
-            new Point(47.0, 6.0),
-            new Point(46.0, 6.0),
-            new Point(46.0, 7.0));
+        checkPolyLine(result.value().shell(), new Point(47.0, 7.0), new Point(
+            47.0,
+            6.0), new Point(46.0, 6.0), new Point(46.0, 7.0));
         
         PolyLine hole = result.value().holes().get(0);
         
@@ -111,6 +126,20 @@ public class OSMToGeoTransformerTest {
         OSMMap map = OSMMapReaderTest.readOSMFile(path);
         Projection proj = new EquirectangularProjection();
         return new OSMToGeoTransformer(proj).transform(map);
+    }
+    
+    private static void checkListsSizes(String fileName, int polyLinesN,
+            int polygonsN) throws IOException, SAXException {
+        Map map = transform(fileName);
+        
+        assertEquals(
+            "check numebr of polylines in " + fileName,
+            polyLinesN,
+            map.polyLines().size());
+        
+        assertEquals("check number of polygons in " + fileName, polygonsN, map
+            .polygons()
+            .size());
     }
     
     private void checkPolyLine(PolyLine line, Point... exceptedArr) {
