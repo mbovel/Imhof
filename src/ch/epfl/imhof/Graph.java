@@ -18,7 +18,7 @@ public final class Graph<N> {
     }
     
     public Set<N> neighborsOf(N n) {
-        return this.neighbors.get(n);
+        return new HashSet<N>(this.neighbors.get(n));
     }
     
     public static class Builder<N> {
