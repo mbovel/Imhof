@@ -25,7 +25,9 @@ public final class Graph<N> {
         private Map<N, Set<N>> neighbors = new HashMap<N, Set<N>>();
         
         public void addNode(N n) {
-            this.neighbors.put(n, new HashSet<N>());
+            if(!this.neighbors.containsKey(n)) {
+                this.neighbors.put(n, new HashSet<N>());
+            }
         }
         
         public void addEdge(N n1, N n2) throws IllegalArgumentException{
