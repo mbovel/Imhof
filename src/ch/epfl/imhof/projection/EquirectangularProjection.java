@@ -1,7 +1,7 @@
 package ch.epfl.imhof.projection;
 
-import ch.epfl.imhof.geometry.Point;
 import ch.epfl.imhof.PointGeo;
+import ch.epfl.imhof.geometry.Point;
 
 /**
  * A way to transform a point in spherical coordinates ( {@link PointGeo}) to a
@@ -21,10 +21,11 @@ public final class EquirectangularProjection implements Projection {
      *            a point in spherical coordinates
      * @return a point in cartesian coordinates
      */
+    @Override
     public Point project(PointGeo point) {
-        return (new Point(point.longitude(), point.latitude()));
+        return new Point(point.longitude(), point.latitude());
     }
-
+    
     /**
      * Transforms a point in cartesian coordinates to a point in spherical
      * coordinates using a simple Equirectangular projection.
@@ -33,7 +34,8 @@ public final class EquirectangularProjection implements Projection {
      *            a point in cartesian coordinates
      * @return a point in spherical coordinates
      */
+    @Override
     public PointGeo inverse(Point point) {
-        return (new PointGeo(point.x(), point.y()));
+        return new PointGeo(point.x(), point.y());
     }
 }
