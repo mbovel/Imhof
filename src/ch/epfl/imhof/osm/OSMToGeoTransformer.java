@@ -75,7 +75,7 @@ public final class OSMToGeoTransformer {
                 return;
             }
             
-            points = transformNodes(way.nodes());
+            points = transformNodes(way.nonRepeatingNodes());
             
             ClosedPolyLine shell = new ClosedPolyLine(points);
             Polygon polygon = new Polygon(shell);
@@ -90,7 +90,7 @@ public final class OSMToGeoTransformer {
                 return;
             }
             
-            points = transformNodes(way.nodes());
+            points = transformNodes(way.nonRepeatingNodes());
             
             PolyLine polyline;
             
