@@ -21,22 +21,25 @@ import ch.epfl.imhof.projection.Projection;
 /**
  * @author Matthieu Bovel (250300)
  */
+//@formatter:off
 public final class OSMToGeoTransformer {
-    private static Set<String> surfaceAtts  = initHashSet("aeroway", "amenity",
-                                                "building", "harbour",
-                                                "historic", "landuse",
-                                                "leisure", "man_made",
-                                                "military", "natural",
-                                                "office", "place", "power",
-                                                "public_transport", "shop",
-                                                "sport", "tourism", "water",
-                                                "waterway", "wetland");
-    private static Set<String> polyLineAtts = initHashSet("bridge", "highway",
-                                                "layer", "man_made", "railway",
-                                                "tunnel", "waterway");
-    private static Set<String> polygonAtts  = initHashSet("building",
-                                                "landuse", "layer", "leisure",
-                                                "natural", "waterway");
+    private static Set<String> surfaceAtts  = initHashSet(
+        "aeroway", "amenity", "building", "harbour", "historic",
+        "landuse", "leisure", "man_made", "military", "natural",
+        "office", "place", "power", "public_transport", "shop",
+        "sport", "tourism", "water", "waterway", "wetland"
+            );
+    
+    private static Set<String> polyLineAtts = initHashSet(
+        "bridge", "highway", "layer", "man_made", "railway",
+        "tunnel", "waterway"
+            );
+    
+    private static Set<String> polygonAtts  = initHashSet(
+        "building", "landuse", "layer", "leisure", "natural",
+        "waterway"
+            );
+    // @formatter:on
     
     private final Projection   projection;
     
@@ -55,7 +58,6 @@ public final class OSMToGeoTransformer {
         
         osm.ways().forEach(way -> transformWay(way, mapBuilder));
         osm.relations().forEach(rel -> transformRel(rel, mapBuilder));
-        
         return mapBuilder.build();
     }
     
@@ -117,6 +119,14 @@ public final class OSMToGeoTransformer {
     }
     
     private void transformRel(OSMRelation rel, Map.Builder mapBuilder) {
+        // Keep only needed attributes from the relation. They will be used for
+        // each created polygon. Ways' attributes are not conserved.
+        Attributes atts = rel.attributes().keepOnlyKeys(polygonAtts);
+        
+        if (atts.isEmpty()) {
+            return;
+        }
+        
         // Conversion of multipolygons
         // http://cs108.epfl.ch/p06_osm-to-geo.html#sec-1-2
         // Relation:multipolygon
@@ -132,10 +142,6 @@ public final class OSMToGeoTransformer {
         List<ClosedPolyLine> innerRings = makeRings(innerWays);
         List<ClosedPolyLine> outerRings = sortByArea(makeRings(outerWays));
         
-        System.out.println(innerRings.size());
-        System.out.println(outerRings.size());
-        
-        
         // Return if there is no outer ring
         if (outerRings.isEmpty()) {
             return;
@@ -146,25 +152,22 @@ public final class OSMToGeoTransformer {
                 .map(outerRing -> new Polygon.Builder(outerRing))
                 .collect(Collectors.toList());
         
-        // 3. Each inner ring is inserted in the smallest possible outer ring in
+        // 3. Each inner ring is added the smallest possible outer ring in
         // which it is contained.
-        innerRings.forEach(innerRing -> {
-            polygonsBuilders.forEach(pb -> {
+        for (ClosedPolyLine innerRing : innerRings) {
+            for (Polygon.Builder pb : polygonsBuilders) {
                 if (pb.shell().containsPoint(innerRing.firstPoint())) {
                     pb.addHole(innerRing);
+                    break;
                 }
-            });
-        });
-        
-        // Keep only needed attributes from the relation. They will be used for
-        // each created polygon. Ways' attributes are not conserved.
-        Attributes atts = rel.attributes().keepOnlyKeys(polygonAtts);
+            }
+        }
         
         // For each polygon builder, we build a polygon the attributes of the
         // relation and add it to the map.
-        polygonsBuilders.forEach(pb -> {
+        for (Polygon.Builder pb : polygonsBuilders) {
             mapBuilder.addPolygon(new Attributed<Polygon>(pb.build(), atts));
-        });
+        }
     }
     
     private static List<OSMWay> getWaysByRole(OSMRelation rel, String role) {
@@ -183,11 +186,15 @@ public final class OSMToGeoTransformer {
     
     private List<ClosedPolyLine> makeRings(List<OSMWay> ways) {
         Graph<OSMNode> graph = makeGraphFromWays(ways);
-        Set<OSMNode> toDo = new HashSet<OSMNode>(graph.nodes());
+        Set<OSMNode> done = new HashSet<OSMNode>();
         List<ClosedPolyLine> polyLines = new ArrayList<ClosedPolyLine>();
         
-        while (!toDo.isEmpty()) {
-            ClosedPolyLine polyLine = makeRing(graph, toDo);
+        for (OSMNode node : graph.nodes()) {
+            if (done.contains(node)) {
+                continue;
+            }
+            
+            ClosedPolyLine polyLine = makeRing(node, graph, done);
             
             if (polyLine != null) {
                 polyLines.add(polyLine);
@@ -217,14 +224,14 @@ public final class OSMToGeoTransformer {
         return graphBuilder.build();
     }
     
-    private ClosedPolyLine makeRing(Graph<OSMNode> graph, Set<OSMNode> toDo) {
+    private ClosedPolyLine makeRing(OSMNode current, Graph<OSMNode> graph,
+            Set<OSMNode> done) {
         PolyLine.Builder polyLineBuilder = new PolyLine.Builder();
-        OSMNode current = getAny(toDo);
         OSMNode first = current;
         OSMNode prev = null;
         
-        while (prev != first) {
-            toDo.remove(current);
+        do {
+            done.add(current);
             polyLineBuilder.addPoint(transformNode(current));
             
             Set<OSMNode> neighbors = graph.neighborsOf(current);
@@ -239,7 +246,7 @@ public final class OSMToGeoTransformer {
             
             prev = current;
             current = getAny(neighbors);
-        }
+        } while (current != first);
         
         return polyLineBuilder.buildClosed();
     }
