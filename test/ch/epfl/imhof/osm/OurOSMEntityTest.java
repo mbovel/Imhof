@@ -20,14 +20,18 @@ public abstract class OurOSMEntityTest {
                 .put("bestCityEver", "true").build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void idCannotBeNegative() {
-        newEntity(-1, new Attributes(new HashMap<String, String>()));
+    @Test
+    public void idCanBeNegative() {
+        OSMEntity entity = newEntity(-1, new Attributes(new HashMap<String, String>()));
+        
+        assertEquals(entity.id(), -1);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void idCannotBeNull() {
-        newEntity(0, new Attributes(new HashMap<String, String>()));
+    @Test
+    public void idCanBeNull() {
+        OSMEntity entity = newEntity(0, new Attributes(new HashMap<String, String>()));
+        
+        assertEquals(entity.id(), 0);
     }
 
     @Test

@@ -28,12 +28,6 @@ public abstract class OSMEntity {
     public OSMEntity(long id, Attributes attributes)
             throws IllegalArgumentException {
         this.attributes = attributes;
-
-        if (id < 1) {
-            throw new IllegalArgumentException(
-                    "id must be a positive non null integer");
-        }
-        
         this.id = id;
     }
 
