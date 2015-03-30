@@ -3,3 +3,6 @@ bin
 doc
 test/data/big/*.gz
 test/data/big/*.osm
+test_official/imhof_tests.zip
+test_official/data/OSMtestFiles
+test_official/test/ch

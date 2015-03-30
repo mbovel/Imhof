@@ -1,7 +1,7 @@
 gz_files = lausanne.osm.gz berne.osm.gz interlaken.osm.gz
 osm_files = lausanne.osm berne.osm interlaken.osm
 
-main: $(osm_files) $(gz_files)
+all: $(osm_files) $(gz_files)
 
 $(gz_files):
 	curl -o $@ http://cs108.epfl.ch/files/$@
