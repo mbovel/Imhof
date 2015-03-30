@@ -156,7 +156,7 @@ public final class OSMWay extends OSMEntity {
          */
         @Override
         public OSMWay build() throws IllegalStateException {
-            if (incomplete) {
+            if (incomplete || nodes.size() < 2) {
                 throw new IllegalStateException(
                     "The OSMWay is not complete yet.");
             }
