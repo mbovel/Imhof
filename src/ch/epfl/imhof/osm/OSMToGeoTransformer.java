@@ -221,14 +221,13 @@ public final class OSMToGeoTransformer {
         PolyLine.Builder polyLineBuilder = new PolyLine.Builder();
         OSMNode current = getAny(toDo);
         OSMNode first = current;
-        ;
         OSMNode prev = null;
         
         do {
             toDo.remove(current);
             polyLineBuilder.addPoint(transformNode(current));
             
-            Set<OSMNode> neighbors = graph.neighborsOf(current);
+            Set<OSMNode> neighbors = new HashSet<OSMNode>(graph.neighborsOf(current));
             
             if (neighbors.size() != 2) {
                 return null;

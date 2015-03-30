@@ -10,7 +10,13 @@ public final class Graph<N> {
     private Map<N, Set<N>> neighbors;
     
     public Graph(Map<N, Set<N>> neighbors) {
-        this.neighbors = Collections.unmodifiableMap(new HashMap<N, Set<N>>(neighbors));
+        this.neighbors = new HashMap<N, Set<N>>();
+        
+        for(Map.Entry<N, Set<N>> entry : neighbors.entrySet()) {
+            this.neighbors.put(entry.getKey(), Collections.unmodifiableSet(new HashSet<N>(entry.getValue())));
+        }
+        
+        this.neighbors = Collections.unmodifiableMap(this.neighbors);
     }
     
     public Set<N> nodes() {
@@ -18,7 +24,11 @@ public final class Graph<N> {
     }
     
     public Set<N> neighborsOf(N n) {
-        return new HashSet<N>(this.neighbors.get(n));
+        if(!this.neighbors.containsKey(n)) {
+            throw new IllegalArgumentException("This graph doesn't contain this element.");
+        }
+        
+        return this.neighbors.get(n);
     }
     
     public static class Builder<N> {
