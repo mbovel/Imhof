@@ -1,5 +1,5 @@
 package ch.epfl.imhof;
 
-public class MapTest {
+public class OurMapTest {
     
 }

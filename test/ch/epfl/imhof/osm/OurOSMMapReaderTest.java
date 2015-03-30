@@ -9,7 +9,7 @@ import java.io.IOException;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-public class OSMMapReaderTest {
+public class OurOSMMapReaderTest {
     private static final double DELTA = 0.000001;
     
     @Test(expected = OSMMapReader.OSMMissingAttributeException.class)

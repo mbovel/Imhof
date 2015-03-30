@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class GraphTest {
+public class OurGraphTest {
     @Test
     public void neighborsOfReturnsEmptySetIfNoNeighbors() {
         Map<Integer, Set<Integer>> map = new HashMap<Integer, Set<Integer>>();

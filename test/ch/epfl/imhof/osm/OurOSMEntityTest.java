@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import ch.epfl.imhof.Attributes;
 
-public abstract class OSMEntityTest {
+public abstract class OurOSMEntityTest {
     static private Attributes attrs;
 
     public abstract OSMEntity newEntity(long id, Attributes attributes);

@@ -21,7 +21,7 @@ import ch.epfl.imhof.geometry.Polygon;
 import ch.epfl.imhof.projection.EquirectangularProjection;
 import ch.epfl.imhof.projection.Projection;
 
-public class OSMToGeoTransformerTest {
+public class OurOSMToGeoTransformerTest {
     private static final double DELTA = 0.000001;
     
     @Test
@@ -123,7 +123,7 @@ public class OSMToGeoTransformerTest {
     }
     
     private static Map transform(String path) throws IOException, SAXException {
-        OSMMap map = OSMMapReaderTest.readOSMFile(path);
+        OSMMap map = OurOSMMapReaderTest.readOSMFile(path);
         Projection proj = new EquirectangularProjection();
         return new OSMToGeoTransformer(proj).transform(map);
     }

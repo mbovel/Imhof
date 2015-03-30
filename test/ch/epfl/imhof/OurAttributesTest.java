@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-public class AttributesTest {
+public class OurAttributesTest {
     private HashMap<String, String> map = new HashMap<String, String>();
     
     @Test

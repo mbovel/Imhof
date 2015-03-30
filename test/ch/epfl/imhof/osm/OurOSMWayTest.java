@@ -10,7 +10,7 @@ import org.junit.BeforeClass;
 import ch.epfl.imhof.Attributes;
 import ch.epfl.imhof.PointGeo;
 
-public class OSMWayTest extends OSMEntityTest {
+public class OurOSMWayTest extends OurOSMEntityTest {
     private static List<OSMNode> nodes;
 
     @BeforeClass
