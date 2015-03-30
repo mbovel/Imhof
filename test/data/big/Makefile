@@ -1,19 +1,14 @@
-main: lausanne.osm lausanne.osm.gz berne.osm berne.osm.gz interlaken.osm interlaken.osm.gz
+gz_files = lausanne.osm.gz berne.osm.gz interlaken.osm.gz
+osm_files = lausanne.osm berne.osm interlaken.osm
 
-lausanne.osm.gz:
-	curl -o $@ http://cs108.epfl.ch/files/lausanne.osm.gz
+main: $(osm_files) $(gz_files)
 
-lausanne.osm: lausanne.osm.gz
-	gunzip -c lausanne.osm.gz > $@
+$(gz_files):
+	curl -o $@ http://cs108.epfl.ch/files/$@
 
-berne.osm.gz:
-	curl -o $@ http://cs108.epfl.ch/files/berne.osm.gz
+$(osm_files): $(gz_files)
+	gunzip -c $@.gz > $@
 
-berne.osm: berne.osm.gz
-	gunzip -c berne.osm.gz > $@
-
-interlaken.osm.gz:
-	curl -o $@ http://cs108.epfl.ch/files/interlaken.osm.gz
-
-interlaken.osm: interlaken.osm.gz
-	gunzip -c interlaken.osm.gz > $@
+clean:
+	rm -rf $(osm_files)
+	rm -rf $(gz_files)
