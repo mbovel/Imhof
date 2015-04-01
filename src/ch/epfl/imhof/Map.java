@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package ch.epfl.imhof;
 
 import java.util.ArrayList;
@@ -11,6 +9,8 @@ import ch.epfl.imhof.geometry.PolyLine;
 import ch.epfl.imhof.geometry.Polygon;
 
 /**
+ * 
+ * 
  * @author Matthieu Bovel (250300)
  */
 public final class Map {
