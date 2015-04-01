@@ -15,7 +15,7 @@ public final class OSMNode extends OSMEntity {
     private final PointGeo position;
 
     /**
-     * Construct a new <code>OSMNode</code> given its unique id, attributes and
+     * Constructs a new <code>OSMNode</code> given its unique id, attributes and
      * position.
      * 
      * @param id
