@@ -18,12 +18,31 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import ch.epfl.imhof.PointGeo;
 
 /**
+ * The <code>OSMMapReader</code> class is used to create an {@link OSMMap} given
+ * an osm file. <code>OSMMapReader</code> is not instanciable.
+ * 
  * @author Matthieu Bovel (250300)
  */
 public final class OSMMapReader {
     private OSMMapReader() {
     }
     
+    /**
+     * Reads an osm file and returns an {@link OSMMap}. Uncompress the osm fil
+     * with Gzip if the second argument is <code>true</code>.
+     * 
+     * @param fileName
+     *            the name of the osm file to read.
+     * @param unGZip
+     *            boolean that tells if it must uncompress the file with Gzip or
+     *            not.
+     * @return an {@link OSMMap} based on the osm file in argument.
+     * @throws IOException
+     *             when something goes wrong in the reading process.
+     * @throws when
+     *             something is wrong with the osm file, for example when an
+     *             attributes is missing.
+     */
     public static OSMMap readOSMFile(String fileName, boolean unGZip)
             throws IOException, SAXException {
         OSMMap.Builder mapBuilder = new OSMMap.Builder();
@@ -279,14 +298,22 @@ public final class OSMMapReader {
         };
     }
     
+    /**
+     * A class that define OSMMissingAttributeException.
+     * 
+     * @author Matthieu Bovel (250300)
+     *
+     */
     public static class OSMMissingAttributeException extends SAXParseException {
         // What is a serialVersionUID and why should I use it?
         // http://stackoverflow.com/a/285809
         private static final long serialVersionUID = 1L;
-
-        public OSMMissingAttributeException(String el, String attr, Locator locator) {
-            super("Missing attribute `" + attr + "` on element `" + el +  "`", locator);
+        
+        public OSMMissingAttributeException(String el, String attr,
+                Locator locator) {
+            super("Missing attribute `" + attr + "` on element `" + el + "`",
+                    locator);
         }
     }
-
+    
 }
