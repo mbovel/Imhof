@@ -17,7 +17,7 @@ import ch.epfl.imhof.Attributes;
  */
 public final class OSMRelation extends OSMEntity {
     private final List<Member> members;
-
+    
     /**
      * Construct a new <code>OSMRelation</code> given its unique id, attributes
      * and members.
@@ -32,9 +32,10 @@ public final class OSMRelation extends OSMEntity {
      */
     public OSMRelation(long id, List<Member> members, Attributes attributes) {
         super(id, attributes);
-        this.members = Collections.unmodifiableList(new ArrayList<Member>(members));
+        this.members = Collections.unmodifiableList(new ArrayList<Member>(
+            members));
     }
-
+    
     /**
      * Returns a {@link List} containing all the {@link Member Members} in the
      * <code>OSMRelation</code>.
@@ -44,7 +45,7 @@ public final class OSMRelation extends OSMEntity {
     public List<Member> members() {
         return members;
     }
-
+    
     /**
      * A class that represents a member of an {@link OSMRelation}. Each member
      * is a {@link OSMEntity} with a type and a role.
@@ -53,10 +54,10 @@ public final class OSMRelation extends OSMEntity {
      *
      */
     public final static class Member {
-        private final Type type;
-        private final String role;
+        private final Type      type;
+        private final String    role;
         private final OSMEntity member;
-
+        
         /**
          * Constructs a new <code>Member</code> instance given its type, role
          * and an <code>OSMEntity</code>.
@@ -74,7 +75,7 @@ public final class OSMRelation extends OSMEntity {
             this.role = role;
             this.member = member;
         }
-
+        
         /**
          * Returns the type of a <code>Member</code>.
          * 
@@ -83,7 +84,7 @@ public final class OSMRelation extends OSMEntity {
         public Type type() {
             return type;
         }
-
+        
         /**
          * Returns the role of a <code>Member</code>.
          * 
@@ -92,7 +93,7 @@ public final class OSMRelation extends OSMEntity {
         public String role() {
             return role;
         }
-
+        
         /**
          * Returns the <code>OSMEntity</code> of a <code>Member</code>.
          * 
@@ -101,7 +102,7 @@ public final class OSMRelation extends OSMEntity {
         public OSMEntity member() {
             return member;
         }
-
+        
         /**
          * An enumeration of all the possible types a
          * <code>OSMRelation.Member</code> can be.
@@ -113,7 +114,7 @@ public final class OSMRelation extends OSMEntity {
             NODE, WAY, RELATION
         }
     }
-
+    
     /**
      * A class that helps in the construction of {@link OSMRelation}.
      * 
@@ -121,8 +122,8 @@ public final class OSMRelation extends OSMEntity {
      *
      */
     public final static class Builder extends OSMEntity.Builder {
-        private List<Member> members = new ArrayList<Member>();
-
+        private final List<Member> members = new ArrayList<Member>();
+        
         /**
          * Constructs an <code>OSMRelation.Builder</code> with the
          * <code>id</code> of the futuree <code>OSMRelation</code>.
@@ -133,7 +134,7 @@ public final class OSMRelation extends OSMEntity {
         public Builder(long id) {
             super(id);
         }
-
+        
         /**
          * Adds a new Member to the <code>OSMRelation</code>.
          * 
@@ -152,7 +153,7 @@ public final class OSMRelation extends OSMEntity {
         public void addMember(Member member) {
             members.add(member);
         }
-
+        
         /**
          * Constructs a new <code>OSMRelation</code> instance using the data
          * provided by the <code>OSMRelation.Builder</code>.
@@ -163,16 +164,16 @@ public final class OSMRelation extends OSMEntity {
          *             if the <code>OSMRelation</code> is not complete (
          *             <code>incomplete = true</code>)
          */
+        @Override
         public OSMRelation build() throws IllegalStateException {
             if (incomplete) {
                 throw new IllegalStateException(
-                        "The OSMRelation is not complete yet.");
+                    "The OSMRelation is not complete yet.");
             }
-
-            return new OSMRelation(this.id, this.members,
-                    this.attributes.build());
+            
+            return new OSMRelation(id, members, attributes.build());
         }
-
+        
     }
-
+    
 }

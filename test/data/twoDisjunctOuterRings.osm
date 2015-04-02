@@ -35,8 +35,8 @@
 	<relation id="1000">
   		<tag k="type" v="multipolygon" />
   		<tag k="building" v="houseboat" />
-  		<member type="way" id="101" role="outer" />
-  		<member type="way" id="102" role="outer" />
+  		<member type="way" ref="101" role="outer" />
+  		<member type="way" ref="102" role="outer" />
 	</relation>
 	
 	

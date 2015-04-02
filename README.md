@@ -54,4 +54,5 @@ Exemple from “[How to Write Doc Comments for the Javadoc Tool](http://www.orac
 - `@param` and `@return` declarations are written in small letters without a dot at the end.
 - `@author` declaration is written in the following format: `FirstName LastName (SciperNumber)`.
 - There is no extra star at the beginning or at the end of the comment block.
-- Methods or class names are written with the correct case and linked with the `{@link ...}` declaration.
+- Method or external class names are written with the correct case and linked with the `{@link ...}` declaration.
+- Current class name is surrounded with `code` element.

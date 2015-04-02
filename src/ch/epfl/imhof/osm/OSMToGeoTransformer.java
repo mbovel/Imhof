@@ -51,8 +51,8 @@ public final class OSMToGeoTransformer {
      * {@link Projection}.
      * 
      * @param projection
-     *            the <code>Projection</code> the
-     *            <code>OSMToGeoTranformer</code> will use.
+     *            the {@link Projection} the
+     *            <code>OSMToGeoTranformer</code> will use
      */
     public OSMToGeoTransformer(Projection projection) {
         this.projection = projection;
@@ -62,9 +62,9 @@ public final class OSMToGeoTransformer {
      * Transforms a given {@link OSMMap} to a {@link Map}.
      * 
      * @param osm
-     *            the <code>OSMMap</code> to be converted.
-     *            
-     * @return the <code>Map</code> that results from the convertion.
+     *            the <code>OSMMap</code> to be converted
+     * 
+     * @return the <code>Map</code> that results from the convertion
      */
     public Map transform(OSMMap osm) {
         Map.Builder mapBuilder = new Map.Builder();
@@ -162,12 +162,14 @@ public final class OSMToGeoTransformer {
         }
         
         // Prepare a polygon builder for each outer ring.
-        List<Polygon.Builder> polygonsBuilders = outerRings.stream()
-                .map(outerRing -> new Polygon.Builder(outerRing))
-                .collect(Collectors.toList());
+        List<Polygon.Builder> polygonsBuilders = outerRings
+            .stream()
+            .map(outerRing -> new Polygon.Builder(outerRing))
+            .collect(Collectors.toList());
         
         // 3. Each inner ring is added the smallest possible outer ring in
-        // which it is contained.
+        // which it is contained (polygonsBuilders have already been sorted by
+        // area).
         for (ClosedPolyLine innerRing : innerRings) {
             for (Polygon.Builder pb : polygonsBuilders) {
                 if (pb.shell().containsPoint(innerRing.firstPoint())) {
@@ -185,12 +187,13 @@ public final class OSMToGeoTransformer {
     }
     
     private static List<OSMWay> getWaysByRole(OSMRelation rel, String role) {
-        return rel.members()
-                .stream()
-                .filter(member -> member.type() == OSMRelation.Member.Type.WAY)
-                .filter(member -> member.role().equals(role))
-                .map(member -> (OSMWay) member.member())
-                .collect(Collectors.toList());
+        return rel
+            .members()
+            .stream()
+            .filter(member -> member.type() == OSMRelation.Member.Type.WAY)
+            .filter(member -> member.role().equals(role))
+            .map(member -> (OSMWay) member.member())
+            .collect(Collectors.toList());
     }
     
     private static List<ClosedPolyLine> sortByArea(List<ClosedPolyLine> list) {
@@ -245,7 +248,7 @@ public final class OSMToGeoTransformer {
             polyLineBuilder.addPoint(transformNode(current));
             
             Set<OSMNode> neighbors = new HashSet<OSMNode>(
-                    graph.neighborsOf(current));
+                graph.neighborsOf(current));
             
             if (neighbors.size() != 2) {
                 return null;
@@ -269,9 +272,10 @@ public final class OSMToGeoTransformer {
     }
     
     private List<Point> transformNodes(List<OSMNode> nodes) {
-        return nodes.stream()
-                .map(node -> transformNode(node))
-                .collect(Collectors.toList());
+        return nodes
+            .stream()
+            .map(node -> transformNode(node))
+            .collect(Collectors.toList());
     }
     
     private Point transformNode(OSMNode node) {

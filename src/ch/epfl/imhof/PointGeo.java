@@ -8,15 +8,14 @@ package ch.epfl.imhof;
  * @author Matteo Besançon (245826)
  */
 public final class PointGeo {
-
-    private final double longitude;
-    private final double latitude;
-
+    static private final double LATITUDE_LOWER_BOUND  = -java.lang.Math.PI / 2;
+    static private final double LATITUDE_UPPER_BOUND  = java.lang.Math.PI / 2;
     static private final double LONGITUDE_LOWER_BOUND = -java.lang.Math.PI;
     static private final double LONGITUDE_UPPER_BOUND = java.lang.Math.PI;
-    static private final double LATITUDE_LOWER_BOUND = -java.lang.Math.PI / 2;
-    static private final double LATITUDE_UPPER_BOUND = java.lang.Math.PI / 2;
-
+    
+    private final double        latitude;
+    private final double        longitude;
+    
     /**
      * Constructs a point, given its longitude and latitude
      * 
@@ -51,23 +50,23 @@ public final class PointGeo {
             throw new IllegalArgumentException("longitude should be at most "
                     + LATITUDE_UPPER_BOUND);
         }
-
+        
         this.latitude = latitude;
         this.longitude = longitude;
     }
-
-    /**
-     * @return point's longitude
-     */
-    public double longitude() {
-        return this.longitude;
-    }
-
+    
     /**
      * @return point's latitude
      */
     public double latitude() {
-        return this.latitude;
+        return latitude;
     }
-
+    
+    /**
+     * @return point's longitude
+     */
+    public double longitude() {
+        return longitude;
+    }
+    
 }

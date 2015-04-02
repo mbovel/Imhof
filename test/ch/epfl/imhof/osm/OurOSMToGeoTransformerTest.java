@@ -122,6 +122,130 @@ public class OurOSMToGeoTransformerTest {
         assertEquals("house", result.attributeValue("building"));
     }
     
+    // Following tests are inspired by
+    // http://wiki.openstreetmap.org/wiki/Relation:multipolygon#Examples
+    
+    @Test
+    public void worksWithOneOuterAndOneInnerRing() throws IOException,
+            SAXException {
+        Map map = transform("test/data/oneOuterAndOneInnerRing.osm");
+        
+        assertTrue(map.polyLines().isEmpty());
+        
+        Attributed<Polygon> result = map.polygons().get(0);
+        
+        checkPolyLine(
+            result.value().shell(),
+            new Point(46.276685, 6.979780),
+            new Point(46.273352, 6.979394),
+            new Point(46.274772, 6.985241),
+            new Point(46.278053, 6.984629));
+        
+        PolyLine hole = result.value().holes().get(0);
+        
+        checkPolyLine(hole, new Point(46.276359, 6.982522), new Point(
+            46.275953,
+            6.982747), new Point(46.276129, 6.983385), new Point(
+            46.276531,
+            6.983122));
+        
+        assertEquals("houseboat", result.attributeValue("building"));
+    }
+    
+    @Test
+    public void worksWithOneOuterAndTwoInnerRings() throws IOException,
+            SAXException {
+        Map map = transform("test/data/oneOuterAndTwoInnerRings.osm");
+        
+        assertTrue(map.polyLines().isEmpty());
+        
+        Attributed<Polygon> result = map.polygons().get(0);
+        
+        checkPolyLine(
+            result.value().shell(),
+            new Point(46.280544, 6.984837),
+            new Point(46.278205, 6.985813),
+            new Point(46.280511, 6.991918),
+            new Point(46.282923, 6.990942));
+        
+        checkPolyLine(result.value().holes().get(0), new Point(
+            46.280424,
+            6.985401), new Point(46.280014, 6.985632), new Point(
+            46.280320,
+            6.986426), new Point(46.280759, 6.986276));
+        
+        checkPolyLine(result.value().holes().get(1), new Point(
+            46.281373,
+            6.989505), new Point(46.280963, 6.989864), new Point(
+            46.281306,
+            6.990733), new Point(46.281942, 6.990486));
+        
+        assertEquals("houseboat", result.attributeValue("building"));
+    }
+    
+    @Test
+    public void worksWithMultipleWaysFormingARing() throws IOException,
+            SAXException {
+        Map map = transform("test/data/multipleWaysFormingARing.osm");
+        
+        assertTrue(map.polyLines().isEmpty());
+        
+        Attributed<Polygon> result = map.polygons().get(0);
+        
+        checkPolyLine(
+            result.value().shell(),
+            new Point(46.280544, 6.984837),
+            new Point(46.278205, 6.985813),
+            new Point(46.280511, 6.991918),
+            new Point(46.282923, 6.990942));
+        
+        checkPolyLine(result.value().holes().get(0), new Point(
+            46.280424,
+            6.985401), new Point(46.280014, 6.985632), new Point(
+            46.280320,
+            6.986426), new Point(46.280759, 6.986276));
+        
+        assertEquals("houseboat", result.attributeValue("building"));
+    }
+    
+    @Test
+    public void worksWithTwoDisjunctOuterRings() throws IOException,
+            SAXException {
+        Map map = transform("test/data/twoDisjunctOuterRings.osm");
+        
+        assertTrue(map.polyLines().isEmpty());
+        
+        Attributed<Polygon> result = map.polygons().get(0);
+        
+        checkPolyLine(
+            map.polygons().get(0).value().shell(),
+            new Point(46.280424, 6.985401),
+            new Point(46.280014, 6.985632),
+            new Point(46.280320, 6.986426),
+            new Point(46.280759, 6.986276));
+        
+        checkPolyLine(
+            map.polygons().get(1).value().shell(),
+            new Point(46.281373, 6.989505),
+            new Point(46.280963, 6.989864),
+            new Point(46.281306, 6.990733),
+            new Point(46.281942, 6.990486));
+        
+        assertEquals("houseboat", result.attributeValue("building"));
+    }
+    
+    // TODO: Two disjunct outer rings and multiple ways forming a ring
+    
+    // TODO: Island within a hole
+    
+    // TODO: Touching inner rings
+    
+    // TODO: Unclosed polygons
+    
+    // TODO: 2 touching rings on single points
+    
+    // TODO: Multipolygon in "8" shape with point at intersection
+    
     private static Map transform(String path) throws IOException, SAXException {
         OSMMap map = OurOSMMapReaderTest.readOSMFile(path);
         Projection proj = new EquirectangularProjection();

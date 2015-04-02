@@ -17,7 +17,7 @@ import java.util.List;
  */
 public abstract class PolyLine {
     protected final List<Point> points;
-
+    
     /**
      * Constructs a {@link PolyLine} given a list of points.
      * 
@@ -27,16 +27,16 @@ public abstract class PolyLine {
      * @throws IllegalArgumentException
      *             if points List is empty
      */
-
+    
     public PolyLine(List<Point> points) throws IllegalArgumentException {
         if (points.isEmpty()) {
             throw new IllegalArgumentException("Points list cannot be empty");
         }
-
+        
         this.points = Collections
-                .unmodifiableList(new ArrayList<Point>(points));
+            .unmodifiableList(new ArrayList<Point>(points));
     }
-
+    
     /**
      * Returns <code>true</code> if the last point is connected to the first
      * one. It is <code>true</code> in the case of a ({@link ClosedPolyLine} or
@@ -45,7 +45,7 @@ public abstract class PolyLine {
      * @return false
      */
     public abstract boolean isClosed();
-
+    
     /**
      * Returns the list of points of this polyline.
      * 
@@ -54,7 +54,7 @@ public abstract class PolyLine {
     public List<Point> points() {
         return points;
     }
-
+    
     /**
      * Return the first point of this polyline.
      * 
@@ -63,22 +63,22 @@ public abstract class PolyLine {
     public Point firstPoint() {
         return points.get(0);
     }
-
+    
     /**
      * Helper class that aids in the construction of {@link PolyLine PolyLines}.
      * 
      * @author Matthieu Bovel (250300)
      */
     public final static class Builder {
-        private List<Point> points;
-
+        private final List<Point> points;
+        
         /**
-         * Construct a new empty {@link PolyLine} builder.
+         * Constructs a new empty {@link PolyLine} builder.
          */
         public Builder() {
-            this.points = new ArrayList<Point>();
+            points = new ArrayList<Point>();
         }
-
+        
         /**
          * Adds a new point to the future the future {@link PolyLine}.
          * 
@@ -87,10 +87,10 @@ public abstract class PolyLine {
          * @return a {@link ClosedPolyLine}
          */
         public Builder addPoint(Point p) {
-            this.points.add(p);
+            points.add(p);
             return this;
         }
-
+        
         /**
          * Constructs a new {@link OpenPolyLine} from data added with
          * {@link #addPoint}.
@@ -98,9 +98,9 @@ public abstract class PolyLine {
          * @return a {@link OpenPolyLine}
          */
         public OpenPolyLine buildOpen() {
-            return new OpenPolyLine(this.points);
+            return new OpenPolyLine(points);
         }
-
+        
         /**
          * Constructs a new {@link ClosedPolyLine} from data added with
          * {@link #addPoint}.
@@ -108,8 +108,7 @@ public abstract class PolyLine {
          * @return a {@link ClosedPolyLine}
          */
         public ClosedPolyLine buildClosed() {
-            return new ClosedPolyLine(this.points);
+            return new ClosedPolyLine(points);
         }
     }
-
 }

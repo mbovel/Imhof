@@ -19,11 +19,10 @@ public final class OSMWay extends OSMEntity {
     private final List<OSMNode> nodes;
     
     /**
-     * Construct a new <code>OSMWay</code> given its identification,
-     * <code>attributes</code> and <code>nodes</code>.
+     * Constructs a new <code>OSMWay</code> given its id, attributes and nodes.
      * 
      * @param id
-     *            <code>OSMWay</code>'s identification
+     *            <code>OSMWay</code>'s id
      * @param nodes
      *            <code>OSMWay</code>'s {@link List} of {@link OSMNode}
      * @param attributes
@@ -50,8 +49,8 @@ public final class OSMWay extends OSMEntity {
      * Returns the number of nodes in the <code>OSMWay</code> /!\ it will counts
      * two times the first node if the <code>OSMWay</code> is closed.
      * 
-     * @return the number of <code>OSMNodes</code> in the field
-     *         <code>nodes</code> the <code>OSMWay</code>
+     * @return the number of {@link OSMNode OSMNodes} in this
+     *         <code>OSMWay</code> the <code>OSMWay</code>
      */
     public int nodesCount() {
         return nodes.size();
@@ -67,9 +66,8 @@ public final class OSMWay extends OSMEntity {
     }
     
     /**
-     * Returns <code>true</code> if the <code>OSMWay</code> is closed. More
-     * formally it tests if the first <code>OSMNode</code> of <code>nodes</code>
-     * is the same than the last one with the method equals.
+     * Returns <code>true</code> if this <code>OSMWay</code> is closed. More
+     * formally it tests if the first node is the same as the last one.
      * 
      * @return <code>true</code> if the <code>OSMWay</code> is closed
      */
@@ -78,9 +76,9 @@ public final class OSMWay extends OSMEntity {
     }
     
     /**
-     * Returns a <code>List</code> of all the <code>OSMNode</code> constituing
-     * the <code>OSMWay</code> without repeating two times the same node if the
-     * first of the <code>List</code> is the same than the last one.
+     * Returns a list of all the {@link OSMNode OSMNodes} of this
+     * <code>OSMWay</code> without repeating two times the same node if the
+     * first node is the same as the last one.
      * 
      * @return a <code>List</code> of all the <code>OSMNode</code> constituing
      *         the <code>OSMWay</code> without repeating two times the same node
@@ -97,25 +95,25 @@ public final class OSMWay extends OSMEntity {
     }
     
     /**
-     * Returns the first <code>OSMNode</code> of the field <code>nodes</code>.
+     * Returns the first node.
      * 
-     * @return the first <code>OSMNode</code> of the field <code>nodes</code>
+     * @return the first node
      */
     public OSMNode firstNode() {
         return nodes.get(0);
     }
     
     /**
-     * Returns the last <code>OSMNode</code> of the field <code>nodes</code>.
+     * Returns the last node.
      * 
-     * @return the last <code>OSMNode</code> of the field <code>nodes</code>
+     * @return the last node
      */
     public OSMNode lastNode() {
         return nodes.get(nodes.size() - 1);
     }
     
     /**
-     * A Class that helps in the construction of {@link OSMWay}.
+     * A Class that helps in the construction of a <code>OSMWay</code>.
      * 
      * @author Matteo Besançon (245826)
      *
@@ -135,10 +133,10 @@ public final class OSMWay extends OSMEntity {
         }
         
         /**
-         * Adds a new <code>OSMNode</code> to <code>nodes</code>.
+         * Adds a new node the future <code>OSMWay</code>.
          * 
          * @param newNode
-         *            a future <code>OSMWay</code>'s node
+         *            the future <code>OSMWay</code>'s node
          */
         public void addNode(OSMNode newNode) {
             nodes.add(newNode);
@@ -163,11 +161,6 @@ public final class OSMWay extends OSMEntity {
             return new OSMWay(id, nodes, attributes.build());
         }
         
-        /*
-         * TODO doc
-         * 
-         * @see ch.epfl.imhof.osm.OSMEntity.Builder#isIncomplete()
-         */
         @Override
         public boolean isIncomplete() {
             return incomplete || nodes.size() < 2;

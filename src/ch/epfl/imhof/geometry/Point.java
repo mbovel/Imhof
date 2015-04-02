@@ -8,7 +8,7 @@ package ch.epfl.imhof.geometry;
 public final class Point {
     private final double x;
     private final double y;
-
+    
     /**
      * Constructs a point, given its x-coordinate and y-coordinate
      * 
@@ -21,14 +21,14 @@ public final class Point {
         this.x = x;
         this.y = y;
     }
-
+    
     /**
      * @return point's abscissa
      */
     public double x() {
         return x;
     }
-
+    
     /**
      * @return point's ordinate
      */

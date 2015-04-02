@@ -18,7 +18,7 @@ public final class OpenPolyLine extends PolyLine {
     public OpenPolyLine(List<Point> points) {
         super(points);
     }
-
+    
     /**
      * Returns <code>true</code> if the last point is connected to the first
      * one. This is always <code>false</code> for an <code>OpenPolyLine</code>.
@@ -26,6 +26,7 @@ public final class OpenPolyLine extends PolyLine {
      * @see ch.epfl.imhof.geometry.PolyLine#isClosed()
      * @return false
      */
+    @Override
     public boolean isClosed() {
         return false;
     }

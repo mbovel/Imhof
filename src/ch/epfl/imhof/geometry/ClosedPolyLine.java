@@ -19,39 +19,7 @@ public final class ClosedPolyLine extends PolyLine {
     public ClosedPolyLine(List<Point> points) {
         super(points);
     }
-
-    /**
-     * Returns <code>true</code> if the last point is connected to the first
-     * one. This is always false for a {@link ClosedPolyLine}.
-     *
-     * @see ch.epfl.imhof.geometry.PolyLine#isClosed()
-     * @return <code>true</code>
-     */
-    public boolean isClosed() {
-        return true;
-    }
-
-    /**
-     * Returns the signed area.
-     * <p>
-     * It is positive if if and only if the vertices of the triangle are
-     * organized counterclockwise.
-     * 
-     * @return the signed area
-     */
-    public double signedArea() {
-        double area = 0;
-
-        for (int i = 0; i != points.size(); ++i) {
-            Point p1 = points.get(i);
-            Point p2 = points.get(nextIndex(i));
-
-            area += p1.x() * p2.y() - p2.x() * p1.y();
-        }
-
-        return area / 2;
-    }
-
+    
     /**
      * Returns the area.
      * <p>
@@ -62,7 +30,7 @@ public final class ClosedPolyLine extends PolyLine {
     public double area() {
         return Math.abs(signedArea());
     }
-
+    
     /**
      * Returns <code>true</code> if p is in this polyline.
      * 
@@ -75,20 +43,53 @@ public final class ClosedPolyLine extends PolyLine {
         for (int i = 0; i != points.size(); ++i) {
             Point p1 = points.get(i);
             Point p2 = points.get(nextIndex(i));
-
+            
             if (p1.y() <= p.y()) {
                 if (p2.y() > p.y() && isLeft(p, p1, p2)) {
                     ++indice;
                 }
             }
-
+            
             else if (p2.y() <= p.y() && isLeft(p, p2, p1)) {
                 --indice;
             }
         }
-        return (indice != 0);
+        return indice != 0;
     }
-
+    
+    /**
+     * Returns <code>true</code> if the last point is connected to the first
+     * one. This is always false for a {@link ClosedPolyLine}.
+     *
+     * @see ch.epfl.imhof.geometry.PolyLine#isClosed()
+     * @return <code>true</code>
+     */
+    @Override
+    public boolean isClosed() {
+        return true;
+    }
+    
+    /**
+     * Returns the signed area.
+     * <p>
+     * It is positive if and only if the vertices of the triangle are organized
+     * counterclockwise.
+     * 
+     * @return the signed area
+     */
+    public double signedArea() {
+        double area = 0;
+        
+        for (int i = 0; i != points.size(); ++i) {
+            Point p1 = points.get(i);
+            Point p2 = points.get(nextIndex(i));
+            
+            area += p1.x() * p2.y() - p2.x() * p1.y();
+        }
+        
+        return area / 2;
+    }
+    
     /**
      * Returns <code>true</code> if <code>p</code> is on the left of the segment
      * defined by the points <code>p1</code> and <code>p2</code>,
@@ -104,12 +105,12 @@ public final class ClosedPolyLine extends PolyLine {
      *         <code>p1</code>,<code>p2</code>)
      */
     private boolean isLeft(Point p, Point p1, Point p2) {
-        return ((p1.x() - p.x()) * (p2.y() - p.y()) > (p2.x() - p.x())
-                * (p1.y() - p.y()));
+        return (p1.x() - p.x()) * (p2.y() - p.y()) > (p2.x() - p.x())
+                * (p1.y() - p.y());
     }
-
+    
     /**
-     * Returns the index of the next point, given the valid index of a point,
+     * Returns the index of the next point, given the valid index of a point.
      * 
      * @param index
      *            the valid index of a point

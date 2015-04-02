@@ -28,20 +28,19 @@ public final class OSMMapReader {
     }
     
     /**
-     * Reads an osm file and returns an {@link OSMMap}. Uncompress the osm fil
-     * with Gzip if the second argument is <code>true</code>.
+     * Reads an osm file and returns an {@link OSMMap}. Ungzip the file if the
+     * second argument is <code>true</code>.
      * 
      * @param fileName
-     *            the name of the osm file to read.
+     *            the name of the osm file to read
      * @param unGZip
-     *            boolean that tells if it must uncompress the file with Gzip or
-     *            not.
-     * @return an {@link OSMMap} based on the osm file in argument.
+     *            boolean that tells if the file is gzip compressed or not.
+     * @return an {@link OSMMap} based on the osm file in argument
      * @throws IOException
-     *             when something goes wrong in the reading process.
+     *             when something goes wrong in the reading process
      * @throws when
      *             something is wrong with the osm file, for example when an
-     *             attributes is missing.
+     *             attributes is missing
      */
     public static OSMMap readOSMFile(String fileName, boolean unGZip)
             throws IOException, SAXException {
@@ -259,7 +258,7 @@ public final class OSMMapReader {
             String str = currentAtts.getValue(name);
             
             if (str == null) {
-                throw new OSMMissingAttributeException(currentEl, "id", locator);
+                throw new OSMMissingAttributeException(currentEl, name, locator);
             }
             
             return str;
@@ -298,8 +297,12 @@ public final class OSMMapReader {
         };
     }
     
+    // This exception should be defined in its own file, but we put it here to
+    // be sure it is not ignored by the « système de rendu ».
+    
     /**
-     * A class that define OSMMissingAttributeException.
+     * This exception is thrown if an attribute is missing on an element in an
+     * osm file.
      * 
      * @author Matthieu Bovel (250300)
      *
@@ -311,8 +314,9 @@ public final class OSMMapReader {
         
         public OSMMissingAttributeException(String el, String attr,
                 Locator locator) {
-            super("Missing attribute `" + attr + "` on element `" + el + "`",
-                    locator);
+            super(
+                "Missing attribute `" + attr + "` on element `" + el + "`",
+                locator);
         }
     }
     

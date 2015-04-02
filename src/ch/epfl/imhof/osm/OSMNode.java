@@ -1,19 +1,19 @@
 package ch.epfl.imhof.osm;
 
-import ch.epfl.imhof.*;
+import ch.epfl.imhof.Attributes;
+import ch.epfl.imhof.PointGeo;
 
 /**
  * Represents an open street map node.
  * <p>
- * An open street map node has a unique id (<code>long</code>), a position
- * ({@link PointGeo}) and some attributes ({@link Attributes}).
+ * An open street map node has a unique id (<code>long</code>), a position (
+ * {@link PointGeo}) and some attributes ({@link Attributes}).
  * 
  * @author Matteo Besançon (245826)
  */
 public final class OSMNode extends OSMEntity {
-
     private final PointGeo position;
-
+    
     /**
      * Constructs a new <code>OSMNode</code> given its unique id, attributes and
      * position.
@@ -29,7 +29,7 @@ public final class OSMNode extends OSMEntity {
         super(id, attributes);
         this.position = position;
     }
-
+    
     /**
      * Returns the <code>position</code> of the <code>OSMNode</code>.
      * 
@@ -38,7 +38,7 @@ public final class OSMNode extends OSMEntity {
     public PointGeo position() {
         return position;
     }
-
+    
     /**
      * A class that helps in the construction of a {@link OSMNode}.
      * 
@@ -47,7 +47,7 @@ public final class OSMNode extends OSMEntity {
      */
     public final static class Builder extends OSMEntity.Builder {
         private final PointGeo position;
-
+        
         /**
          * Constructs an <code>OSMNode.Builder</code> with the id and the
          * position of the future <code>OSMNode</code>.
@@ -61,7 +61,7 @@ public final class OSMNode extends OSMEntity {
             super(id);
             this.position = position;
         }
-
+        
         /**
          * Constructs a new <code>OSMNode</code> instance using the datas
          * provided by the <code>OSMNode.Builder</code>.
@@ -72,13 +72,14 @@ public final class OSMNode extends OSMEntity {
          *             if the <code>OSMNode</code> is not complete (
          *             <code>incomplete = true</code>)
          */
+        @Override
         public OSMNode build() throws IllegalStateException {
             if (incomplete) {
                 throw new IllegalStateException(
-                        "the OSMNode is not complete yet.");
+                    "the OSMNode is not complete yet.");
             }
-
-            return new OSMNode(this.id, this.position, this.attributes.build());
+            
+            return new OSMNode(id, position, attributes.build());
         }
     }
 }

@@ -22,7 +22,8 @@ public final class Attributes {
      * @param attributes
      */
     public Attributes(Map<String, String> attributes) {
-        this.attributes = Collections.unmodifiableMap(new HashMap<>(attributes));
+        this.attributes = Collections
+            .unmodifiableMap(new HashMap<>(attributes));
     }
     
     /**
@@ -37,8 +38,8 @@ public final class Attributes {
     }
     
     /**
-     * Returns <code>true</code> if this set of attributes contains the
-     * specified attribute key.
+     * Returns <code>true</code> if this set of attributes contains an attribute
+     * with the given key.
      * 
      * @param key
      *            the attribute key
@@ -50,47 +51,48 @@ public final class Attributes {
     }
     
     /**
-     * Returns the value of the specified attribute key, specified as a string,
-     * or null if the attribute was not found.
+     * Returns the value associated to the given key, specified as a string, or
+     * <code>null</code> if an attribute with the given key does not exist.
      * 
      * @param key
      *            the attribute key as a {@link String}
      * @return the String value of the specified attribute key, or
-     *         <code>null</code> if not found
+     *         <code>null</code> if an attribute with the given key does not
+     *         exist.
      */
     public String get(String key) {
         return attributes.get(key);
     }
     
     /**
-     * Returns the string value to which the specified key is mapped, or
-     * <code>defaultValue</code> if this map contains no mapping for the given
-     * key.
+     * Returns the string value associated to the given key, or
+     * <code>defaultValue</code> if an attribute with the given key does not
+     * exist.
      * 
      * @param key
      *            the attribute key as a string
      * @param defaultValue
-     *            the default mapping associated to the key
-     * @return the string value to which the specified key is mapped, or
-     *         <code>defaultValue</code> if this map contains no string mapped
-     *         to the given key
+     *            the default value associated to the key
+     * @return the string value associated to the given key, or
+     *         <code>defaultValue</code> if an attribute with the given key does
+     *         not exist.
      */
     public String get(String key, String defaultValue) {
         return attributes.getOrDefault(key, defaultValue);
     }
     
     /**
-     * Returns the integer value to which the specified key is mapped, or
-     * <code>defaultValue</code> if this map contains no mapping for the given
-     * key.
+     * Returns the integer value associated to the given key, or
+     * <code>defaultValue</code> if an attribute with the given key does not
+     * exist.
      * 
      * @param key
      *            the attribute key as a string
      * @param defaultValue
-     *            the default mapping associated to the key
-     * @return the integer value to which the specified key is mapped, or
-     *         <code>defaultValue</code> if this map contains no valid integer
-     *         mapped to the given key.
+     *            the default value associated to the key
+     * @return the integer value associated to the given key, or
+     *         <code>defaultValue</code> if an attribute with the given key does
+     *         not exist.
      */
     public int get(String key, int defaultValue) {
         if (!attributes.containsKey(key)) {
