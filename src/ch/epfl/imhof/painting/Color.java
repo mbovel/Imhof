@@ -1,6 +1,10 @@
 package ch.epfl.imhof.painting;
 
 
+/**
+ * @author Matteo Besançon (245826)
+ *
+ */
 public class Color {
     
     private final float r, g, b;
