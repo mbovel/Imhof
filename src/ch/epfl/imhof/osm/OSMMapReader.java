@@ -319,5 +319,4 @@ public final class OSMMapReader {
                 locator);
         }
     }
-    
 }
