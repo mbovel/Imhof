@@ -5,6 +5,17 @@ public class Color {
     
     private final float r, g, b;
     
+    public static final Color red = rgb(1.0f,0.0f,0.0f);
+    public static final Color RED = rgb(1.0f,0.0f,0.0f);
+    public static final Color green = rgb(0.0f,1.0f,0.0f);
+    public static final Color GREEN = rgb(0.0f,1.0f,0.0f);
+    public static final Color blue = rgb(0.0f,0.0f,1.0f);
+    public static final Color BLUE = rgb(0.0f,0.0f,1.0f);
+    public static final Color black = rgb(0.0f,0.0f,0.0f);
+    public static final Color BLACK = rgb(0.0f,0.0f,0.0f);
+    public static final Color white = rgb(1.0f,1.0f,1.0f);
+    public static final Color WHITE = rgb(1.0f,1.0f,1.0f);
+    
     private Color(float r, float g, float b) {
         this.r = r;
         this.g = g;
