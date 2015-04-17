@@ -2,10 +2,8 @@ package ch.epfl.imhof.painting;
 
 /**
  * @author Matteo Besançon (245826)
- *
  */
 public class LineStyle {
-    
     public enum LineJoin {
         BEVEL, MITER, ROUND
     }
@@ -14,15 +12,11 @@ public class LineStyle {
         BUTT, ROUND, SQUARE
     }
     
-    private float    lineWidth;
-    private Color    lineColor;
-    private LineCap  lineCap;
-    private LineJoin lineJoin;
-    private float[]  lineDashingPattern;
-    
-    public LineStyle(float width, Color color) {
-        this(width, color, LineCap.BUTT, LineJoin.MITER, new float[0]);
-    }
+    private final float    width;
+    private final Color    color;
+    private final LineCap  cap;
+    private final LineJoin join;
+    private final float[]  dashingPattern;
     
     public LineStyle(float width, Color color, LineCap cap, LineJoin join,
             float[] dashingPattern) throws IllegalArgumentException {
@@ -30,58 +24,61 @@ public class LineStyle {
             throw new IllegalArgumentException("width cannot be negative");
         }
         
-        for (int i = 0; i != dashingPattern.length; ++i) {
-            if (dashingPattern[i] <= 0.0) {
+        for (float f : dashingPattern) {
+            if (f <= 0.0) {
                 throw new IllegalArgumentException(
-                        "Cannot have a segment null or negative in the dashing pattern");
+                    "Cannot have a null or negative segment in the dashing pattern");
             }
         }
         
-        this.lineWidth = width;
-        this.lineColor = color;
-        this.lineCap = cap;
-        this.lineJoin = join;
-        this.lineDashingPattern = dashingPattern;
-    }
-
-    public float lineWidth() {
-        return lineWidth;
-    }
-
-    public Color lineColor() {
-        return lineColor;
-    }
-
-    public LineCap lineCap() {
-        return lineCap;
-    }
-
-    public LineJoin lineJoin() {
-        return lineJoin;
-    }
-
-    public float[] lineDashingPattern() {
-        return lineDashingPattern;
+        this.width = width;
+        this.color = color;
+        this.cap = cap;
+        this.join = join;
+        this.dashingPattern = dashingPattern;
     }
     
-    public LineStyle withWidth(float newWidth){
-        return new LineStyle(newWidth, lineColor, lineCap, lineJoin, lineDashingPattern );
+    public LineStyle(float width, Color color) {
+        this(width, color, LineCap.BUTT, LineJoin.MITER, new float[0]);
     }
     
-    public LineStyle withColor(Color newColor){
-        return new LineStyle(lineWidth, newColor, lineCap, lineJoin, lineDashingPattern );
+    public float width() {
+        return width;
     }
     
-    public LineStyle withCap(LineCap newCap){
-        return new LineStyle(lineWidth, lineColor, newCap, lineJoin, lineDashingPattern );
+    public Color color() {
+        return color;
     }
     
-    public LineStyle withJoin(LineJoin newJoin){
-        return new LineStyle(lineWidth, lineColor, lineCap, newJoin, lineDashingPattern );
+    public LineCap cap() {
+        return cap;
     }
     
-    public LineStyle withDashingPattern(float[] newDashingPattern){
-        return new LineStyle(lineWidth, lineColor, lineCap, lineJoin, newDashingPattern );
+    public LineJoin join() {
+        return join;
     }
-
+    
+    public float[] dashingPattern() {
+        return dashingPattern;
+    }
+    
+    public LineStyle withWidth(float newWidth) {
+        return new LineStyle(newWidth, color, cap, join, dashingPattern);
+    }
+    
+    public LineStyle withColor(Color newColor) {
+        return new LineStyle(width, newColor, cap, join, dashingPattern);
+    }
+    
+    public LineStyle withCap(LineCap newCap) {
+        return new LineStyle(width, color, newCap, join, dashingPattern);
+    }
+    
+    public LineStyle withJoin(LineJoin newJoin) {
+        return new LineStyle(width, color, cap, newJoin, dashingPattern);
+    }
+    
+    public LineStyle withDashingPattern(float[] newDashingPattern) {
+        return new LineStyle(width, color, cap, join, newDashingPattern);
+    }
 }
