@@ -21,6 +21,21 @@ public class Color {
         this.b = b;
     }
     
+    private static void checkColorValues(float... colors) {
+        for (float color : colors) {
+            if (color < 0) {
+                throw new IllegalArgumentException(
+                        "The color value must be at least 0");
+            }
+            
+            if (color > 1) {
+                throw new IllegalArgumentException(
+                        "The color value must be at most 1");
+            }
+            
+        }
+    }
+    
     /**
      * Returns the red value of the color.
      *
@@ -109,21 +124,6 @@ public class Color {
             throws IllegalArgumentException {
         checkColorValues(r, g, b);
         return new Color(r, g, b);
-    }
-    
-    private static void checkColorValues(float... colors) {
-        for (float color : colors) {
-            if (color < 0) {
-                throw new IllegalArgumentException(
-                        "The color value must be at least 0");
-            }
-            
-            if (color > 1) {
-                throw new IllegalArgumentException(
-                        "The color value must be at most 1");
-            }
-            
-        }
     }
     
     /**
