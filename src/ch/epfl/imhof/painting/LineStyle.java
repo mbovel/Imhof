@@ -1,7 +1,16 @@
 package ch.epfl.imhof.painting;
 
 /**
- * This class is used to the differents style possible for a line.
+ * The drawing style of a {@link PolyLine}.
+ * <p>
+ * Holds informations about
+ * <ul>
+ * <li>line width,</li>
+ * <li>line color,</li>
+ * <li>line cap,</li>
+ * <li>line join,
+ * <li>line dashing pattern.</li>
+ * </ul>
  * 
  * @author Matteo Besançon (245826)
  */
