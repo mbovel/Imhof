@@ -167,7 +167,7 @@ public class LineStyle {
      * Returns a new <code>LineStyle</code> with the given line join.
      * 
      * @param newJoin
-     *            the line join wanted for the new <code>LineStyle</code>.
+     *            the line join wanted for the new <code>LineStyle</code>
      * 
      * @return the new <code>LineStyle</code>
      */
