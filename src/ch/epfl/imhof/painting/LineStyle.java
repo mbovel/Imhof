@@ -6,9 +6,8 @@ package ch.epfl.imhof.painting;
  * @author Matteo Besançon (245826)
  */
 public class LineStyle {
-    
     /**
-     * The differents way to join two segments of a line.
+     * The different ways to join two segments of a line.
      *
      */
     public enum LineJoin {
@@ -16,7 +15,7 @@ public class LineStyle {
     }
     
     /**
-     * The differents ways to end a line.
+     * The different ways to end a line.
      *
      */
     public enum LineCap {
@@ -30,22 +29,23 @@ public class LineStyle {
     private final float[]  dashingPattern;
     
     /**
-     * Creat a new instance of <code>LineStyle</code> given all its parametre.
+     * Creates a new instance of <code>LineStyle</code> given all its
+     * parameters.
      * 
      * @param width
-     *            the width of the line.
+     *            the width of the line
      * @param color
-     *            the color of the line.
+     *            the color of the line
      * @param cap
-     *            the way to end the line.
+     *            the way to end the line
      * @param join
-     *            the way to join two segments of the line.
+     *            the way to join two segments of the line
      * @param dashingPattern
-     *            the sequence of opacity of the line.
+     *            the sequence of opacity of the line
      * 
      * @throws IllegalArgumentException
-     *             if the width of the line is negative or if the sequece of
-     *             opacity of the line contains a negative or null ellement.
+     *             if the width of the line is negative or if the sequence of
+     *             opacity of the line contains a negative or null value
      */
     public LineStyle(float width, Color color, LineCap cap, LineJoin join,
             float[] dashingPattern) throws IllegalArgumentException {
@@ -56,7 +56,7 @@ public class LineStyle {
         for (float f : dashingPattern) {
             if (f <= 0.0) {
                 throw new IllegalArgumentException(
-                        "Cannot have a null or negative segment in the dashing pattern");
+                    "Cannot have a null or negative segment in the dashing pattern");
             }
         }
         
@@ -68,15 +68,15 @@ public class LineStyle {
     }
     
     /**
-     * Creat a new instance of <code>LineStyle</code> given its width and color.
-     * By default the <code>LineCap</code> is <code>BUTT</code>, the
+     * Creates a new instance of <code>LineStyle</code> given its width and
+     * color. By default the <code>LineCap</code> is <code>BUTT</code>, the
      * <code>LineJoin</code> is <code>MITER</code> and the
      * <code>dashingPattern</code> is empty.
      * 
      * @param width
-     *            the width of the line.
+     *            the width of the line
      * @param color
-     *            the color of the line.
+     *            the color of the line
      */
     public LineStyle(float width, Color color) {
         this(width, color, LineCap.BUTT, LineJoin.MITER, new float[0]);
@@ -112,7 +112,7 @@ public class LineStyle {
     /**
      * Returns the line join.
      * 
-     * @return the line join.
+     * @return the line join
      */
     public LineJoin join() {
         return join;
@@ -131,7 +131,7 @@ public class LineStyle {
      * Returns a new <code>LineStyle</code> with the given width.
      * 
      * @param newWidth
-     *            the line width wanted for the new <code>LineStyle</code>.
+     *            the line width wanted for the new <code>LineStyle</code>
      * 
      * @return the new <code>LineStyle</code>
      */
@@ -143,7 +143,7 @@ public class LineStyle {
      * Returns a new <code>LineStyle</code> with the given color.
      * 
      * @param newColor
-     *            the color wanted for the new <code>LineStyle</code>.
+     *            the color wanted for the new <code>LineStyle</code>
      * 
      * @return the new <code>LineStyle</code>
      */
@@ -155,7 +155,7 @@ public class LineStyle {
      * Returns a new <code>LineStyle</code> with the given line cap.
      * 
      * @param newCap
-     *            the line cap wanted for the new <code>LineStyle</code>.
+     *            the line cap wanted for the new <code>LineStyle</code>
      * 
      * @return the new <code>LineStyle</code>
      */
@@ -179,7 +179,7 @@ public class LineStyle {
      * Returns a new <code>LineStyle</code> with the given dashing pattern.
      * 
      * @param newDashingPattern
-     *            the dashing pattern wanted for the new <code>LineStyle</code>.
+     *            the dashing pattern wanted for the new <code>LineStyle</code>
      * 
      * @return the new <code>LineStyle</code>
      */
