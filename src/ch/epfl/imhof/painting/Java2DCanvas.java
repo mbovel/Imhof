@@ -59,6 +59,7 @@ public class Java2DCanvas implements Canvas {
         return image;
     }
     
+    // NOT FORGET TO SET VISIBILITY TO PRIVATE WHEN DONE WITH TESTING !!!!
     public void paint(String name) throws IOException {
         ImageIO.write(image, "png", new File(name + ".png"));
     }
