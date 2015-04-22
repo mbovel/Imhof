@@ -62,12 +62,15 @@ public class LineStyle {
             throw new IllegalArgumentException("Width cannot be negative");
         }
         
-        for (float f : dashingPattern) {
-            if (f <= 0.0f) {
-                throw new IllegalArgumentException(
-                    "Cannot have a null or negative segment in the dashing pattern");
+        if(dashingPattern!= null){
+            for (float f : dashingPattern) {
+                if (f <= 0.0f) {
+                    throw new IllegalArgumentException(
+                        "Cannot have a null or negative segment in the dashing pattern");
+                }
             }
         }
+        
         
         this.width = width;
         this.color = color;
@@ -88,7 +91,7 @@ public class LineStyle {
      *            the color of the line
      */
     public LineStyle(float width, Color color) {
-        this(width, color, LineCap.BUTT, LineJoin.MITER, new float[0]);
+        this(width, color, LineCap.BUTT, LineJoin.MITER, null);
     }
     
     /**
