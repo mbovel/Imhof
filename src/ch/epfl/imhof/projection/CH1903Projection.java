@@ -15,44 +15,6 @@ import ch.epfl.imhof.geometry.Point;
  */
 public final class CH1903Projection implements Projection {
     /**
-     * Transforms a point in cartesian coordinates to a point in spherical
-     * coordinates using a “CH1903 projection”.
-     * 
-     * @param point
-     *            a point in cartesian coordinates
-     * @return a point in spherical coordinates
-     */
-    @Override
-    public PointGeo inverse(Point point) {
-        double lambda0, phi0, x1, y1, lambda, phi;
-        
-        // @formatter:off
-             x1 = (point.x() - 600000.0) / 1000000.0;
-
-             y1 = (point.y() - 200000.0) / 1000000.0;
-
-        lambda0 =   2.6779094
-                   + 4.728982 * x1
-                   + 0.791484 * x1 * y1
-                   + 0.1306 * x1 * Math.pow(y1, 2.0)
-                   - 0.0436 * Math.pow(x1, 3.0);
-
-           phi0 =   16.9023892
-                   + 3.238272 * y1
-                   - 0.270978 * Math.pow(x1, 2.0)
-                   - 0.002528 * Math.pow(y1, 2.0)
-                   - 0.0447 * Math.pow(x1, 2.0) * y1
-                   - 0.0140 * Math.pow(y1, 3.0);
-
-          lambda = lambda0 * (100.0 / 36.0);
-
-             phi = phi0 * (100.0 / 36.0);
-        // @formatter:on
-        
-        return new PointGeo(Math.toRadians(lambda), Math.toRadians(phi));
-    }
-    
-    /**
      * Transforms a point in spherical coordinates to a point in cartesian
      * coordinates using a “CH1903 projection”.
      * 
@@ -89,5 +51,45 @@ public final class CH1903Projection implements Projection {
         // @formatter:on
         
         return new Point(x, y);
+    }
+    
+    /**
+     * Transforms a point in cartesian coordinates to a point in spherical
+     * coordinates using a “CH1903 projection”.
+     * 
+     * @param point
+     *            a point in cartesian coordinates
+     * @return a point in spherical coordinates
+     */
+    @Override
+    public PointGeo inverse(Point point) {
+        double lambda0, phi0, x1, y1, lambda, phi;
+        
+        // Discussion about Math.pow caching
+        // https://piazza.com/class/i39wbwd15v83mt?cid=275
+        // @formatter:off
+             x1 = (point.x() - 600000.0) / 1000000.0;
+
+             y1 = (point.y() - 200000.0) / 1000000.0;
+
+        lambda0 =   2.6779094
+                   + 4.728982 * x1
+                   + 0.791484 * x1 * y1
+                   + 0.1306 * x1 * Math.pow(y1, 2.0)
+                   - 0.0436 * Math.pow(x1, 3.0);
+
+           phi0 =   16.9023892
+                   + 3.238272 * y1
+                   - 0.270978 * Math.pow(x1, 2.0)
+                   - 0.002528 * Math.pow(y1, 2.0)
+                   - 0.0447 * Math.pow(x1, 2.0) * y1
+                   - 0.0140 * Math.pow(y1, 3.0);
+
+          lambda = lambda0 * (100.0 / 36.0);
+
+             phi = phi0 * (100.0 / 36.0);
+        // @formatter:on
+        
+        return new PointGeo(Math.toRadians(lambda), Math.toRadians(phi));
     }
 }

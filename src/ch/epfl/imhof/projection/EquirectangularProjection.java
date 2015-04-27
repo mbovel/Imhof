@@ -14,19 +14,6 @@ import ch.epfl.imhof.geometry.Point;
  */
 public final class EquirectangularProjection implements Projection {
     /**
-     * Transforms a point in cartesian coordinates to a point in spherical
-     * coordinates using a simple Equirectangular projection.
-     * 
-     * @param point
-     *            a point in cartesian coordinates
-     * @return a point in spherical coordinates
-     */
-    @Override
-    public PointGeo inverse(Point point) {
-        return new PointGeo(point.x(), point.y());
-    }
-    
-    /**
      * Transforms a point in spherical coordinates to a point in cartesian
      * coordinates using a simple Equirectangular projection.
      * 
@@ -37,5 +24,18 @@ public final class EquirectangularProjection implements Projection {
     @Override
     public Point project(PointGeo point) {
         return new Point(point.longitude(), point.latitude());
+    }
+    
+    /**
+     * Transforms a point in cartesian coordinates to a point in spherical
+     * coordinates using a simple Equirectangular projection.
+     * 
+     * @param point
+     *            a point in cartesian coordinates
+     * @return a point in spherical coordinates
+     */
+    @Override
+    public PointGeo inverse(Point point) {
+        return new PointGeo(point.x(), point.y());
     }
 }

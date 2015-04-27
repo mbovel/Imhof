@@ -11,16 +11,6 @@ import ch.epfl.imhof.geometry.Point;
  */
 public interface Projection {
     /**
-     * Transforms a point in cartesian coordinates to a point in spherical
-     * coordinates.
-     * 
-     * @param point
-     *            a point in cartesian coordinates
-     * @return a point in spherical coordinates
-     */
-    public PointGeo inverse(Point point);
-    
-    /**
      * Transforms a point in spherical coordinates to a point in cartesian
      * coordinates.
      * 
@@ -29,4 +19,14 @@ public interface Projection {
      * @return a point in cartesian coordinates
      */
     public Point project(PointGeo point);
+    
+    /**
+     * Transforms a point in cartesian coordinates to a point in spherical
+     * coordinates.
+     * 
+     * @param point
+     *            a point in cartesian coordinates
+     * @return a point in spherical coordinates
+     */
+    public PointGeo inverse(Point point);
 }
