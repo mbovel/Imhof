@@ -1,4 +1,4 @@
-package ch.epfl.imhof.painting;
+package ch.epfl.imhof;
 
 import static ch.epfl.imhof.painting.Color.gray;
 import static ch.epfl.imhof.painting.Color.rgb;
@@ -18,16 +18,16 @@ public final class SwissPainter {
 
     static {
         Color black = Color.BLACK;
-        Color darkGray = gray(0.2f);
-        Color darkGreen = rgb(0.75f, 0.85f, 0.7f);
-        Color darkRed = rgb(0.7f, 0.15f, 0.15f);
-        Color darkBlue = rgb(0.45f, 0.7f, 0.8f);
-        Color lightGreen = rgb(0.85f, 0.9f, 0.85f);
-        Color lightGray = gray(0.9f);
-        Color orange = rgb(1f, 0.75f, 0.2f);
-        Color lightYellow = rgb(1f, 1f, 0.5f);
-        Color lightRed = rgb(0.95f, 0.7f, 0.6f);
-        Color lightBlue = rgb(0.8f, 0.9f, 0.95f);
+        Color darkGray = gray(0.2);
+        Color darkGreen = rgb(0.75, 0.85, 0.7);
+        Color darkRed = rgb(0.7, 0.15, 0.15);
+        Color darkBlue = rgb(0.45, 0.7, 0.8);
+        Color lightGreen = rgb(0.85, 0.9, 0.85);
+        Color lightGray = gray(0.9);
+        Color orange = rgb(1, 0.75, 0.2);
+        Color lightYellow = rgb(1, 1, 0.5);
+        Color lightRed = rgb(0.95, 0.7, 0.6);
+        Color lightBlue = rgb(0.8, 0.9, 0.95);
         Color white = Color.WHITE;
 
         Painter roadPainter = RoadPainterGenerator.painterForRoads(
