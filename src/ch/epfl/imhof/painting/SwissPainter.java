@@ -30,6 +30,7 @@ public final class SwissPainter {
         Color lightBlue = rgb(0.8f, 0.9f, 0.95f);
         Color white = Color.WHITE;
         
+        // @formatter:off
         Painter roadPainter = RoadPainterGenerator.painterForRoads(
             new RoadSpec(tagged("highway", "motorway", "trunk"), 2, orange,
                     0.5f, black),
@@ -46,12 +47,14 @@ public final class SwissPainter {
             new RoadSpec(tagged("highway", "secondary_link"), 1.7f,
                     lightYellow, 0.35f, black),
             new RoadSpec(tagged("highway", "residential", "living_street",
-                "unclassified"), 1.2f, white, 0.15f, black), new RoadSpec(
-                    tagged("highway", "service", "pedestrian"), 0.5f, white,
-                    0.15f, black));
+                "unclassified"), 1.2f, white, 0.15f, black),
+            new RoadSpec(tagged("highway", "service", "pedestrian"), 0.5f, white,
+                    0.15f, black)
+            );
+        // @formatter:on
         
         Painter fgPainter = roadPainter.above(
-            line(0.5f, darkGray, LineCap.Round, LineJoin.Miter, 1f, 2f).when(
+            line(0.5f, darkGray, LineCap.ROUND, LineJoin.MITER, new float[]{1f, 2f}).when(
                 tagged("highway", "footway", "steps", "path", "track",
                     "cycleway")))
                 .above(polygon(darkGray).when(tagged("building")))
