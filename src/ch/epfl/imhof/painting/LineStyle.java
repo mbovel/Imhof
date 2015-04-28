@@ -91,7 +91,7 @@ public class LineStyle {
      *            the color of the line
      */
     public LineStyle(float width, Color color) {
-        this(width, color, LineCap.BUTT, LineJoin.MITER, null);
+        this(width, color, LineCap.BUTT, LineJoin.MITER, new float[0]);
     }
     
     /**
