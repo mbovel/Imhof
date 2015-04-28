@@ -105,7 +105,7 @@ public class OurOSMMapReaderTest {
             map.relations().size());
     }
     
-    protected static OSMMap readOSMFile(final String fileName)
+    public static OSMMap readOSMFile(final String fileName)
             throws IOException, SAXException {
         assumeFileExists(fileName);
         final boolean unGZip = fileExtension(fileName).equals("gz");
