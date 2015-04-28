@@ -44,8 +44,7 @@ public class Java2DCanvas implements Canvas {
         
         // fill the background
         context.setColor(background.toJavaColor());
-        context.fillRect(0, 0, (int) relHeight + 1, (int) relWidth + 1);
-        
+        context.fillRect(0, 0, (int) relWidth + 1, (int) relHeight + 1);
     }
     
     public BufferedImage image() {
