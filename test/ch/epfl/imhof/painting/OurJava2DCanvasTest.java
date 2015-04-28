@@ -1,9 +1,10 @@
 package ch.epfl.imhof.painting;
 
-import static org.junit.Assert.*;
-
-import java.awt.BasicStroke;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import org.junit.Test;
 
@@ -15,42 +16,61 @@ import ch.epfl.imhof.painting.LineStyle.LineCap;
 import ch.epfl.imhof.painting.LineStyle.LineJoin;
 
 public class OurJava2DCanvasTest {
+    static private void canvasToFile(Java2DCanvas canvas, String fileName)
+            throws IOException {
+        ImageIO.write(canvas.image(), "png", new File(fileName + ".png"));
+    }
     
-    @Test
-    public void imageTest() throws IOException {
-        Java2DCanvas a = new Java2DCanvas(new Point(1, -1), new Point(8, 4),
-                134, 500, 500, Color.GREEN);
-        a.paint("test2");
+    static private Java2DCanvas polyLineOnCanvas(int res) {
+        Java2DCanvas canvas = new Java2DCanvas(
+            new Point(0, 0),
+            new Point(200, 200),
+            1500,
+            1500,
+            res,
+            Color.BLUE);
+        
+        PolyLine.Builder polyLineBuilder = new PolyLine.Builder();
+        
+        polyLineBuilder.addPoint(new Point(15, 15));
+        polyLineBuilder.addPoint(new Point(33, 6));
+        polyLineBuilder.addPoint(new Point(34, 60));
+        polyLineBuilder.addPoint(new Point(60, 26));
+        polyLineBuilder.addPoint(new Point(200, 200));
+        
+        OpenPolyLine polyLine = polyLineBuilder.buildOpen();
+        
+        LineStyle lineStyle = new LineStyle(
+            1,
+            Color.RED,
+            LineCap.ROUND,
+            LineJoin.ROUND,
+            null);
+        
+        canvas.drawPolyLine(polyLine, lineStyle);
+        
+        return canvas;
     }
     
     @Test
-    public void drawPolyLineTest() throws IOException {
-        Java2DCanvas a = new Java2DCanvas(new Point(0, 0), new Point(200, 200),
-                1500, 1500, 72, Color.BLUE);
-        
-        PolyLine.Builder b = new PolyLine.Builder();
-        
-        b.addPoint(new Point(15, 15));
-        b.addPoint(new Point(33, 6));
-        b.addPoint(new Point(34, 60));
-        b.addPoint(new Point(60, 26));
-        b.addPoint(new Point(200, 200));
-        
-        OpenPolyLine c = b.buildOpen();
-        
-        LineStyle d = new LineStyle(10, Color.RED, LineCap.ROUND,
-                LineJoin.ROUND, null);
-        
-        a.drawPolyLine(c, d);
-        
-        a.paint("test2");
-        
+    public void drawPolyLine72dpiWorks() throws IOException {
+        canvasToFile(polyLineOnCanvas(72), "test2_72dpi");
     }
     
     @Test
-    public void drawPolygonTest() throws IOException {
-        Java2DCanvas a = new Java2DCanvas(new Point(0, 0), new Point(200, 200),
-                800, 800, 72, Color.RED);
+    public void drawPolyLine300dpiWorks() throws IOException {
+        canvasToFile(polyLineOnCanvas(300), "test2_300dpi");
+    }
+    
+    @Test
+    public void drawPolygonWorks() throws IOException {
+        Java2DCanvas a = new Java2DCanvas(
+            new Point(0, 0),
+            new Point(200, 200),
+            800,
+            800,
+            72,
+            Color.RED);
         
         PolyLine.Builder shell = new PolyLine.Builder();
         
@@ -75,7 +95,7 @@ public class OurJava2DCanvasTest {
         
         a.drawPolygon(polygon.build(), Color.GREEN);
         
-        a.paint("test3");
+        canvasToFile(a, "test3");
     }
     
     /*

@@ -1,57 +1,50 @@
 package ch.epfl.imhof.painting;
 
-import java.awt.geom.Area;
+import static java.awt.RenderingHints.KEY_ANTIALIASING;
+import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
+
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.geom.Area;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
-
-import javax.imageio.ImageIO;
 
 import ch.epfl.imhof.geometry.ClosedPolyLine;
 import ch.epfl.imhof.geometry.Point;
 import ch.epfl.imhof.geometry.PolyLine;
 import ch.epfl.imhof.geometry.Polygon;
-import static java.awt.RenderingHints.KEY_ANTIALIASING;
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
 
 public class Java2DCanvas implements Canvas {
-    private double                 width, height;
-    private Color                  background;
-    private Function<Point, Point> change;
-    private BufferedImage          image;
-    private Graphics2D             context;
+    private final Function<Point, Point> change;
+    private final BufferedImage          image;
+    private final Graphics2D             context;
     
     public Java2DCanvas(Point bl, Point tr, int width, int height,
             int resolution, Color background) {
-        double resolutionFactor = (resolution / 72);
+        double resolutionFactor = resolution / 72.0;
+        double relWidth = width / resolutionFactor;
+        double relHeight = height / resolutionFactor;
         
-        this.width = width * resolutionFactor;
-        this.height = height * resolutionFactor;
-        this.background = background;
+        change = Point.alignedCoordinateChange(
+            bl,
+            new Point(0, relHeight),
+            tr,
+            new Point(relWidth, 0));
         
-        this.change = Point.alignedCoordinateChange(bl, new Point(0,
-                this.height), tr, new Point(this.width, 0));
+        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         
-        this.image = new BufferedImage((int) this.width, (int) this.height,
-                BufferedImage.TYPE_INT_RGB);
+        // create the graphical context
+        context = image.createGraphics();
         
-        // creat the graphical context
-        this.context = image.createGraphics();
+        context.scale(resolutionFactor, resolutionFactor);
         
         // set on the antialiasing
         context.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
         
         // fill the background
         context.setColor(background.toJavaColor());
-        context.fillRect(0, 0, width, height);
-        
-        // context.scale(width * resolutionFactor, height * resolutionFactor);
+        context.fillRect(0, 0, (int) relHeight + 1, (int) relWidth + 1);
         
     }
     
@@ -59,54 +52,68 @@ public class Java2DCanvas implements Canvas {
         return image;
     }
     
-    // NOT FORGET TO SET VISIBILITY TO PRIVATE WHEN DONE WITH TESTING !!!!
-    public void paint(String name) throws IOException {
-        ImageIO.write(image, "png", new File(name + ".png"));
-    }
-    
     @Override
     public void drawPolyLine(PolyLine toDraw, LineStyle style) {
-        BasicStroke stroke = styleToStroke(style);
+        BasicStroke stroke = lineStyleToBasicStroke(style);
         
         context.setStroke(stroke);
         context.setColor(style.color().toJavaColor());
         
-        context.draw(stroke.createStrokedShape(creatPath(toDraw)));
+        context.draw(polyLineToPath2D(toDraw));
     }
     
-    private Path2D creatPath(PolyLine toDraw) {
-        List<Point> toDrawPoints = changePoints(toDraw.points());
+    @Override
+    public void drawPolygon(Polygon toDraw, Color color) {
+        Path2D path = polyLineToPath2D(toDraw.shell());
+        Area area = new Area(path);
+        
+        for (ClosedPolyLine hole : toDraw.holes()) {
+            area.subtract(new Area(polyLineToPath2D(hole)));
+        }
+        
+        context.setColor(color.toJavaColor());
+        
+        context.fill(area);
+        context.draw(area);
+    }
+    
+    private Path2D polyLineToPath2D(PolyLine toDraw) {
         Path2D path = new Path2D.Double();
+        boolean first = true;
         
-        path.moveTo(change.apply(toDraw.firstPoint()).x(),
-            change.apply(toDraw.firstPoint()).y());
-        
-        for (int i = 1; i != toDrawPoints.size(); ++i) {
-            path.lineTo(toDrawPoints.get(i).x(), toDrawPoints.get(i).y());
+        for (Point point : toDraw.points()) {
+            Point relPoint = change.apply(point);
+            
+            if (first) {
+                path.moveTo(relPoint.x(), relPoint.y());
+            }
+            else {
+                path.lineTo(relPoint.x(), relPoint.y());
+            }
+            
+            first = false;
         }
         
         if (toDraw.isClosed()) {
             path.closePath();
         }
+        
         return path;
     }
     
-    private List<Point> changePoints(List<Point> points) {
-        List<Point> toReturn = new ArrayList<Point>();
-        
-        for (Point point : points) {
-            toReturn.add(change.apply(point));
-        }
-        return toReturn;
+    static private BasicStroke lineStyleToBasicStroke(LineStyle style) {
+        return new BasicStroke(
+            style.width(),
+            convertCap(style),
+            convertJoin(style),
+            10.0f,
+            style.dashingPattern(),
+            0.0f);
     }
     
-    private BasicStroke styleToStroke(LineStyle style) {
-        return new BasicStroke(style.width(), convertCap(style),
-                convertJoin(style), 10.0f, style.dashingPattern(), 0.0f);
-    }
-    
-    private int convertCap(LineStyle style) {
+    static private int convertCap(LineStyle style) {
         int value = 0;
+        
         switch (style.cap()) {
             case ROUND:
                 value = BasicStroke.CAP_ROUND;
@@ -118,11 +125,13 @@ public class Java2DCanvas implements Canvas {
                 value = BasicStroke.CAP_SQUARE;
                 break;
         }
+        
         return value;
     }
     
-    private int convertJoin(LineStyle style) {
+    static private int convertJoin(LineStyle style) {
         int value = 0;
+        
         switch (style.join()) {
             case BEVEL:
                 value = BasicStroke.JOIN_BEVEL;
@@ -134,22 +143,7 @@ public class Java2DCanvas implements Canvas {
                 value = BasicStroke.JOIN_MITER;
                 break;
         }
+        
         return value;
     }
-    
-    @Override
-    public void drawPolygon(Polygon toDraw, Color color) {
-        context.setColor(color.toJavaColor());
-        Path2D path = creatPath(toDraw.shell());
-        
-        Area area = new Area(path);
-        
-        for (ClosedPolyLine hole : toDraw.holes()) {
-            area.subtract(new Area(creatPath(hole)));
-        }
-        
-        context.fill(area);
-        context.draw(area);
-    }
-    
 }
