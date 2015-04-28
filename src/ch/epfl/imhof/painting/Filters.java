@@ -9,7 +9,7 @@ import ch.epfl.imhof.Attributed;
 
 public class Filters {
     private Filters() {
-    };
+    }
     
     static public Predicate<Attributed<?>> tagged(String name) {
         return a -> a.hasAttribute(name);
