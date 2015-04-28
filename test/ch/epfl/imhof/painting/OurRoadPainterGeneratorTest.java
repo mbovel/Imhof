@@ -38,6 +38,6 @@ public class OurRoadPainterGeneratorTest {
         // Dessin de la carte et stockage dans un fichier
         SwissPainter.painter().drawMap(map, canvas);
         
-        ImageIO.write(canvas.image(), "png", new File("loztot.png"));
+        ImageIO.write(canvas.image(), "png", new File("loz150dpi.png"));
     }
 }
