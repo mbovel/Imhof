@@ -100,12 +100,17 @@ public class Java2DCanvas implements Canvas {
     }
     
     static private BasicStroke lineStyleToBasicStroke(LineStyle style) {
+        float[] dash = style.dashingPattern();
+        if (style.dashingPattern().length == 0){
+            dash = null;
+        }
+        
         return new BasicStroke(
             style.width(),
             convertCap(style),
             convertJoin(style),
             10.0f,
-            style.dashingPattern(),
+            dash,
             0.0f);
     }
     
