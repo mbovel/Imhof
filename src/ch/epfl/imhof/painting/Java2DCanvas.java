@@ -73,7 +73,6 @@ public class Java2DCanvas implements Canvas {
         context.setColor(color.toJavaColor());
         
         context.fill(area);
-        context.draw(area);
     }
     
     private Path2D polyLineToPath2D(PolyLine toDraw) {
