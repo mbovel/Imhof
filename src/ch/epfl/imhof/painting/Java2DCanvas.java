@@ -15,11 +15,41 @@ import ch.epfl.imhof.geometry.Point;
 import ch.epfl.imhof.geometry.PolyLine;
 import ch.epfl.imhof.geometry.Polygon;
 
+/**
+ * This implementation of the {@link Canvas} interface use Java2D classes to
+ * draw polylines and polygons on a {@link BufferedImage}. The result is
+ * accessible with the {@link #image} getter.
+ * 
+ * @see <a
+ *      href="https://docs.oracle.com/javase/tutorial/2d/overview/index.html">Java2D
+ *      documentation, Oracle</a>
+ * @author Matteo Besançon (245826)
+ */
 public class Java2DCanvas implements Canvas {
     private final Function<Point, Point> change;
     private final BufferedImage          image;
     private final Graphics2D             context;
     
+    /**
+     * Constructs a new <code>Java2DCanvas</code> with given arguments.
+     * <p>
+     * Points at the bottom left and top right of the image are used so that the
+     * class can take care of doing all the necessary coordinate changes when
+     * drawing a {@link PolyLine} or a {@link Polygon}.
+     * 
+     * @param bl
+     *            the point at the bottom left of the image
+     * @param tr
+     *            the point at the top right of the image
+     * @param width
+     *            width of generated image, in pixels
+     * @param height
+     *            height of generated image, in pixels
+     * @param resolution
+     *            resolution of the generated image
+     * @param background
+     *            color of the background
+     */
     public Java2DCanvas(Point bl, Point tr, int width, int height,
             int resolution, Color background) {
         double resolutionFactor = resolution / 72.0;
@@ -47,10 +77,18 @@ public class Java2DCanvas implements Canvas {
         context.fillRect(0, 0, (int) relWidth + 1, (int) relHeight + 1);
     }
     
+    /**
+     * Returns the result as an image buffer.
+     * 
+     * @return the result as an image buffer
+     */
     public BufferedImage image() {
         return image;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void drawPolyLine(PolyLine toDraw, LineStyle style) {
         BasicStroke stroke = lineStyleToBasicStroke(style);
@@ -61,6 +99,9 @@ public class Java2DCanvas implements Canvas {
         context.draw(polyLineToPath2D(toDraw));
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void drawPolygon(Polygon toDraw, Color color) {
         Path2D path = polyLineToPath2D(toDraw.shell());
@@ -101,7 +142,8 @@ public class Java2DCanvas implements Canvas {
     
     static private BasicStroke lineStyleToBasicStroke(LineStyle style) {
         float[] dash = style.dashingPattern();
-        if (style.dashingPattern().length == 0){
+        
+        if (style.dashingPattern().length == 0) {
             dash = null;
         }
         
