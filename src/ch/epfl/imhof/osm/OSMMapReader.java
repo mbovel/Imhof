@@ -24,6 +24,21 @@ import ch.epfl.imhof.PointGeo;
  * @author Matthieu Bovel (250300)
  */
 public final class OSMMapReader {
+    private static final String NODE_EL       = "node";
+    private static final String WAY_EL        = "way";
+    private static final String REL_EL        = "relation";
+    private static final String TAG_EL        = "tag";
+    private static final String WAY_NODE_EL   = "nd";
+    private static final String REL_MEMBER_EL = "member";
+    private static final String LON_ATTR      = "lon";
+    private static final String LAT_ATTR      = "lat";
+    private static final String ID_ATTR       = "id";
+    private static final String REF_ATTR      = "ref";
+    private static final String ROLE_ATTR     = "role";
+    private static final String TYPE_ATTR     = "type";
+    private static final String KEY_ATTR      = "k";
+    private static final String VALUE_ATTR    = "v";
+    
     private OSMMapReader() {
     }
     
@@ -64,6 +79,8 @@ public final class OSMMapReader {
         
         xmlReader.parse(new InputSource(input));
         
+        input.close();
+        
         return handler.mapBuilder();
     }
     
@@ -99,15 +116,15 @@ public final class OSMMapReader {
             switch (state) {
                 case IN_ROOT:
                     switch (currentEl) {
-                        case "node":
+                        case NODE_EL:
                             nodeBuilder = parseNodeEl();
                             state = State.IN_NODE;
                             break;
-                        case "way":
+                        case WAY_EL:
                             wayBuilder = parseWayEl();
                             state = State.IN_WAY;
                             break;
-                        case "relation":
+                        case REL_EL:
                             relBuilder = parseRelationEl();
                             state = State.IN_RELATION;
                             break;
@@ -115,7 +132,7 @@ public final class OSMMapReader {
                     break;
                 case IN_NODE:
                     switch (currentEl) {
-                        case "tag":
+                        case TAG_EL:
                             OSMAttr attr = parseTagEl();
                             nodeBuilder.setAttribute(attr.key(), attr.value());
                             break;
@@ -123,7 +140,7 @@ public final class OSMMapReader {
                     break;
                 case IN_WAY:
                     switch (currentEl) {
-                        case "nd":
+                        case WAY_NODE_EL:
                             OSMNode node = parseNdEl();
                             if (node == null) {
                                 wayBuilder.setIncomplete();
@@ -132,7 +149,7 @@ public final class OSMMapReader {
                                 wayBuilder.addNode(node);
                             }
                             break;
-                        case "tag":
+                        case TAG_EL:
                             OSMAttr attr = parseTagEl();
                             wayBuilder.setAttribute(attr.key(), attr.value());
                             break;
@@ -140,7 +157,7 @@ public final class OSMMapReader {
                     break;
                 case IN_RELATION:
                     switch (currentEl) {
-                        case "member":
+                        case REL_MEMBER_EL:
                             OSMRelation.Member member = parseMemberEl();
                             if (member == null) {
                                 relBuilder.setIncomplete();
@@ -149,7 +166,7 @@ public final class OSMMapReader {
                                 relBuilder.addMember(member);
                             }
                             break;
-                        case "tag":
+                        case TAG_EL:
                             OSMAttr attr = parseTagEl();
                             relBuilder.setAttribute(attr.key(), attr.value());
                             break;
@@ -161,11 +178,13 @@ public final class OSMMapReader {
         @Override
         public void endElement(String uri, String lName, String qName) {
             currentEl = qName;
+            
+            // Incomplete elemnts are silently ignored
             switch (state) {
                 case IN_ROOT:
                     break;
                 case IN_NODE:
-                    if (currentEl.equals("node")) {
+                    if (currentEl.equals(NODE_EL)) {
                         if (!nodeBuilder.isIncomplete()) {
                             mapBuilder.addNode(nodeBuilder.build());
                         }
@@ -174,8 +193,7 @@ public final class OSMMapReader {
                     }
                     break;
                 case IN_WAY:
-                    // Incomplete Way is silently ignored
-                    if (currentEl.equals("way")) {
+                    if (currentEl.equals(WAY_EL)) {
                         if (!wayBuilder.isIncomplete()) {
                             mapBuilder.addWay(wayBuilder.build());
                         }
@@ -184,8 +202,7 @@ public final class OSMMapReader {
                     }
                     break;
                 case IN_RELATION:
-                    // Incomplete Relation is silently ignored
-                    if (currentEl.equals("relation")) {
+                    if (currentEl.equals(REL_EL)) {
                         if (!relBuilder.isIncomplete()) {
                             mapBuilder.addRelation(relBuilder.build());
                         }
@@ -198,45 +215,45 @@ public final class OSMMapReader {
         
         private OSMNode.Builder parseNodeEl() throws NumberFormatException,
                 OSMMissingAttributeException {
-            double lon = Math.toRadians(parseDoubleAttr("lon"));
-            double lat = Math.toRadians(parseDoubleAttr("lat"));
+            double lon = Math.toRadians(parseDoubleAttr(LON_ATTR));
+            double lat = Math.toRadians(parseDoubleAttr(LAT_ATTR));
             PointGeo position = new PointGeo(lon, lat);
             
-            return new OSMNode.Builder(parseLongAttr("id"), position);
+            return new OSMNode.Builder(parseLongAttr(ID_ATTR), position);
         }
         
         private OSMRelation.Builder parseRelationEl()
                 throws NumberFormatException, OSMMissingAttributeException {
-            return new OSMRelation.Builder(parseLongAttr("id"));
+            return new OSMRelation.Builder(parseLongAttr(ID_ATTR));
         }
         
         private OSMWay.Builder parseWayEl() throws NumberFormatException,
                 OSMMissingAttributeException {
-            return new OSMWay.Builder(parseLongAttr("id"));
+            return new OSMWay.Builder(parseLongAttr(ID_ATTR));
         }
         
         private OSMNode parseNdEl() throws NumberFormatException,
                 OSMMissingAttributeException {
-            return mapBuilder.nodeForId(parseLongAttr("ref"));
+            return mapBuilder.nodeForId(parseLongAttr(REF_ATTR));
         }
         
         private OSMRelation.Member parseMemberEl()
                 throws OSMMissingAttributeException {
             OSMRelation.Member.Type type = null;
-            String role = parseStringAttr("role");
+            String role = parseStringAttr(ROLE_ATTR);
             OSMEntity ref = null;
-            long refId = parseLongAttr("ref");
+            long refId = parseLongAttr(REF_ATTR);
             
-            switch (parseStringAttr("type")) {
-                case "node":
+            switch (parseStringAttr(TYPE_ATTR)) {
+                case NODE_EL:
                     type = OSMRelation.Member.Type.NODE;
                     ref = mapBuilder.nodeForId(refId);
                     break;
-                case "way":
+                case WAY_EL:
                     type = OSMRelation.Member.Type.WAY;
                     ref = mapBuilder.wayForId(refId);
                     break;
-                case "relation":
+                case REL_EL:
                     type = OSMRelation.Member.Type.RELATION;
                     ref = mapBuilder.relationForId(refId);
                     break;
@@ -250,7 +267,9 @@ public final class OSMMapReader {
         }
         
         private OSMAttr parseTagEl() throws OSMMissingAttributeException {
-            return new OSMAttr(parseStringAttr("k"), parseStringAttr("v"));
+            return new OSMAttr(
+                parseStringAttr(KEY_ATTR),
+                parseStringAttr(VALUE_ATTR));
         }
         
         private String parseStringAttr(String name)

@@ -16,7 +16,7 @@ import java.util.List;
  *
  */
 public abstract class PolyLine {
-    protected final List<Point> points;
+    private final List<Point> points;
     
     /**
      * Constructs a {@link PolyLine} given a list of points.

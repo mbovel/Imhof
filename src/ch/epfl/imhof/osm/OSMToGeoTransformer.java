@@ -26,33 +26,33 @@ import ch.epfl.imhof.projection.Projection;
  */
 //@formatter:off
 public final class OSMToGeoTransformer {
-    private static Set<String> surfaceAtts  = initHashSet(
+    private static final Set<String> surfaceAtts  = initHashSet(
         "aeroway", "amenity", "building", "harbour", "historic",
         "landuse", "leisure", "man_made", "military", "natural",
         "office", "place", "power", "public_transport", "shop",
         "sport", "tourism", "water", "waterway", "wetland"
             );
     
-    private static Set<String> polyLineAtts = initHashSet(
+    private static final Set<String> polyLineAtts = initHashSet(
         "bridge", "highway", "layer", "man_made", "railway",
         "tunnel", "waterway"
             );
     
-    private static Set<String> polygonAtts  = initHashSet(
+    private static final Set<String> polygonAtts  = initHashSet(
         "building", "landuse", "layer", "leisure", "natural",
         "waterway"
             );
     // @formatter:on
     
-    private final Projection   projection;
+    private final Projection         projection;
     
     /**
      * Constructs a new <code>OSMToGeoTranformer</code> given a type of
      * {@link Projection}.
      * 
      * @param projection
-     *            the {@link Projection} the
-     *            <code>OSMToGeoTranformer</code> will use
+     *            the {@link Projection} the <code>OSMToGeoTranformer</code>
+     *            will use
      */
     public OSMToGeoTransformer(Projection projection) {
         this.projection = projection;
@@ -133,11 +133,21 @@ public final class OSMToGeoTransformer {
     }
     
     private void transformRel(OSMRelation rel, Map.Builder mapBuilder) {
+        Attributes atts = rel.attributes();
+        
+        if (!atts.contains("type")) {
+            return;
+        }
+        
+        if (!atts.get("type").equals("multipolygon")) {
+            return;
+        }
+        
         // Keep only needed attributes from the relation. They will be used for
         // each created polygon. Ways' attributes are not conserved.
-        Attributes atts = rel.attributes().keepOnlyKeys(polygonAtts);
+        Attributes filteredAtts = atts.keepOnlyKeys(polygonAtts);
         
-        if (atts.isEmpty()) {
+        if (filteredAtts.isEmpty()) {
             return;
         }
         
@@ -167,7 +177,7 @@ public final class OSMToGeoTransformer {
             .map(outerRing -> new Polygon.Builder(outerRing))
             .collect(Collectors.toList());
         
-        // 3. Each inner ring is added the smallest possible outer ring in
+        // 3. Each inner ring is added to the smallest possible outer ring in
         // which it is contained (polygonsBuilders have already been sorted by
         // area).
         for (ClosedPolyLine innerRing : innerRings) {
@@ -179,10 +189,12 @@ public final class OSMToGeoTransformer {
             }
         }
         
-        // For each polygon builder, we build a polygon the attributes of the
-        // relation and add it to the map.
+        // For each polygon builder, we build a polygon with the attributes of
+        // the relation and add it to the map.
         for (Polygon.Builder pb : polygonsBuilders) {
-            mapBuilder.addPolygon(new Attributed<Polygon>(pb.build(), atts));
+            mapBuilder.addPolygon(new Attributed<Polygon>(
+                pb.build(),
+                filteredAtts));
         }
     }
     
@@ -209,15 +221,17 @@ public final class OSMToGeoTransformer {
         while (!toDo.isEmpty()) {
             ClosedPolyLine polyLine = makeRing(graph, toDo);
             
-            if (polyLine != null) {
-                polyLines.add(polyLine);
+            if (polyLine == null) {
+                return new ArrayList<ClosedPolyLine>();
             }
+            
+            polyLines.add(polyLine);
         }
         
         return polyLines;
     }
     
-    private static Graph<OSMNode> makeGraphFromWays(List<OSMWay> ways) {
+    private Graph<OSMNode> makeGraphFromWays(List<OSMWay> ways) {
         Graph.Builder<OSMNode> graphBuilder = new Graph.Builder<OSMNode>();
         
         for (OSMWay way : ways) {
@@ -283,8 +297,6 @@ public final class OSMToGeoTransformer {
     }
     
     private static Set<String> initHashSet(String... strings) {
-        HashSet<String> set = new HashSet<String>();
-        Arrays.stream(strings).forEach(str -> set.add(str));
-        return set;
+        return new HashSet<>(Arrays.asList(strings));
     }
 }

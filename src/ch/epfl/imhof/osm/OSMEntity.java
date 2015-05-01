@@ -87,7 +87,7 @@ public abstract class OSMEntity {
     public abstract static class Builder {
         protected final long         id;
         protected Attributes.Builder attributes = new Attributes.Builder();
-        protected boolean            incomplete = false;
+        private boolean              incomplete = false;
         
         abstract public OSMEntity build();
         

@@ -72,7 +72,7 @@ public final class OSMWay extends OSMEntity {
      * @return <code>true</code> if the <code>OSMWay</code> is closed
      */
     public boolean isClosed() {
-        return nodes.get(0).equals(nodes.get(nodes.size() - 1));
+        return firstNode().equals(lastNode());
     }
     
     /**
@@ -154,16 +154,17 @@ public final class OSMWay extends OSMEntity {
          */
         @Override
         public OSMWay build() throws IllegalStateException {
-            if (incomplete || nodes.size() < 2) {
+            if (isIncomplete()) {
                 throw new IllegalStateException(
                     "The OSMWay is not complete yet.");
             }
+            
             return new OSMWay(id, nodes, attributes.build());
         }
         
         @Override
         public boolean isIncomplete() {
-            return incomplete || nodes.size() < 2;
+            return super.isIncomplete() || nodes.size() < 2;
         }
     }
 }

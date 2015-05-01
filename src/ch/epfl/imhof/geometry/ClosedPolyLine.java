@@ -40,9 +40,9 @@ public final class ClosedPolyLine extends PolyLine {
      */
     public boolean containsPoint(Point p) {
         int indice = 0;
-        for (int i = 0; i != points.size(); ++i) {
-            Point p1 = points.get(i);
-            Point p2 = points.get(nextIndex(i));
+        for (int i = 0; i != points().size(); ++i) {
+            Point p1 = points().get(i);
+            Point p2 = points().get(nextIndex(i));
             
             if (p1.y() <= p.y()) {
                 if (p2.y() > p.y() && isLeft(p, p1, p2)) {
@@ -77,12 +77,12 @@ public final class ClosedPolyLine extends PolyLine {
      * 
      * @return the signed area
      */
-    public double signedArea() {
+    private double signedArea() {
         double area = 0;
         
-        for (int i = 0; i != points.size(); ++i) {
-            Point p1 = points.get(i);
-            Point p2 = points.get(nextIndex(i));
+        for (int i = 0; i != points().size(); ++i) {
+            Point p1 = points().get(i);
+            Point p2 = points().get(nextIndex(i));
             
             area += p1.x() * p2.y() - p2.x() * p1.y();
         }
@@ -117,6 +117,6 @@ public final class ClosedPolyLine extends PolyLine {
      * @return the index of the next point
      */
     private int nextIndex(int index) {
-        return java.lang.Math.floorMod(index + 1, points.size());
+        return java.lang.Math.floorMod(index + 1, points().size());
     }
 }

@@ -166,7 +166,7 @@ public final class OSMRelation extends OSMEntity {
          */
         @Override
         public OSMRelation build() throws IllegalStateException {
-            if (incomplete) {
+            if (isIncomplete()) {
                 throw new IllegalStateException(
                     "The OSMRelation is not complete yet.");
             }

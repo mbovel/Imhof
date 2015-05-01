@@ -85,12 +85,12 @@ public class OurOSMToGeoTransformerTest {
     
     @Test
     public void worksWithLausanne() throws IOException, SAXException {
-        checkListsSizes("test/data/big/lausanne.osm", 80165, 47976);
+        checkListsSizes("test/data/big/lausanne.osm", 80165, 47975);
     }
     
     @Test
     public void worksWithBerne() throws IOException, SAXException {
-        checkListsSizes("test/data/big/berne.osm", 87389, 68373);
+        checkListsSizes("test/data/big/berne.osm", 87389, 68369);
     }
     
     @Test
@@ -217,19 +217,17 @@ public class OurOSMToGeoTransformerTest {
         
         Attributed<Polygon> result = map.polygons().get(0);
         
-        checkPolyLine(
-            map.polygons().get(0).value().shell(),
-            new Point(46.280424, 6.985401),
-            new Point(46.280014, 6.985632),
-            new Point(46.280320, 6.986426),
-            new Point(46.280759, 6.986276));
+        checkPolyLine(map.polygons().get(0).value().shell(), new Point(
+            46.280424,
+            6.985401), new Point(46.280014, 6.985632), new Point(
+            46.280320,
+            6.986426), new Point(46.280759, 6.986276));
         
-        checkPolyLine(
-            map.polygons().get(1).value().shell(),
-            new Point(46.281373, 6.989505),
-            new Point(46.280963, 6.989864),
-            new Point(46.281306, 6.990733),
-            new Point(46.281942, 6.990486));
+        checkPolyLine(map.polygons().get(1).value().shell(), new Point(
+            46.281373,
+            6.989505), new Point(46.280963, 6.989864), new Point(
+            46.281306,
+            6.990733), new Point(46.281942, 6.990486));
         
         assertEquals("houseboat", result.attributeValue("building"));
     }
@@ -256,12 +254,11 @@ public class OurOSMToGeoTransformerTest {
             int polygonsN) throws IOException, SAXException {
         Map map = transform(fileName);
         
-        assertEquals(
-            "check numebr of polylines in " + fileName,
-            polyLinesN,
-            map.polyLines().size());
+        assertEquals("number of polylines in " + fileName, polyLinesN, map
+            .polyLines()
+            .size());
         
-        assertEquals("check number of polygons in " + fileName, polygonsN, map
+        assertEquals("number of polygons in " + fileName, polygonsN, map
             .polygons()
             .size());
     }
