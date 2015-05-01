@@ -67,7 +67,8 @@ public interface Painter {
         };
     }
     
-    static Painter line(float width, Color color, LineStyle.LineCap cap, LineStyle.LineJoin join, float[] dashingPattern) {
+    static Painter line(float width, Color color, LineStyle.LineCap cap,
+            LineStyle.LineJoin join, float[] dashingPattern) {
         LineStyle style = new LineStyle(width, color, cap, join, dashingPattern);
         return line(style);
     }
@@ -82,15 +83,16 @@ public interface Painter {
             for (Attributed<Polygon> polygon : map.polygons()) {
                 canvas.drawPolyLine(polygon.value().shell(), style);
                 
-                for(PolyLine hole : polygon.value().holes()) {
+                for (PolyLine hole : polygon.value().holes()) {
                     canvas.drawPolyLine(hole, style);
                 }
-                    
+                
             }
         };
     }
     
-    static Painter outline(float width, Color color, LineStyle.LineCap cap, LineStyle.LineJoin join, float[] dashingPattern) {
+    static Painter outline(float width, Color color, LineStyle.LineCap cap,
+            LineStyle.LineJoin join, float[] dashingPattern) {
         LineStyle style = new LineStyle(width, color, cap, join, dashingPattern);
         return outline(style);
     }
