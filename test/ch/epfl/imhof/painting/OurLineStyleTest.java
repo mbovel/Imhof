@@ -1,22 +1,31 @@
 package ch.epfl.imhof.painting;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import ch.epfl.imhof.painting.LineStyle.*;
+import ch.epfl.imhof.painting.LineStyle.LineCap;
+import ch.epfl.imhof.painting.LineStyle.LineJoin;
 
 public class OurLineStyleTest {
-    private static final double    DELTA = 0.000001;
-    private static final float    FDELTA = 0.000001f;
-    private static final LineStyle STYLE = new LineStyle(4f, Color.GREEN,
-                                                 LineCap.BUTT, LineJoin.BEVEL,
-                                                 new float[0]);
+    private static final double    DELTA  = 0.000001;
+    private static final float     FDELTA = 0.000001f;
+    private static final LineStyle STYLE  = new LineStyle(
+                                              4f,
+                                              Color.GREEN,
+                                              LineCap.BUTT,
+                                              LineJoin.BEVEL,
+                                              new float[0]);
     
     @Test(expected = IllegalArgumentException.class)
     public void constructorThrowsExceptionWithNegativeWidth() {
-        new LineStyle(-3.2f, Color.RED, LineCap.BUTT, LineJoin.MITER,
-                new float[0]);
+        new LineStyle(
+            -3.2f,
+            Color.RED,
+            LineCap.BUTT,
+            LineJoin.MITER,
+            new float[0]);
     }
     
     @Test(expected = IllegalArgumentException.class)
@@ -46,41 +55,40 @@ public class OurLineStyleTest {
     
     @Test
     public void withWidthReturnsRightWidth() {
-       LineStyle a = STYLE.withWidth(2f);
-       
-       assertEquals(2f,a.width(), FDELTA);
+        LineStyle a = STYLE.withWidth(2f);
+        
+        assertEquals(2f, a.width(), FDELTA);
     }
     
     @Test
     public void withColorReturnsRighColor() {
-       LineStyle a = STYLE.withColor(Color.RED);
-       
-       assertEquals(Color.RED.r(), a.color().r(), FDELTA);
-       assertEquals(Color.RED.g(), a.color().g(), FDELTA);
-       assertEquals(Color.RED.b(), a.color().b(), FDELTA);
+        LineStyle a = STYLE.withColor(Color.RED);
+        
+        assertEquals(Color.RED.r(), a.color().r(), FDELTA);
+        assertEquals(Color.RED.g(), a.color().g(), FDELTA);
+        assertEquals(Color.RED.b(), a.color().b(), FDELTA);
     }
     
     @Test
-    public void withCapReturnsRightCap(){
+    public void withCapReturnsRightCap() {
         LineStyle a = STYLE.withCap(LineCap.ROUND);
         
         assertEquals(LineCap.ROUND, a.cap());
     }
     
     @Test
-    public void withJoinReturnsRightJoin(){
+    public void withJoinReturnsRightJoin() {
         LineStyle a = STYLE.withJoin(LineJoin.BEVEL);
         
         assertEquals(LineJoin.BEVEL, a.join());
     }
     
     @Test
-    public void withDashingPatternReturnsRightDashingPattern(){
-        float[] dash = {2f,3f};
+    public void withDashingPatternReturnsRightDashingPattern() {
+        float[] dash = { 2f, 3f };
         LineStyle a = STYLE.withDashingPattern(dash);
         
         assertArrayEquals(dash, a.dashingPattern(), FDELTA);
     }
-    
     
 }
