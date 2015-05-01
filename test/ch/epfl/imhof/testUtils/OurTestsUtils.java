@@ -1,6 +1,7 @@
 package ch.epfl.imhof.testUtils;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
 import java.awt.image.BufferedImage;
@@ -42,8 +43,8 @@ public class OurTestsUtils {
     
     // Percentage difference between images, rosettacode.org
     // http://rosettacode.org/wiki/Percentage_difference_between_images#Java
-    static void assertImagesSame(String exceptedFileName, BufferedImage actual)
-            throws IOException {
+    static public void assertImagesSame(String exceptedFileName,
+            BufferedImage actual) throws IOException {
         assumeFileExists(exceptedFileName);
         
         BufferedImage excepted = ImageIO.read(new File(exceptedFileName));
@@ -53,10 +54,8 @@ public class OurTestsUtils {
         int height2 = actual.getHeight(null);
         long diff = 0;
         
-        if (width1 != width2 || height1 != height2) {
-            System.err.println("Error: Images dimensions mismatch");
-            System.exit(1);
-        }
+        assertTrue("images dimensions match", width1 == width2
+                && height1 == height2);
         
         for (int y = 0; y < height1; y++) {
             for (int x = 0; x < width1; x++) {
@@ -76,6 +75,8 @@ public class OurTestsUtils {
         
         double n = width1 * height1 * 3;
         double p = diff / n / 255.0;
+        
+        System.out.println(p);
         
         assertEquals("check " + exceptedFileName
                 + " is the same as actual image", 0.0, p, IMAGE_DIFF_DELTA);
