@@ -1,9 +1,7 @@
 package ch.epfl.imhof.painting;
 
-import java.io.File;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import org.junit.Test;
 
@@ -11,21 +9,41 @@ import ch.epfl.imhof.geometry.OpenPolyLine;
 import ch.epfl.imhof.geometry.Point;
 import ch.epfl.imhof.geometry.PolyLine;
 import ch.epfl.imhof.geometry.Polygon;
+import ch.epfl.imhof.testUtils.OurTestsUtils;
 
 public class OurJava2DCanvasTest {
-    static private void canvasToFile(Java2DCanvas canvas, String fileName)
-            throws IOException {
-        ImageIO.write(canvas.image(), "png", new File(fileName + ".png"));
+    @Test
+    public void drawSimplePolyLine72dpiWorks() throws IOException {
+        OurTestsUtils.assertImagesSame(
+            "test/data/simplePolyLine72dpi.png",
+            drawAmazingRedLine(72));
     }
     
-    static private Java2DCanvas polyLineOnCanvas(int res) {
-        Java2DCanvas canvas = new Java2DCanvas(
-            new Point(0, 0),
-            new Point(200, 200),
-            1500,
-            1500,
-            res,
-            Color.BLUE);
+    @Test
+    public void drawSimplePolyLine300dpiWorks() throws IOException {
+        OurTestsUtils.assertImagesSame(
+            "test/data/simplePolyLine300dpi.png",
+            drawAmazingRedLine(300));
+    }
+    
+    @Test
+    public void drawSimplePolygon72dpiWorks() throws IOException {
+        OurTestsUtils.assertImagesSame(
+            "test/data/simplePolygon72dpi.png",
+            drawCrazyGreenPolygon(72));
+    }
+    
+    @Test
+    public void drawSimplePolygon300dpiWorks() throws IOException {
+        OurTestsUtils.assertImagesSame(
+            "test/data/simplePolygon300dpi.png",
+            drawCrazyGreenPolygon(300));
+    }
+    
+    static private BufferedImage drawAmazingRedLine(int res) {
+        Java2DCanvas canvas = new Java2DCanvas(new Point(0, 0), new Point(
+            200,
+            200), 1500, 1500, res, Color.BLUE);
         
         PolyLine.Builder polyLineBuilder = new PolyLine.Builder();
         
@@ -37,34 +55,17 @@ public class OurJava2DCanvasTest {
         
         OpenPolyLine polyLine = polyLineBuilder.buildOpen();
         
-        LineStyle lineStyle = new LineStyle(
-            1,
-            Color.RED);
+        LineStyle lineStyle = new LineStyle(1, Color.RED);
         
         canvas.drawPolyLine(polyLine, lineStyle);
         
-        return canvas;
+        return canvas.image();
     }
     
-    @Test
-    public void drawPolyLine72dpiWorks() throws IOException {
-        canvasToFile(polyLineOnCanvas(72), "test2_72dpi");
-    }
-    
-    @Test
-    public void drawPolyLine300dpiWorks() throws IOException {
-        canvasToFile(polyLineOnCanvas(300), "test2_300dpi");
-    }
-    
-    @Test
-    public void drawPolygonWorks() throws IOException {
-        Java2DCanvas a = new Java2DCanvas(
-            new Point(0, 0),
-            new Point(200, 200),
-            800,
-            800,
-            72,
-            Color.RED);
+    static private BufferedImage drawCrazyGreenPolygon(int res) {
+        Java2DCanvas canvas = new Java2DCanvas(new Point(0, 0), new Point(
+            200,
+            200), 800, 800, 72, Color.RED);
         
         PolyLine.Builder shell = new PolyLine.Builder();
         
@@ -87,37 +88,8 @@ public class OurJava2DCanvasTest {
         
         polygon.addHole(hole.buildClosed());
         
-        a.drawPolygon(polygon.build(), Color.GREEN);
+        canvas.drawPolygon(polygon.build(), Color.GREEN);
         
-        canvasToFile(a, "test3");
+        return canvas.image();
     }
-    
-    /*
-     * @Test public void convertCapTest(){ Java2DCanvas canvas = new
-     * Java2DCanvas(new Point(0, 0), new Point(200, 200), 1500, 1500, 72,
-     * Color.BLUE);
-     * 
-     * LineStyle a = new LineStyle(20, Color.RED, LineCap.ROUND, LineJoin.ROUND,
-     * null); LineStyle b = new LineStyle(20, Color.RED, LineCap.BUTT,
-     * LineJoin.ROUND, null); LineStyle c = new LineStyle(20, Color.RED,
-     * LineCap.SQUARE, LineJoin.ROUND, null);
-     * 
-     * assertEquals(BasicStroke.CAP_ROUND, canvas.convertCap(a));
-     * assertEquals(BasicStroke.CAP_BUTT, canvas.convertCap(b));
-     * assertEquals(BasicStroke.CAP_SQUARE, canvas.convertCap(c)); }
-     * 
-     * 
-     * @Test public void convertJoinTest(){ Java2DCanvas canvas = new
-     * Java2DCanvas(new Point(0, 0), new Point(200, 200), 1500, 1500, 72,
-     * Color.BLUE);
-     * 
-     * LineStyle a = new LineStyle(20, Color.RED, LineCap.ROUND, LineJoin.ROUND,
-     * null); LineStyle b = new LineStyle(20, Color.RED, LineCap.BUTT,
-     * LineJoin.BEVEL, null); LineStyle c = new LineStyle(20, Color.RED,
-     * LineCap.SQUARE, LineJoin.MITER, null);
-     * 
-     * assertEquals(BasicStroke.JOIN_ROUND, canvas.convertJoin(a));
-     * assertEquals(BasicStroke.JOIN_BEVEL, canvas.convertJoin(b));
-     * assertEquals(BasicStroke.JOIN_MITER, canvas.convertJoin(c)); }
-     */
 }
