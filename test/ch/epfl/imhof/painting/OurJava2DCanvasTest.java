@@ -11,8 +11,6 @@ import ch.epfl.imhof.geometry.OpenPolyLine;
 import ch.epfl.imhof.geometry.Point;
 import ch.epfl.imhof.geometry.PolyLine;
 import ch.epfl.imhof.geometry.Polygon;
-import ch.epfl.imhof.painting.LineStyle.LineCap;
-import ch.epfl.imhof.painting.LineStyle.LineJoin;
 
 public class OurJava2DCanvasTest {
     static private void canvasToFile(Java2DCanvas canvas, String fileName)
@@ -41,10 +39,7 @@ public class OurJava2DCanvasTest {
         
         LineStyle lineStyle = new LineStyle(
             1,
-            Color.RED,
-            LineCap.ROUND,
-            LineJoin.ROUND,
-            null);
+            Color.RED);
         
         canvas.drawPolyLine(polyLine, lineStyle);
         
