@@ -1,10 +1,7 @@
 package ch.epfl.imhof.painting;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.function.Predicate;
-
-import javax.imageio.ImageIO;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -12,19 +9,9 @@ import org.xml.sax.SAXException;
 import ch.epfl.imhof.Attributed;
 import ch.epfl.imhof.Map;
 import ch.epfl.imhof.geometry.Point;
-import ch.epfl.imhof.osm.OSMMap;
-import ch.epfl.imhof.osm.OSMToGeoTransformer;
-import ch.epfl.imhof.projection.CH1903Projection;
-import ch.epfl.imhof.projection.Projection;
 import ch.epfl.imhof.testUtils.OurTestsUtils;
 
 public class OurPainterTest {
-    public static Map readMap(String path) throws IOException, SAXException {
-        OSMMap map = OurTestsUtils.readOSMFile(path);
-        Projection proj = new CH1903Projection();
-        return new OSMToGeoTransformer(proj).transform(map);
-    }
-    
     @Test
     public void worksWithExample() throws IOException, SAXException {
         Predicate<Attributed<?>> isLake = Filters.tagged("natural", "water");
@@ -39,9 +26,9 @@ public class OurPainterTest {
         
         Painter painter = buildingsPainter.above(lakesPainter);
         
-        Map map = readMap("test/data/big/lausanne.osm.gz");
+        Map map = OurTestsUtils
+            .readOSMFileToMap("test/data/big/lausanne.osm.gz");
         
-        // La toile
         Point bl = new Point(532510, 150590);
         Point tr = new Point(539570, 155260);
         
@@ -56,6 +43,8 @@ public class OurPainterTest {
         // Dessin de la carte et stockage dans un fichier
         painter.drawMap(map, canvas);
         
-        ImageIO.write(canvas.image(), "png", new File("loz.png"));
+        OurTestsUtils.assertImagesSame(
+            "test/data/lausanne_bb.png",
+            canvas.image());
     }
 }

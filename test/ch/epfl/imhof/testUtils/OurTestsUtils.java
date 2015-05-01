@@ -12,8 +12,12 @@ import javax.imageio.ImageIO;
 
 import org.xml.sax.SAXException;
 
+import ch.epfl.imhof.Map;
 import ch.epfl.imhof.osm.OSMMap;
 import ch.epfl.imhof.osm.OSMMapReader;
+import ch.epfl.imhof.osm.OSMToGeoTransformer;
+import ch.epfl.imhof.projection.CH1903Projection;
+import ch.epfl.imhof.projection.Projection;
 
 public class OurTestsUtils {
     private static double IMAGE_DIFF_DELTA = 0.005;
@@ -23,6 +27,13 @@ public class OurTestsUtils {
         assumeFileExists(fileName);
         final boolean unGZip = fileExtension(fileName).equals("gz");
         return OSMMapReader.readOSMFile(fileName, unGZip);
+    }
+    
+    public static Map readOSMFileToMap(String path) throws IOException,
+            SAXException {
+        OSMMap map = OurTestsUtils.readOSMFile(path);
+        Projection proj = new CH1903Projection();
+        return new OSMToGeoTransformer(proj).transform(map);
     }
     
     private static void assumeFileExists(final String fileName) {
