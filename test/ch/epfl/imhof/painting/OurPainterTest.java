@@ -14,13 +14,13 @@ import ch.epfl.imhof.Map;
 import ch.epfl.imhof.geometry.Point;
 import ch.epfl.imhof.osm.OSMMap;
 import ch.epfl.imhof.osm.OSMToGeoTransformer;
-import ch.epfl.imhof.osm.OurOSMMapReaderTest;
 import ch.epfl.imhof.projection.CH1903Projection;
 import ch.epfl.imhof.projection.Projection;
+import ch.epfl.imhof.testUtils.OurTestsUtils;
 
 public class OurPainterTest {
     public static Map readMap(String path) throws IOException, SAXException {
-        OSMMap map = OurOSMMapReaderTest.readOSMFile(path);
+        OSMMap map = OurTestsUtils.readOSMFile(path);
         Projection proj = new CH1903Projection();
         return new OSMToGeoTransformer(proj).transform(map);
     }

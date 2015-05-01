@@ -20,6 +20,7 @@ import ch.epfl.imhof.geometry.PolyLine;
 import ch.epfl.imhof.geometry.Polygon;
 import ch.epfl.imhof.projection.EquirectangularProjection;
 import ch.epfl.imhof.projection.Projection;
+import ch.epfl.imhof.testUtils.OurTestsUtils;
 
 public class OurOSMToGeoTransformerTest {
     private static final double DELTA = 0.000001;
@@ -245,7 +246,7 @@ public class OurOSMToGeoTransformerTest {
     // TODO: Multipolygon in "8" shape with point at intersection
     
     private static Map transform(String path) throws IOException, SAXException {
-        OSMMap map = OurOSMMapReaderTest.readOSMFile(path);
+        OSMMap map = OurTestsUtils.readOSMFile(path);
         Projection proj = new EquirectangularProjection();
         return new OSMToGeoTransformer(proj).transform(map);
     }
@@ -263,7 +264,7 @@ public class OurOSMToGeoTransformerTest {
             .size());
     }
     
-    private void checkPolyLine(PolyLine line, Point... exceptedArr) {
+    private static void checkPolyLine(PolyLine line, Point... exceptedArr) {
         List<Point> excepted = Arrays.stream(exceptedArr).map(p -> {
             return new Point(Math.toRadians(p.y()), Math.toRadians(p.x()));
         }).collect(Collectors.toList());
@@ -293,16 +294,4 @@ public class OurOSMToGeoTransformerTest {
             }
         }
     }
-    
-    // private static void printGraph(Graph<OSMNode> g) {
-    // System.out.println(g + ":");
-    //
-    // for (OSMNode node : g.nodes()) {
-    // System.out.println("  " + node.id());
-    //
-    // for (OSMNode neighbor : g.neighborsOf(node)) {
-    // System.out.println("    -> " + neighbor.id());
-    // }
-    // }
-    // }
 }
