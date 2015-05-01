@@ -13,14 +13,18 @@ import ch.epfl.imhof.geometry.Polygon;
  */
 public interface Canvas {
     /**
-     * @param polyline
-     * @param style
+     * Draws a polyline on this canvas, given the {@link PolyLine} and a {@link LineStyle}.
+     * 
+     * @param toDraw the polyline to draw
+     * @param style the line style to use to draw the polyline
      */
     void drawPolyLine(PolyLine toDraw, LineStyle style);
     
     /**
-     * @param toDraw
-     * @param color
+     * Draws a polygon on this canvas, given the {@link Polygon} and a {@link Color}.
+     * 
+     * @param toDraw the polygon to draw
+     * @param color the color to use to draw the polygon
      */
     void drawPolygon(Polygon toDraw, Color color);
 }
