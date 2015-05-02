@@ -51,6 +51,10 @@ public interface Painter {
         };
     }
     
+    static Painter empty() {
+        return (map, canvas) -> {};
+    }
+    
     static Painter polygon(Color color) {
         return (map, canvas) -> {
             for (Attributed<Polygon> polygon : map.polygons()) {
