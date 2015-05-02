@@ -125,12 +125,11 @@ public class Java2DCanvas implements Canvas {
             
             if (first) {
                 path.moveTo(relPoint.x(), relPoint.y());
+                first = false;
             }
             else {
                 path.lineTo(relPoint.x(), relPoint.y());
             }
-            
-            first = false;
         }
         
         if (toDraw.isClosed()) {
