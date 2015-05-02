@@ -20,7 +20,7 @@ import ch.epfl.imhof.projection.CH1903Projection;
 import ch.epfl.imhof.projection.Projection;
 
 public class OurTestsUtils {
-    private static double IMAGE_DIFF_DELTA = 0.005;
+    private static double IMAGE_DIFF_DELTA = 0.0001;
     
     public static OSMMap readOSMFile(final String fileName) throws IOException,
             SAXException {
@@ -87,7 +87,8 @@ public class OurTestsUtils {
         double n = width1 * height1 * 3;
         double p = diff / n / 255.0;
         
-        System.out.println(p);
+        System.out.printf("%.5f", p * 100);
+        System.out.println("% diff with " + exceptedFileName);
         
         assertEquals("check " + exceptedFileName
                 + " is the same as actual image", 0.0, p, IMAGE_DIFF_DELTA);
