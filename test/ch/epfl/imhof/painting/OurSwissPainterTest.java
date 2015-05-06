@@ -58,5 +58,6 @@ public class OurSwissPainterTest {
         OurTestsUtils.assertImagesSame(
             "test/data/interlaken_72dpi.png",
             canvas.image());
+        
     }
 }
