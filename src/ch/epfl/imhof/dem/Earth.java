@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ch.epfl.imhof.dem;
 
 /**
