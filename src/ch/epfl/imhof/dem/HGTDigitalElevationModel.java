@@ -55,7 +55,7 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
         // 2. Find resolution
         
         long length = file.length();
-        double n = Math.sqrt(length/2);
+        double n = Math.sqrt(length / 2);
         
         if (Math.floor(n) != n) {
             throw new IllegalArgumentException(
@@ -78,46 +78,46 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
     
     @Override
     public Vector3d normalAt(PointGeo point) {
-        // Warning: not the same i and j as in the docs
-        int i = (int) ((point.longitude() - southWest.longitude() - point
-            .longitude() % resolution) / resolution);
-        int j = (int) ((point.latitude() - southWest.latitude() - point
-            .latitude() % resolution)  / resolution);
+        int column = (int) ((point.longitude() - southWest.longitude()) / resolution);
+        int row = (int) (rowLength - ((point.latitude() - southWest.latitude()) / resolution));
         
-        if (i < 0) {
+        if (row < 0) {
             throw new IllegalArgumentException("point's too far north");
         }
-        if (j < 0) {
+        if (column < 0) {
             throw new IllegalArgumentException("point's too far west");
         }
-        if (i >= rowLength) {
+        if (row >= rowLength) {
             throw new IllegalArgumentException("point's too far south");
         }
-        if (j >= rowLength) {
+        if (column >= rowLength) {
             throw new IllegalArgumentException("point's too far east");
         }
         
         // South West (bottom left, z_i+1,j):
-        short sw = buffer.get(i * rowLength + j);
+        short sw = buffer.get(row * rowLength + column);
         
         // South East (bottom right, z_i+1,j+1):
-        short se = buffer.get(i * rowLength + j + 1);
+        short se = buffer.get(row * rowLength + column + 1);
         
         // Nord West (top left, z_i,j):
-        short nw = buffer.get((i - 1) * rowLength + j);
+        short nw = buffer.get((row - 1) * rowLength + column);
         
         // Nord East (top right, z_i,j+1):
-        short ne = buffer.get((i - 1) * rowLength + j + 1);
+        short ne = buffer.get((row - 1) * rowLength + column + 1);
         
-        Vector3d a = new Vector3d(s, 0, sw - nw);
-        Vector3d b = new Vector3d(0, s, ne - nw);
-        Vector3d c = new Vector3d(-s, 0, ne - se);
-        Vector3d d = new Vector3d(0, -s, sw - se);
+        // Vector3d a = new Vector3d(s, 0, sw - nw);
+        // Vector3d b = new Vector3d(0, s, ne - nw);
+        // Vector3d c = new Vector3d(-s, 0, ne - se);
+        // Vector3d d = new Vector3d(0, -s, sw - se);
+        //
+        // Vector3d n1 = a.cross(b);
+        // Vector3d n2 = c.cross(d);
+        //
+        // return n1.add(n2).multiply(0.5);
         
-        Vector3d n1 = a.cross(b);
-        Vector3d n2 = c.cross(d);
-        
-        return n1.add(n2).multiply(0.5);
+        return new Vector3d(0.5 * s * (nw - sw + ne - se), 0.5 * s
+                * (nw + sw - ne - se), Math.pow(s, 2.0));
     }
     
     @Override

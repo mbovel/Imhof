@@ -15,12 +15,12 @@ import ch.epfl.imhof.geometry.Vector3d;
 public class OurHGTDigitalElevationModelTest {
     @Test
     public void alpineTerrainExempleWorks() throws Exception {
-        double n = 46.2;
-        double s = 46.8;
+        double n = 46.8;
+        double s = 46.2;
         double w = 7.2;
         double e = 7.8;
         
-        double realWidth = s - n;
+        double realWidth = n - s;
         double realHeight = e - w;
         int imgWidth = 800;
         int imgHeight = 800;
@@ -34,13 +34,13 @@ public class OurHGTDigitalElevationModelTest {
             imgHeight,
             BufferedImage.TYPE_INT_RGB);
         
-        for (int i = 0; i != imgWidth; ++i) {
-            for (int j = 0; j != imgHeight; ++j) {
-                double lat = w + ((double)i / imgWidth) * realWidth;
-                double lon = n + ((double)j / imgHeight) * realHeight;
+        for (int i = 0; i != imgHeight; ++i) {
+            double lat = n - ((double)i / imgHeight) * realHeight;
+            for (int j = 0; j != imgWidth; ++j) {
+                double lon = w + ((double)j / imgWidth) * realWidth;
                 PointGeo point = new PointGeo(
-                    Math.toRadians(lat),
-                    Math.toRadians(lon));
+                    Math.toRadians(lon),
+                    Math.toRadians(lat));
                 Vector3d normal = dem.normalAt(point).normalized();
                 float grey = (float) (0.5 * (normal.y() + 1));
                 Color color = new Color(grey, grey, grey);
