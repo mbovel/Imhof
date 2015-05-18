@@ -106,18 +106,18 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
         // Nord East (top right, z_i,j+1):
         short ne = buffer.get((row - 1) * rowLength + column + 1);
         
-        // Vector3d a = new Vector3d(s, 0, sw - nw);
-        // Vector3d b = new Vector3d(0, s, ne - nw);
-        // Vector3d c = new Vector3d(-s, 0, ne - se);
-        // Vector3d d = new Vector3d(0, -s, sw - se);
-        //
-        // Vector3d n1 = a.cross(b);
-        // Vector3d n2 = c.cross(d);
-        //
-        // return n1.add(n2).multiply(0.5);
+         Vector3d a = new Vector3d(s, 0, sw - nw);
+         Vector3d b = new Vector3d(0, s, ne - nw);
+         Vector3d c = new Vector3d(-s, 0, ne - se);
+         Vector3d d = new Vector3d(0, -s, sw - se);
         
-        return new Vector3d(0.5 * s * (nw - sw + ne - se), 0.5 * s
-                * (nw + sw - ne - se), Math.pow(s, 2.0));
+         Vector3d n1 = a.cross(b);
+         Vector3d n2 = c.cross(d);
+        
+         return n1.add(n2).multiply(0.5);
+        
+        //return new Vector3d(0.5 * s * (nw - sw + ne - se), 0.5 * s
+        //        * (nw + sw - ne - se), Math.pow(s, 2.0));
     }
     
     @Override

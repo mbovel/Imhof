@@ -29,20 +29,18 @@ public class OurHGTDigitalElevationModelTest {
         File demFile = new File("test/data/big/N46E007.hgt");
         HGTDigitalElevationModel dem = new HGTDigitalElevationModel(demFile);
         
-        BufferedImage imageOut = new BufferedImage(
-            imgWidth,
-            imgHeight,
-            BufferedImage.TYPE_INT_RGB);
+        BufferedImage imageOut = new BufferedImage(imgWidth, imgHeight,
+                BufferedImage.TYPE_INT_RGB);
         
         for (int i = 0; i != imgHeight; ++i) {
-            double lat = n - ((double)i / imgHeight) * realHeight;
+            double lat = n - ((double) i / imgHeight) * realHeight;
             for (int j = 0; j != imgWidth; ++j) {
-                double lon = w + ((double)j / imgWidth) * realWidth;
-                PointGeo point = new PointGeo(
-                    Math.toRadians(lon),
-                    Math.toRadians(lat));
+                double lon = w + ((double) j / imgWidth) * realWidth;
+                PointGeo point = new PointGeo(Math.toRadians(lon),
+                        Math.toRadians(lat));
                 Vector3d normal = dem.normalAt(point).normalized();
-                float grey = (float) (0.5 * (normal.y() + 1));
+                float grey = (float) (1 - 0.5 * (normal.x() + 1));
+                // float grey = (float) (0.5 * (normal.y() + 1));
                 Color color = new Color(grey, grey, grey);
                 out[i * imgWidth + j] = color.getRGB();
             }
