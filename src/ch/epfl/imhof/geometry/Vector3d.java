@@ -38,16 +38,16 @@ public class Vector3d {
         return x * that.x + y * that.y + z * that.z;
     }
     
-    public Vector3d cross(Vector3d that) {
-        return new Vector3d(y * that.z - z * that.y, z * that.x - x * that.z, x
-                * that.y - y - that.x);
-    }
-    
-    public Vector3d add(Vector3d that) {
-        return new Vector3d(x + that.x, y + that.y, z + that.z);
-    }
-    
-    public Vector3d multiply(double k) {
-        return new Vector3d(k * x, k * y, k * z);
-    }
+//    public Vector3d cross(Vector3d that) {
+//        return new Vector3d(y * that.z - z * that.y, z * that.x - x * that.z, x
+//                * that.y - y - that.x);
+//    }
+//    
+//    public Vector3d add(Vector3d that) {
+//        return new Vector3d(x + that.x, y + that.y, z + that.z);
+//    }
+//    
+//    public Vector3d multiply(double k) {
+//        return new Vector3d(k * x, k * y, k * z);
+//    }
 }
