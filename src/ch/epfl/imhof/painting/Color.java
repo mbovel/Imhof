@@ -86,19 +86,6 @@ public class Color {
     }
     
     /**
-     * Converts a color from the java API ({@link java.awt.Color}) to a color.
-     * 
-     * @param javaColor
-     *            color from the java API
-     *            
-     * @return the converted color
-     */
-    public Color fromJavaColor(java.awt.Color javaColor) {
-        return rgb(javaColor.getRed() / 255f, javaColor.getGreen() / 255f,
-            javaColor.getBlue() / 255f);
-    }
-    
-    /**
      * Returns a shade of grey given a value in the interval [0.0 , 1.0]. 0.0 is
      * black and 1.0 is white.
      * 
