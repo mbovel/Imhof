@@ -27,9 +27,9 @@ public class Main {
         String osmFile = args[0];
         String hgtFile = args[1];
         PointGeo bl = new PointGeo(Math.toRadians(Double.parseDouble(args[2])),
-            Math.toRadians(Double.parseDouble(args[3])));
+                Math.toRadians(Double.parseDouble(args[3])));
         PointGeo tr = new PointGeo(Math.toRadians(Double.parseDouble(args[4])),
-            Math.toRadians(Double.parseDouble(args[5])));
+                Math.toRadians(Double.parseDouble(args[5])));
         int res = Integer.parseInt(args[6]);
         String outputFile = args[7];
         
@@ -44,11 +44,7 @@ public class Main {
         int width = (int) Math.round((trProjected.x() - blProjected.x())
                 / (trProjected.y() - blProjected.y()) * height);
         
-        final boolean unGZip = osmFile.substring(osmFile.lastIndexOf('.') + 1)
-                .equals("gz");
-        OSMMap osmMap = OSMMapReader.readOSMFile(osmFile, unGZip);
-        
-        Map map = new OSMToGeoTransformer(projection).transform(osmMap);
+        Map map = osmFileToMap(osmFile);
         
         Java2DCanvas canvas = new Java2DCanvas(blProjected, trProjected, width,
                 height, res, Color.WHITE);
@@ -59,19 +55,41 @@ public class Main {
                 new HGTDigitalElevationModel(new File(hgtFile)), new Vector3d(
                         -1.0, 1.0, 1.0));
         
-        BufferedImage shade = shader.shadedRelief(trProjected, blProjected, width, height, 1.7);
+        BufferedImage shade = shader.shadedRelief(trProjected, blProjected,
+            width, height, 1.7);
         
-        BufferedImage finalImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        
-        for (int x = 0; x != width; ++x){
-            for (int y = 0; y != height; ++y){
-                Color mapColor = Color.rgb(canvas.image().getRGB(x, y));
-                Color shadeColor = Color.rgb(shade.getRGB(x, y));
-                
-                finalImage.setRGB(x, y, mapColor.multiply(shadeColor).toJavaColor().getRGB());
-            }
-        }
+        BufferedImage finalImage = merge(canvas, shade, width, height);
         
         ImageIO.write(finalImage, "png", new File(outputFile));
     }
+    
+    private static Map osmFileToMap(String osmFile) throws IOException,
+            SAXException {
+        CH1903Projection projection = new CH1903Projection();
+        
+        final boolean unGZip = osmFile.substring(osmFile.lastIndexOf('.') + 1)
+                .equals("gz");
+        OSMMap osmMap = OSMMapReader.readOSMFile(osmFile, unGZip);
+        
+        return new OSMToGeoTransformer(projection).transform(osmMap);
+    }
+    
+    private static BufferedImage merge(Java2DCanvas canvas,
+            BufferedImage shade, int width, int height) {
+        BufferedImage finalImage = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_RGB);
+        
+        for (int x = 0; x != width; ++x) {
+            for (int y = 0; y != height; ++y) {
+                Color mapColor = Color.rgb(canvas.image().getRGB(x, y));
+                Color shadeColor = Color.rgb(shade.getRGB(x, y));
+                
+                finalImage.setRGB(x, y, mapColor.multiply(shadeColor)
+                        .toJavaColor()
+                        .getRGB());
+            }
+        }
+        return finalImage;
+    }
+    
 }
