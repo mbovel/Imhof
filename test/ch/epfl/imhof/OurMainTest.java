@@ -1,3 +1,4 @@
+
 package ch.epfl.imhof;
 
 import java.io.IOException;

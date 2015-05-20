@@ -85,6 +85,10 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
             throw new IllegalArgumentException("point's too far north");
         }
         if (column < 0) {
+            System.out.println(column);
+            System.out.println(southWest.longitude());
+            System.out.println(point.longitude());
+            System.out.println(resolution);
             throw new IllegalArgumentException("point's too far west");
         }
         if (row >= rowLength) {

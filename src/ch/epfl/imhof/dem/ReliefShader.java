@@ -36,9 +36,9 @@ public class ReliefShader {
             bufferHeight,
             Point.alignedCoordinateChange(
                 topRight,
-                new Point(offset, imgWidth + offset),
+                new Point( imgWidth + offset , offset),
                 bottomLeft,
-                new Point(offset + imgHeight, offset)));
+                new Point(offset, offset + imgHeight)));
         
         return offset == 0 ? raw : blurImage(raw, blurKernel);
     }
@@ -56,6 +56,10 @@ public class ReliefShader {
             for (int j = 0; j != width; ++j) {
                 PointGeo pointGeo = projection.inverse(coorChange
                     .apply(new Point(i, j)));
+                System.out.println(pointGeo.longitude());
+                System.out.println(i);
+                System.out.println(j);
+                System.out.println("--------------");
                 Vector3d normal = dem.normalAt(pointGeo).normalized();
                 
                 // As vectors are normalized, we do not need to divide the

@@ -35,14 +35,19 @@ public class Main {
         
         CH1903Projection projection = new CH1903Projection();
         Point blProjected = projection.project(bl);
+        System.out.println(blProjected.x());
         Point trProjected = projection.project(tr);
+        System.out.println(trProjected.x());
         
         int height = (int) Math.round(((res / 0.0254) / 25_000)
                 * (Math.toRadians(tr.latitude()) - Math.toRadians(bl.latitude()))
                 * Earth.RADIUS);
+        System.out.println(height);
         
         int width = (int) Math.round((trProjected.x() - blProjected.x())
                 / (trProjected.y() - blProjected.y()) * height);
+        
+        System.out.println(width);
         
         Map map = osmFileToMap(osmFile);
         
