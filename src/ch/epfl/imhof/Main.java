@@ -39,8 +39,11 @@ public class Main {
         Point trProjected = projection.project(tr);
         System.out.println(trProjected.x());
         
-        int height = (int) Math.round(((res / 0.0254) / 25_000)
-                * (Math.toRadians(tr.latitude()) - Math.toRadians(bl.latitude()))
+        System.out.println("--------------");
+        System.out.println(tr.latitude());
+        System.out.println(bl.latitude());
+        int height = (int) Math.round(((res * 39.3701) / 25_000)
+                * (tr.latitude() - bl.latitude())
                 * Earth.RADIUS);
         System.out.println(height);
         
