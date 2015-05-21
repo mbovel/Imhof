@@ -36,7 +36,7 @@ public class ReliefShader {
             bufferHeight,
             Point.alignedCoordinateChange(
                 topRight,
-                new Point( imgWidth + offset , offset),
+                new Point( imgWidth + offset , offset), 
                 bottomLeft,
                 new Point(offset, offset + imgHeight)));
         
