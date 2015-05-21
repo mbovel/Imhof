@@ -31,14 +31,18 @@ public class ReliefShader {
         int bufferWidth = imgWidth + 2 * offset;
         int bufferHeight = imgHeight + 2 * offset;
         
+        /* Debug : */ System.out.println("bufferWidth: " + bufferWidth);
+        /* Debug : */ System.out.println("bufferHeight: " + bufferHeight);
+        /* Debug : */ System.out.println("offset: " + offset);
+        
         BufferedImage raw = rawShadedRelief(
             bufferWidth,
             bufferHeight,
             Point.alignedCoordinateChange(
-                topRight,
                 new Point( imgWidth + offset , offset),
-                bottomLeft,
-                new Point(offset, offset + imgHeight)));
+                topRight,
+                new Point(offset, offset + imgHeight),
+                bottomLeft));
         
         return offset == 0 ? raw : blurImage(raw, blurKernel);
     }
@@ -50,16 +54,10 @@ public class ReliefShader {
             height,
             BufferedImage.TYPE_INT_RGB);
         
-        int[] imageArray = new int[width * height];
-        
-        for (int i = 0; i != height; ++i) {
-            for (int j = 0; j != width; ++j) {
+        for (int y = 0; y != height; ++y) {
+            for (int x = 0; x != width; ++x) {
                 PointGeo pointGeo = projection.inverse(coorChange
-                    .apply(new Point(i, j)));
-                System.out.println(pointGeo.longitude());
-                System.out.println(i);
-                System.out.println(j);
-                System.out.println("--------------");
+                    .apply(new Point(x, y)));
                 Vector3d normal = dem.normalAt(pointGeo).normalized();
                 
                 // As vectors are normalized, we do not need to divide the
@@ -71,11 +69,9 @@ public class ReliefShader {
                 float blue = 0.5f * (0.7f * cos + 1);
                 
                 Color color = new Color(red, green, blue);
-                imageArray[i * width + j] = color.getRGB();
+                image.setRGB(x, y, color.getRGB());
             }
         }
-        
-        image.setRGB(0, 0, width, height, imageArray, 0, width);
         
         return image;
         
@@ -114,14 +110,15 @@ public class ReliefShader {
         RenderingHints hints = new RenderingHints(
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        System.out.println("kernel[0]: " + kernel[3]);
+        System.out.println("kernel.length: " + kernel.length);
+        
         ConvolveOp xBlur = new ConvolveOp(
             new Kernel(kernel.length, 1, kernel),
             ConvolveOp.EDGE_NO_OP,
             hints);
-        ConvolveOp yBlur = new ConvolveOp(
-            new Kernel(1, kernel.length, kernel),
-            ConvolveOp.EDGE_NO_OP,
-            hints);
-        return yBlur.filter(xBlur.filter(image, null), null);
+        
+        return xBlur.filter(image, null);
     }
 }
