@@ -22,6 +22,7 @@ import ch.epfl.imhof.painting.SwissPainter;
 import ch.epfl.imhof.projection.CH1903Projection;
 
 public class Main {
+    private static CH1903Projection projection = new CH1903Projection();
     
     public static void main(String[] args) throws IOException, SAXException {
         String osmFile = args[0];
@@ -33,48 +34,51 @@ public class Main {
         int res = Integer.parseInt(args[6]);
         String outputFile = args[7];
         
-        CH1903Projection projection = new CH1903Projection();
+        // Get bottom left and top right points in CH1903 coordinate system
         Point blProjected = projection.project(bl);
-        System.out.println(blProjected.x());
         Point trProjected = projection.project(tr);
-        System.out.println(trProjected.x());
         
-        System.out.println("--------------");
-        System.out.println(tr.latitude());
-        System.out.println(bl.latitude());
+        /* Debug: */ System.out.println("blProjected.x: " + blProjected.x());
+        /* Debug: */ System.out.println("blProjected.y: " + blProjected.y());
+        /* Debug: */ System.out.println("trProjected.x: " + trProjected.x());
+        /* Debug: */ System.out.println("trProjected.x: " + trProjected.y());
+        
+        // Find final image width and height
         int height = (int) Math.round(((res * 39.3701) / 25_000)
                 * (tr.latitude() - bl.latitude())
                 * Earth.RADIUS);
-        System.out.println(height);
-        
         int width = (int) Math.round((trProjected.x() - blProjected.x())
                 / (trProjected.y() - blProjected.y()) * height);
         
-        System.out.println(width);
+        /* Debug: */ System.out.println("height: " + height);
+        /* Debug: */ System.out.println("width: "  + width);
+
+//        Map map = osmFileToMap(osmFile);
         
-        Map map = osmFileToMap(osmFile);
-        
-        Java2DCanvas canvas = new Java2DCanvas(blProjected, trProjected, width,
-                height, res, Color.WHITE);
-        
-        SwissPainter.painter().drawMap(map, canvas);
+//        Java2DCanvas canvas = new Java2DCanvas(blProjected, trProjected, width,
+//                height, res, Color.WHITE);
+//        
+//        SwissPainter.painter().drawMap(map, canvas);
         
         ReliefShader shader = new ReliefShader(projection,
-                new HGTDigitalElevationModel(new File(hgtFile)), new Vector3d(
-                        -1.0, 1.0, 1.0));
+          new HGTDigitalElevationModel(new File(hgtFile)), new Vector3d(
+                  -1.0, 1.0, 1.0));
         
         BufferedImage shade = shader.shadedRelief(trProjected, blProjected,
-            width, height, 1.7);
+          width, height, 1.7);
         
-        BufferedImage finalImage = merge(canvas, shade, width, height);
-        
-        ImageIO.write(finalImage, "png", new File(outputFile));
+        ImageIO.write(shade, "png", new File(outputFile));
+//        
+//        BufferedImage shade = shader.shadedRelief(trProjected, blProjected,
+//            width, height, 1.7);
+//        
+//        BufferedImage finalImage = merge(canvas, shade, width, height);
+//        
+//        ImageIO.write(finalImage, "png", new File(outputFile));
     }
     
     private static Map osmFileToMap(String osmFile) throws IOException,
             SAXException {
-        CH1903Projection projection = new CH1903Projection();
-        
         final boolean unGZip = osmFile.substring(osmFile.lastIndexOf('.') + 1)
                 .equals("gz");
         OSMMap osmMap = OSMMapReader.readOSMFile(osmFile, unGZip);
@@ -97,6 +101,7 @@ public class Main {
                         .getRGB());
             }
         }
+        
         return finalImage;
     }
     
