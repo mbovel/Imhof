@@ -40,10 +40,11 @@ public final class Point {
     }
     
     /**
-     * Given two {@link Point Points} in a cartesian coordinate system A and
-     * their corresponding {@link Point Points} in cartesian coordinate B
-     * aligned with A, returns a {@link Function} representing the change of
-     * coordinate that can then be applied to any {@link Point}.
+     * Let A and B be two cartesian coordinate systems with aligned axes.
+     * <p>
+     * Given two {@link Point Points} expressed in coordinate system A and
+     * the same two {@link Point Points} expressed in coordinate system B,
+     * returns a {@link Function} (<code>Point -> Point</code>) representing the change of coordinate from A to B.
      * 
      * @param p1A
      *            first point in cartesian coordinate system A
@@ -53,7 +54,7 @@ public final class Point {
      *            second point in cartesian coordinate system A
      * @param p2B
      *            second point in cartesian coordinate system B
-     * @return a {@link Function} representing the change of coordinate
+     * @return a {@link Function} (<code>Point -> Point</code>) representing the change of coordinate
      * @throws IllegalArgumentException
      *             if p1 and p2 are aligned, either horizontally or vertically.
      */
