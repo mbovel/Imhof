@@ -9,6 +9,12 @@ import java.nio.channels.FileChannel.MapMode;
 import ch.epfl.imhof.PointGeo;
 import ch.epfl.imhof.geometry.Vector3d;
 
+/**
+ * Represents a digital elevation model in the NASA .hgt format.
+ * 
+ * @author Matthieu Bovel (250300)
+ *
+ */
 public class HGTDigitalElevationModel implements DigitalElevationModel {
     private final PointGeo        southWest;
     private final int             rowLength;
@@ -17,6 +23,18 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
     private final FileInputStream stream;
     private final ShortBuffer     buffer;
     
+    /**
+     * Construct a digital elevation model given an hgt file.
+     * 
+     * @param file
+     *            the hgt file of the digital elevation model
+     * 
+     * @throws IllegalArgumentException
+     *             when the .hgt file is not conform (ie. not correctly named or
+     *             is not square)
+     * @throws IOException
+     *             if some I/O error occurs
+     */
     public HGTDigitalElevationModel(File file) throws IllegalArgumentException,
             IOException {
         String fileName = file.getName();
@@ -35,7 +53,7 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
                 break;
             default:
                 throw new IllegalArgumentException(
-                    "first character in file name must be either 'S' or 'N'");
+                        "first character in file name must be either 'S' or 'N'");
         }
         
         switch (fileName.substring(3, 4)) {
@@ -47,7 +65,7 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
                 break;
             default:
                 throw new IllegalArgumentException(
-                    "fourth character in file name must be either 'W' or 'E'");
+                        "fourth character in file name must be either 'W' or 'E'");
         }
         
         southWest = new PointGeo(Math.toRadians(lon), Math.toRadians(lat));
@@ -59,7 +77,7 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
         
         if (Math.floor(n) != n) {
             throw new IllegalArgumentException(
-                "illegal file format (file length must be a square)");
+                    "illegal file format (file length must be a square)");
         }
         
         rowLength = (int) n;
@@ -70,12 +88,17 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
         
         stream = new FileInputStream(file);
         
-        buffer = stream
-            .getChannel()
-            .map(MapMode.READ_ONLY, 0, length)
-            .asShortBuffer();
+        buffer = stream.getChannel()
+                .map(MapMode.READ_ONLY, 0, length)
+                .asShortBuffer();
     }
     
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * ch.epfl.imhof.dem.DigitalElevationModel#normalAt(ch.epfl.imhof.PointGeo)
+     */
     @Override
     public Vector3d normalAt(PointGeo point) {
         int column = (int) ((point.longitude() - southWest.longitude()) / resolution);
@@ -124,6 +147,11 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
                 * (bl + br - tl - tr), Math.pow(s, 2.0));
     }
     
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.AutoCloseable#close()
+     */
     @Override
     public void close() throws Exception {
         stream.close();
