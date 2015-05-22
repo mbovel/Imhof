@@ -18,6 +18,18 @@
 
 ## Coding styles
 
+### Order
+
+- public static vars
+- protected static vars
+- private static vars
+- public vars
+- protected vars
+- private vars
+- methods by use order
+- static methods by use order
+
+
 ### Java doc
 
 Exemple from “[How to Write Doc Comments for the Javadoc Tool](http://www.oracle.com/technetwork/articles/java/index-137868.html)”:
