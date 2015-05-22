@@ -12,11 +12,29 @@ import ch.epfl.imhof.geometry.Point;
 import ch.epfl.imhof.geometry.Vector3d;
 import ch.epfl.imhof.projection.Projection;
 
+/**
+ * Class used to graphically represents a {@link DigitalElevationModel}.
+ * 
+ * @author Matthieu Bovel (250300)
+ */
 public class ReliefShader {
     private final DigitalElevationModel dem;
     private final Projection            projection;
     private final Vector3d              sun;
     
+    /**
+     * Constructs a new <code>ReliefShader</code> given a {@link Projection}, a
+     * {@link DigitalElevationModel} and a the direction of the sunlight (a
+     * {@link Vector3d}).
+     * 
+     * @param projection
+     *            a {@link Projection} to use to transform 3D points of the
+     *            {@link DigitalElevationModel} to 2D points for drawing
+     * @param dem
+     *            the {@link DigitalElevationModel}
+     * @param sun
+     *            a {@link Vector3d} representing the direction of the sunlight
+     */
     public ReliefShader(Projection projection, DigitalElevationModel dem,
             Vector3d sun) {
         this.projection = projection;
@@ -24,6 +42,23 @@ public class ReliefShader {
         this.sun = sun.normalized();
     }
     
+    /**
+     * Draw a subset of the {@link DigitalElevationModel} data on a
+     * {@link BufferedImage}.
+     * 
+     * @param topRight
+     *            the {@link Point} a the top right of the image
+     * @param bottomLeft
+     *            the {@link Point} a the bottom left of the image
+     * @param imgWidth
+     *            width of the output image (in pixels)
+     * @param imgHeight
+     *            height of the output image (in pixels)
+     * @param blurRadius
+     *            radius of the gausian blur to apply to the final image (in
+     *            pixels)
+     * @return the result as a {@link BufferedImage}
+     */
     public BufferedImage shadedRelief(Point topRight, Point bottomLeft,
             int imgWidth, int imgHeight, double blurRadius) {
         float[] blurKernel = blurKernel(blurRadius);
@@ -39,7 +74,6 @@ public class ReliefShader {
                 topRight,
                 new Point(offset, offset + imgHeight),
                 bottomLeft));
-
         
         return offset == 0 ? raw : blurImage(raw, blurKernel).getSubimage(
             offset,
