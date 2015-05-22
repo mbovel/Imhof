@@ -16,6 +16,8 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
     private final double          s;
     private final FileInputStream stream;
     private final ShortBuffer     buffer;
+    private final static double   DELTA          = 0.0000001;
+    private final static double   HGT_FILE_WIDTH = Math.toRadians(1.0);
     
     public HGTDigitalElevationModel(File file) throws IllegalArgumentException,
             IOException {
@@ -63,7 +65,7 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
         }
         
         rowLength = (int) n;
-        resolution = Math.toRadians(1.0 / rowLength);
+        resolution = HGT_FILE_WIDTH / (rowLength - 1);
         s = resolution * Earth.RADIUS;
         
         // 3. Buffer file
@@ -78,8 +80,40 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
     
     @Override
     public Vector3d normalAt(PointGeo point) {
-        int column = (int) ((point.longitude() - southWest.longitude()) / resolution);
-        int row = (int) (rowLength - ((point.latitude() - southWest.latitude()) / resolution));
+        int i = pointGeoToIndex(point);
+        
+        // Top left (z_i,j):
+        short tl = buffer.get(i);
+        
+        // Top right (z_i,j+1):
+        short tr = buffer.get(i + 1);
+        
+        // Bottom left (z_i+1,j):
+        short bl = buffer.get(i + rowLength);
+        
+        // Bottom right (z_i+1,j+1):
+        short br = buffer.get(i + rowLength + 1);
+        
+        // Vector3d a = new Vector3d(s, 0, sw - nw);
+        // Vector3d b = new Vector3d(0, s, ne - nw);
+        // Vector3d c = new Vector3d(-s, 0, ne - se);
+        // Vector3d d = new Vector3d(0, -s, sw - se);
+        //
+        // Vector3d n1 = a.cross(b);
+        // Vector3d n2 = c.cross(d);
+        //
+        // return n1.add(n2).multiply(0.5);
+        
+        return new Vector3d(0.5 * s * (bl - br + tl - tr), 0.5 * s
+                * (bl + br - tl - tr), Math.pow(s, 2.0));
+    }
+    
+    // Package visibility for testing (see OurHGTDigitalElevationModelTest)
+    int pointGeoToIndex(PointGeo p) {
+        int column = floorDelta((p.longitude() - southWest.longitude())
+                / resolution);
+        int row = floorDelta(rowLength - 1.0
+                - (p.latitude() - southWest.latitude()) / resolution);
         
         if (row < 0) {
             throw new IllegalArgumentException("point's too far north");
@@ -94,30 +128,17 @@ public class HGTDigitalElevationModel implements DigitalElevationModel {
             throw new IllegalArgumentException("point's too far east");
         }
         
-        // Top left (z_i,j):
-        short tl = buffer.get(row * rowLength + column);
+        return row * rowLength + column;
+    }
+    
+    private static int floorDelta(double n) {
+        double nCeiled = Math.ceil(n);
         
-        // Top right (z_i,j+1):
-        short tr = buffer.get(row * rowLength + column + 1);
+        if (nCeiled - n < DELTA) {
+            return (int) nCeiled;
+        }
         
-        // Bottom left (z_i+1,j):
-        short bl = buffer.get((row + 1) * rowLength + column);
-        
-        // Bottom right (z_i+1,j+1):
-        short br = buffer.get((row + 1) * rowLength + column + 1);
-        
-        // Vector3d a = new Vector3d(s, 0, sw - nw);
-        // Vector3d b = new Vector3d(0, s, ne - nw);
-        // Vector3d c = new Vector3d(-s, 0, ne - se);
-        // Vector3d d = new Vector3d(0, -s, sw - se);
-        //
-        // Vector3d n1 = a.cross(b);
-        // Vector3d n2 = c.cross(d);
-        //
-        // return n1.add(n2).multiply(0.5);
-        
-        return new Vector3d(0.5 * s * (bl - br + tl - tr), 0.5 * s
-                * (bl + br - tl - tr), Math.pow(s, 2.0));
+        return (int) Math.floor(n);
     }
     
     @Override
