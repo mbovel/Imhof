@@ -34,11 +34,11 @@ public class RoadPainterGenerator {
             return Painter.empty();
         }
         
-        return stack(specs, RoadSpec::bridgesIn)
-            .above(stack(specs, RoadSpec::bridgesBorder))
-            .above(stack(specs, RoadSpec::roadsIn))
-            .above(stack(specs, RoadSpec::roadsBorder))
-            .above(stack(specs, RoadSpec::tunnels));
+        return stack(specs, RoadSpec::bridgesIn).above(
+            stack(specs, RoadSpec::bridgesBorder))
+                .above(stack(specs, RoadSpec::roadsIn))
+                .above(stack(specs, RoadSpec::roadsBorder))
+                .above(stack(specs, RoadSpec::tunnels));
     }
     
     private static Painter stack(RoadSpec[] specs,
@@ -62,6 +62,20 @@ public class RoadPainterGenerator {
         private final float                    wayI, wayC;
         private final Color                    colorI, colorC;
         
+        /**
+         * Construct a RoadSpec instance
+         * 
+         * @param filter
+         *            the filter used to choose the roads
+         * @param wayI
+         *            the thickness of inside of the road
+         * @param colorI
+         *            the color of the inside of the road
+         * @param wayC
+         *            the thickness of the border of the road
+         * @param colorC
+         *            the color of the border of the road
+         */
         public RoadSpec(Predicate<Attributed<?>> filter, float wayI,
                 Color colorI, float wayC, Color colorC) {
             this.filter = filter;
@@ -74,51 +88,33 @@ public class RoadPainterGenerator {
         private Painter tunnels() {
             float[] dashingPattern = { 2f * wayI, 2f * wayI };
             
-            return Painter.line(
-                wayI / 2f,
-                colorC,
-                LineCap.BUTT,
-                LineJoin.ROUND,
-                dashingPattern).when(filter.and(Filters.tagged("tunnel")));
+            return Painter.line(wayI / 2f, colorC, LineCap.BUTT,
+                LineJoin.ROUND, dashingPattern).when(
+                filter.and(Filters.tagged("tunnel")));
         }
         
         private Painter roadsBorder() {
-            return Painter.line(
-                wayI + 2f * wayC,
-                colorC,
-                LineCap.ROUND,
-                LineJoin.ROUND,
-                new float[0]).when(
+            return Painter.line(wayI + 2f * wayC, colorC, LineCap.ROUND,
+                LineJoin.ROUND, new float[0]).when(
                 filter.and(Filters.tagged("bridge").negate()).and(
                     Filters.tagged("tunnel").negate()));
         }
         
         private Painter bridgesBorder() {
-            return Painter.line(
-                wayI + 2f * wayC,
-                colorC,
-                LineCap.BUTT,
-                LineJoin.ROUND,
-                new float[0]).when(filter.and(Filters.tagged("bridge")));
+            return Painter.line(wayI + 2f * wayC, colorC, LineCap.BUTT,
+                LineJoin.ROUND, new float[0]).when(
+                filter.and(Filters.tagged("bridge")));
         }
         
         private Painter roadsIn() {
-            return Painter.line(
-                wayI,
-                colorI,
-                LineCap.ROUND,
-                LineJoin.ROUND,
+            return Painter.line(wayI, colorI, LineCap.ROUND, LineJoin.ROUND,
                 new float[0]).when(
                 filter.and(Filters.tagged("bridge").negate()).and(
                     Filters.tagged("tunnel").negate()));
         }
         
         private Painter bridgesIn() {
-            return Painter.line(
-                wayI,
-                colorI,
-                LineCap.ROUND,
-                LineJoin.ROUND,
+            return Painter.line(wayI, colorI, LineCap.ROUND, LineJoin.ROUND,
                 new float[0]).when(filter.and(Filters.tagged("bridge")));
         }
     }
