@@ -32,6 +32,61 @@ public class OurMainTest {
                 "46.9742", "300", "berne.png");
     }
     
+    @Test(expected = Exception.class)
+    public void failWith7Args() throws IOException, SAXException {
+        testMain("test/data/big/interlaken.osm.gz",
+                "test/data/big/N46E007.hgt", "7.8122", "46.6645", "7.9049",
+                "46.7061", "300");
+    }
+    
+    @Test(expected = Exception.class)
+    public void failWith6Args() throws IOException, SAXException {
+        testMain("test/data/big/interlaken.osm.gz",
+                "test/data/big/N46E007.hgt", "7.8122", "46.6645", "7.9049",
+                "46.7061");
+    }
+    
+    @Test(expected = Exception.class)
+    public void failWith5Args() throws IOException, SAXException {
+        testMain("test/data/big/interlaken.osm.gz",
+                "test/data/big/N46E007.hgt", "7.8122", "46.6645", "7.9049");
+    }
+    
+    @Test(expected = Exception.class)
+    public void failWith4Args() throws IOException, SAXException {
+        testMain("test/data/big/interlaken.osm.gz",
+                "test/data/big/N46E007.hgt", "7.8122", "46.6645");
+    }
+    
+    @Test(expected = Exception.class)
+    public void failWith3Args() throws IOException, SAXException {
+        testMain("test/data/big/interlaken.osm.gz",
+                "test/data/big/N46E007.hgt", "7.8122");
+    }
+    
+    @Test(expected = Exception.class)
+    public void failWith2Args() throws IOException, SAXException {
+        testMain("test/data/big/interlaken.osm.gz",
+                "test/data/big/N46E007.hgt");
+    }
+    
+    @Test(expected = Exception.class)
+    public void failWithOneArg() throws IOException, SAXException {
+        testMain("test/data/big/interlaken.osm.gz");
+    }
+    
+    @Test(expected = Exception.class)
+    public void failWithNoArg() throws IOException, SAXException {
+        testMain();
+    }
+    
+    @Test(expected = Exception.class)
+    public void failWith7args() throws IOException, SAXException {
+        testMain("test/data/big/interlaken.osm.gz",
+                "test/data/big/N46E007.hgt", "7.8122", "46.6645", "7.9049",
+                "46.7061", "300");
+    }
+    
     private static void testMain(String... args) throws IOException, SAXException {
         Main.main(args);
         File result = new File(args[7]);
