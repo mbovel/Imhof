@@ -12,6 +12,8 @@ import ch.epfl.imhof.painting.RoadPainterGenerator.RoadSpec;
 
 /**
  * An implementation of {@link Painter} using typical swiss maps style.
+ * 
+ * @author Matteo Besançon (245826)
  */
 public final class SwissPainter {
     private static final Painter PAINTER;
