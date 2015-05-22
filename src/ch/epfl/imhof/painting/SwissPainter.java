@@ -139,6 +139,9 @@ public final class SwissPainter {
         PAINTER = fgPainter.above(bgPainter);
     }
     
+    /**
+     * @return
+     */
     public static Painter painter() {
         return PAINTER;
     }

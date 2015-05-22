@@ -9,38 +9,36 @@ import ch.epfl.imhof.painting.LineStyle.LineJoin;
 
 /**
  * A class that generate a painter which is able to paint the whole road network
- * correctly.
+ * of a {@link Map}.
  * 
  * @author Matthieu Bovel (250300)
  * @author Matteo Besançon (245826)
- *
  */
 public class RoadPainterGenerator {
-    
     private RoadPainterGenerator() {
         
     }
     
     /**
      * A method that returns a painter which is able to paint the whole road
-     * network correctly.
+     * network of a {@link Map}.
      * 
      * @param specs
-     *            the specifications of each type of roads.
+     *            a list of {@link RoadSpec RoadSpecs}
      * 
-     * @return a painter which is able to paint the whole road network
-     *         correctly.
+     * @return a painter which is able to paint the whole road network of a
+     *         {@link Map}
      */
     public static Painter painterForRoads(RoadSpec... specs) {
         if (specs.length == 0) {
             return Painter.empty();
         }
         
-        return stack(specs, RoadSpec::bridgesIn).above(
-            stack(specs, RoadSpec::bridgesBorder))
-                .above(stack(specs, RoadSpec::roadsIn))
-                .above(stack(specs, RoadSpec::roadsBorder))
-                .above(stack(specs, RoadSpec::tunnels));
+        return stack(specs, RoadSpec::bridgesIn)
+            .above(stack(specs, RoadSpec::bridgesBorder))
+            .above(stack(specs, RoadSpec::roadsIn))
+            .above(stack(specs, RoadSpec::roadsBorder))
+            .above(stack(specs, RoadSpec::tunnels));
     }
     
     private static Painter stack(RoadSpec[] specs,
@@ -55,10 +53,9 @@ public class RoadPainterGenerator {
     }
     
     /**
+     * Holds informations about the way of drawing a road.
      * 
-     * 
-     * @author Matthieu Bovel (250300)
-     *
+     * @author Matteo Besançon (245826)
      */
     public static class RoadSpec {
         private final Predicate<Attributed<?>> filter;
@@ -74,36 +71,54 @@ public class RoadPainterGenerator {
             this.colorC = colorC;
         }
         
-        public Painter tunnels() {
+        private Painter tunnels() {
             float[] dashingPattern = { 2f * wayI, 2f * wayI };
             
-            return Painter.line(wayI / 2f, colorC, LineCap.BUTT,
-                LineJoin.ROUND, dashingPattern).when(
-                filter.and(Filters.tagged("tunnel")));
+            return Painter.line(
+                wayI / 2f,
+                colorC,
+                LineCap.BUTT,
+                LineJoin.ROUND,
+                dashingPattern).when(filter.and(Filters.tagged("tunnel")));
         }
         
-        public Painter roadsBorder() {
-            return Painter.line(wayI + 2f * wayC, colorC, LineCap.ROUND,
-                LineJoin.ROUND, new float[0]).when(
-                filter.and(Filters.tagged("bridge").negate()).and(
-                    Filters.tagged("tunnel").negate()));
-        }
-        
-        public Painter bridgesBorder() {
-            return Painter.line(wayI + 2f * wayC, colorC, LineCap.BUTT,
-                LineJoin.ROUND, new float[0]).when(
-                filter.and(Filters.tagged("bridge")));
-        }
-        
-        public Painter roadsIn() {
-            return Painter.line(wayI, colorI, LineCap.ROUND, LineJoin.ROUND,
+        private Painter roadsBorder() {
+            return Painter.line(
+                wayI + 2f * wayC,
+                colorC,
+                LineCap.ROUND,
+                LineJoin.ROUND,
                 new float[0]).when(
                 filter.and(Filters.tagged("bridge").negate()).and(
                     Filters.tagged("tunnel").negate()));
         }
         
-        public Painter bridgesIn() {
-            return Painter.line(wayI, colorI, LineCap.ROUND, LineJoin.ROUND,
+        private Painter bridgesBorder() {
+            return Painter.line(
+                wayI + 2f * wayC,
+                colorC,
+                LineCap.BUTT,
+                LineJoin.ROUND,
+                new float[0]).when(filter.and(Filters.tagged("bridge")));
+        }
+        
+        private Painter roadsIn() {
+            return Painter.line(
+                wayI,
+                colorI,
+                LineCap.ROUND,
+                LineJoin.ROUND,
+                new float[0]).when(
+                filter.and(Filters.tagged("bridge").negate()).and(
+                    Filters.tagged("tunnel").negate()));
+        }
+        
+        private Painter bridgesIn() {
+            return Painter.line(
+                wayI,
+                colorI,
+                LineCap.ROUND,
+                LineJoin.ROUND,
                 new float[0]).when(filter.and(Filters.tagged("bridge")));
         }
     }

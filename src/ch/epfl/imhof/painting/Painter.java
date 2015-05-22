@@ -10,6 +10,8 @@ import ch.epfl.imhof.geometry.PolyLine;
 import ch.epfl.imhof.geometry.Polygon;
 
 /**
+ * Interface representing a way to draw a {@link Map} on a {@link Canvas}.
+ * 
  * @author Matthieu Bovel (250300)
  */
 public interface Painter {
