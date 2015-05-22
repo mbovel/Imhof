@@ -2,7 +2,5 @@ ch.epfl.imhof.painting.RoadPainterGenerator.RoadSpec
 ch.epfl.imhof.painting.Painter
 ch.epfl.imhof.painting.Filters
 
-ch.epfl.imhof.geometry.Vector3d
-
 ch.epfl.imhof.dem.ReliefShader
 ch.epfl.imhof.dem.HGTDigitalElevationModel
