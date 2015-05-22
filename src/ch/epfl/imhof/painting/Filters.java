@@ -19,13 +19,14 @@ public class Filters {
     
     /**
      * Returns a {@link Predicate} (<code>Attributed<?> -> boolean</code>) whose
-     * value is true if its parameter contains the attribute with the given name
-     * or false otherwise.
+     * return value is <code>true</code> if its parameter contains the attribute
+     * with the given name or <code>false</code> otherwise.
      * 
      * @param name
-     *            the attribute to check for in the predicate
-     * @return a {@link Predicate} whose value is true if its paramter contains
-     *         the attribute with the given name
+     *            the attribute's key to look for
+     * @return a {@link Predicate} whose return value is <code>true</code> if
+     *         its parameter contains the attribute with the given name, or
+     *         <code>false</code> otherwise
      */
     static public Predicate<Attributed<?>> tagged(String name) {
         return a -> a.hasAttribute(name);
@@ -33,13 +34,17 @@ public class Filters {
     
     // Should it support integers as attribute values?
     /**
-     * Returns a {@link Predicate} (<code>Attributed<?> -> boolean</code>) whose
-     * value is <code>true</code> if its parameter contains the attribute with the given name
-     * and this attribute has one of the given values or <code>false</code> otherwise.
+     * Returns a {@link Predicate} whose return value is <code>true</code> if
+     * its parameter contains an attribute with the given name and its value is
+     * one of the given values, or <code>false</code> otherwise.
      * 
      * @param name
+     *            the attribute's key to look for
      * @param values
-     * @return
+     *            the possible attribute's keys
+     * @return a {@link Predicate} whose return value is <code>true</code> if
+     *         its parameter contains an attribute with the given name and its
+     *         value is one of the given values, <code>false</code> otherwise
      */
     static public Predicate<Attributed<?>> tagged(String name, String... values) {
         Set<String> valuesSet = new HashSet<String>(Arrays.asList(values));
@@ -49,8 +54,14 @@ public class Filters {
     }
     
     /**
+     * Returns a {@link Predicate} whose return value is <code>true</code> if
+     * its parameter is on a given layer, <code>false</code> otherwise.
+     * 
      * @param layer
-     * @return
+     *            the layer the tested {@link Predicate}'s parameter should be
+     *            on
+     * @return a {@link Predicate} whose return value is <code>true</code> if
+     *         its parameter is on a given layer, <code>false</code> otherwise
      */
     static public Predicate<Attributed<?>> onLayer(int layer) {
         return a -> a.attributeValue("layer", 0) == layer;
