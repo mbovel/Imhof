@@ -12,6 +12,7 @@ import ch.epfl.imhof.geometry.Vector3d;
 /**
  * Represents a digital elevation model in the NASA .hgt format.
  * 
+ * @see <a href="http://wiki.openstreetmap.org/wiki/SRTM">More informations about HGT format (see section Format)</a>
  * @author Matthieu Bovel (250300)
  *
  */
