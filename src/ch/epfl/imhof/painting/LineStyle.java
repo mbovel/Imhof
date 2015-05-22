@@ -71,7 +71,6 @@ public class LineStyle {
             }
         }
         
-        
         this.width = width;
         this.color = color;
         this.cap = cap;
