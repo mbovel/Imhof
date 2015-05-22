@@ -31,10 +31,6 @@ public class ReliefShader {
         int bufferWidth = imgWidth + 2 * offset;
         int bufferHeight = imgHeight + 2 * offset;
         
-        /* Debug : */System.out.println("bufferWidth: " + bufferWidth);
-        /* Debug : */System.out.println("bufferHeight: " + bufferHeight);
-        /* Debug : */System.out.println("offset: " + offset);
-        
         BufferedImage raw = rawShadedRelief(
             bufferWidth,
             bufferHeight,
