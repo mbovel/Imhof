@@ -31,22 +31,25 @@ public class ReliefShader {
         int bufferWidth = imgWidth + 2 * offset;
         int bufferHeight = imgHeight + 2 * offset;
         
-        /* Debug : */ System.out.println("bufferWidth: " + bufferWidth);
-        /* Debug : */ System.out.println("bufferHeight: " + bufferHeight);
-        /* Debug : */ System.out.println("offset: " + offset);
+        /* Debug : */System.out.println("bufferWidth: " + bufferWidth);
+        /* Debug : */System.out.println("bufferHeight: " + bufferHeight);
+        /* Debug : */System.out.println("offset: " + offset);
         
         BufferedImage raw = rawShadedRelief(
             bufferWidth,
             bufferHeight,
             Point.alignedCoordinateChange(
-
-                new Point( imgWidth + offset , offset),
+                new Point(imgWidth + offset, offset),
                 topRight,
                 new Point(offset, offset + imgHeight),
                 bottomLeft));
 
         
-        return offset == 0 ? raw : blurImage(raw, blurKernel);
+        return offset == 0 ? raw : blurImage(raw, blurKernel).getSubimage(
+            offset,
+            offset,
+            imgWidth,
+            imgHeight);
     }
     
     private BufferedImage rawShadedRelief(int width, int height,
@@ -113,14 +116,16 @@ public class ReliefShader {
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
         
-        System.out.println("kernel[0]: " + kernel[3]);
-        System.out.println("kernel.length: " + kernel.length);
-        
         ConvolveOp xBlur = new ConvolveOp(
             new Kernel(kernel.length, 1, kernel),
             ConvolveOp.EDGE_NO_OP,
             hints);
         
-        return xBlur.filter(image, null);
+        ConvolveOp yBlur = new ConvolveOp(
+            new Kernel(1, kernel.length, kernel),
+            ConvolveOp.EDGE_NO_OP,
+            hints);
+        
+        return yBlur.filter(xBlur.filter(image, null), null);
     }
 }
