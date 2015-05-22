@@ -42,16 +42,6 @@ public class OurHGTDigitalElevationModelTest {
             for (int x = 0; x != imgWidth; ++x) {
                 double lon = Math.toRadians(w + x * widthRatio);
                 
-                if(y == imgWidth - 1 && x == 0) {
-                    System.out.println(Math.toDegrees(lon));
-                    System.out.println(Math.toDegrees(lat));
-                }
-                
-                if(y == 0 && x == imgWidth - 1) {
-                    System.out.println(Math.toDegrees(lon));
-                    System.out.println(Math.toDegrees(lat));
-                }
-                
                 PointGeo point = new PointGeo(lon, lat);
                 Vector3d normal = dem.normalAt(point).normalized();
                 
