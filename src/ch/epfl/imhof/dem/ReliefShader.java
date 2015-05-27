@@ -13,7 +13,7 @@ import ch.epfl.imhof.geometry.Vector3d;
 import ch.epfl.imhof.projection.Projection;
 
 /**
- * Class used to graphically represents a {@link DigitalElevationModel}.
+ * Class used to graphically represent a {@link DigitalElevationModel}.
  * 
  * @author Matthieu Bovel (250300)
  */
@@ -24,7 +24,7 @@ public final class ReliefShader {
     
     /**
      * Constructs a new <code>ReliefShader</code> given a {@link Projection}, a
-     * {@link DigitalElevationModel} and a the direction of the sunlight (a
+     * {@link DigitalElevationModel} and the direction of the sunlight (a
      * {@link Vector3d}).
      * 
      * @param projection

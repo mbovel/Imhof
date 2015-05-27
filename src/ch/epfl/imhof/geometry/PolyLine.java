@@ -13,7 +13,6 @@ import java.util.List;
  *      Wikipedia</a>
  * @author Matteo Besançon (245826)
  * @author Matthieu Bovel (250300)
- *
  */
 public abstract class PolyLine {
     private final List<Point> points;

@@ -95,6 +95,16 @@ public final class HGTDigitalElevationModel implements DigitalElevationModel {
             .getChannel()
             .map(MapMode.READ_ONLY, 0, length)
             .asShortBuffer();
+    } 
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.AutoCloseable#close()
+     */
+    @Override
+    public void close() throws Exception {
+        stream.close();
     }
     
     /*
@@ -162,16 +172,6 @@ public final class HGTDigitalElevationModel implements DigitalElevationModel {
         }
         
         return row * rowLength + column;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.AutoCloseable#close()
-     */
-    @Override
-    public void close() throws Exception {
-        stream.close();
     }
     
     private static int floorDelta(double n) {

@@ -4,7 +4,6 @@ package ch.epfl.imhof.geometry;
  * A vector represented in a three dimension Cartesian coordinate system.
  * 
  * @author Matthieu Bovel (250300)
- *
  */
 public final class Vector3d {
     private final double x;
