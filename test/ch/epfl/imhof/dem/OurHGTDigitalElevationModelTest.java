@@ -53,7 +53,7 @@ public class OurHGTDigitalElevationModelTest {
         
         dem.close();
         
-        OurTestsUtils.assertImagesSame("test/data/shaded-orientation.png", imageOut);
+        OurTestsUtils.assertImagesSame("test/data/big/shaded-orientation.png", imageOut);
     }
     
     @Test

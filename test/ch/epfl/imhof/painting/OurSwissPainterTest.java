@@ -31,7 +31,7 @@ public class OurSwissPainterTest {
         SwissPainter.painter().drawMap(map, canvas);
         
         OurTestsUtils.assertImagesSame(
-            "test/data/lausanne_150dpi.png",
+            "test/data/big/lausanne_150dpi.png",
             canvas.image());
     }
     
@@ -56,7 +56,7 @@ public class OurSwissPainterTest {
         SwissPainter.painter().drawMap(map, canvas);
         
         OurTestsUtils.assertImagesSame(
-            "test/data/interlaken_72dpi.png",
+            "test/data/big/interlaken_72dpi.png",
             canvas.image());
         
     }

@@ -44,7 +44,7 @@ public class OurPainterTest {
         painter.drawMap(map, canvas);
         
         OurTestsUtils.assertImagesSame(
-            "test/data/lausanne_bb.png",
+            "test/data/big/lausanne_bb.png",
             canvas.image());
     }
 }

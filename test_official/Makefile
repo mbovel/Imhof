@@ -1,7 +1,6 @@
 file = imhof_tests.zip
 subfolders = data/OSMtestFiles test/ch
 
-
 all: $(subfolders)
 
 $(subfolders): $(file)
