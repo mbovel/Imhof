@@ -119,6 +119,8 @@ public final class HGTDigitalElevationModel implements DigitalElevationModel {
         // Bottom right (z_i+1,j+1):
         short br = buffer.get(i + rowLength + 1);
         
+        // For readability:
+        
         // Vector3d a = new Vector3d(s, 0, sw - nw);
         // Vector3d b = new Vector3d(0, s, ne - nw);
         // Vector3d c = new Vector3d(-s, 0, ne - se);
@@ -129,12 +131,18 @@ public final class HGTDigitalElevationModel implements DigitalElevationModel {
         //
         // return n1.add(n2).multiply(0.5);
         
+        // For performance:
+        
         return new Vector3d(0.5 * s * (bl - br + tl - tr), 0.5 * s
                 * (bl + br - tl - tr), Math.pow(s, 2.0));
     }
     
     // Package visibility for testing (see OurHGTDigitalElevationModelTest)
     int pointGeoToIndex(PointGeo p) {
+        // The floorDelta method is used instead of (int)Math.floor so that edge
+        // cases give correct results (most left bottom point in a HTD file for
+        // example). It does however not change anything in most cases. See
+        // OurHGTDigitalElevationModelTest for more details.
         int column = floorDelta((p.longitude() - southWest.longitude())
                 / resolution);
         int row = floorDelta(rowLength - 1.0
