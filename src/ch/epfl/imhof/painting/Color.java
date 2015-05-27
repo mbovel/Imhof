@@ -115,12 +115,12 @@ public final class Color {
         for (float color : colors) {
             if (color < 0) {
                 throw new IllegalArgumentException(
-                        "The color value must be at least 0");
+                        "The color value must be at least 0.");
             }
             
             if (color > 1) {
                 throw new IllegalArgumentException(
-                        "The color value must be at most 1");
+                        "The color value must be at most 1.");
             }
             
         }
@@ -128,7 +128,7 @@ public final class Color {
     
     /**
      * Returns a color given its value of red, green and blue. These values are
-     * encapsulated in an integer, the red value in the bits 23 to 16, the green
+     * encapsulated in an integer: the red value in the bits 23 to 16, the green
      * in the bits 15 to 8 and the blue in the bits 7 to 0.
      * 
      * @param n
@@ -139,12 +139,12 @@ public final class Color {
     public static Color rgb(int n) {
         if (n < 0) {
             throw new IllegalArgumentException(
-                    "The color value must be at least 0x000000");
+                    "The color value must be at least 0x000000.");
         }
         
         if (n > 0xFFFFFF) {
             throw new IllegalArgumentException(
-                    "The color value must be at most 0xFFFFFF");
+                    "The color value must be at most 0xFFFFFF.");
         }
         
         return rgb(((n & 0xFF0000) >> 16) / 255.0f,

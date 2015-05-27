@@ -1,5 +1,7 @@
 package ch.epfl.imhof.painting;
 
+import ch.epfl.imhof.geometry.PolyLine;
+
 /**
  * The drawing style of a {@link PolyLine}.
  * <p>
@@ -16,7 +18,7 @@ package ch.epfl.imhof.painting;
  */
 public final class LineStyle {
     /**
-     * The different ways to join two segments of a line.
+     * The different ways to join the segments of a line.
      *
      */
     public enum LineJoin {
@@ -59,14 +61,14 @@ public final class LineStyle {
     public LineStyle(float width, Color color, LineCap cap, LineJoin join,
             float[] dashingPattern) throws IllegalArgumentException {
         if (width < 0.0f) {
-            throw new IllegalArgumentException("Width cannot be negative");
+            throw new IllegalArgumentException("Width cannot be negative.");
         }
         
-        if(dashingPattern!= null){
+        if (dashingPattern != null) {
             for (float f : dashingPattern) {
                 if (f <= 0.0f) {
                     throw new IllegalArgumentException(
-                        "Cannot have a null or negative segment in the dashing pattern");
+                        "Cannot have a null or negative segment in the dashing pattern.");
                 }
             }
         }
@@ -139,7 +141,7 @@ public final class LineStyle {
     }
     
     /**
-     * Returns a new <code>LineStyle</code> with the given width.
+     * Returns a copy of this <code>LineStyle</code> with the given width.
      * 
      * @param newWidth
      *            the line width wanted for the new <code>LineStyle</code>
@@ -151,7 +153,7 @@ public final class LineStyle {
     }
     
     /**
-     * Returns a new <code>LineStyle</code> with the given color.
+     * Returns a copy of this <code>LineStyle</code> with the given color.
      * 
      * @param newColor
      *            the color wanted for the new <code>LineStyle</code>
@@ -163,7 +165,7 @@ public final class LineStyle {
     }
     
     /**
-     * Returns a new <code>LineStyle</code> with the given line cap.
+     * Returns a copy of this <code>LineStyle</code> with the given line cap.
      * 
      * @param newCap
      *            the line cap wanted for the new <code>LineStyle</code>
@@ -175,7 +177,7 @@ public final class LineStyle {
     }
     
     /**
-     * Returns a new <code>LineStyle</code> with the given line join.
+     * Returns a copy of this <code>LineStyle</code> with the given line join.
      * 
      * @param newJoin
      *            the line join wanted for the new <code>LineStyle</code>
@@ -187,7 +189,8 @@ public final class LineStyle {
     }
     
     /**
-     * Returns a new <code>LineStyle</code> with the given dashing pattern.
+     * Returns a copy of this <code>LineStyle</code> with the given dashing
+     * pattern.
      * 
      * @param newDashingPattern
      *            the dashing pattern wanted for the new <code>LineStyle</code>
