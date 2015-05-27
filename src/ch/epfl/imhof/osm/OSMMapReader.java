@@ -334,7 +334,7 @@ public final class OSMMapReader {
         public OSMMissingAttributeException(String el, String attr,
                 Locator locator) {
             super(
-                "Missing attribute `" + attr + "` on element `" + el + "`",
+                "missing attribute `" + attr + "` on element `" + el + "`",
                 locator);
         }
     }

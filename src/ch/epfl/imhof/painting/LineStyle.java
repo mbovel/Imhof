@@ -61,14 +61,14 @@ public final class LineStyle {
     public LineStyle(float width, Color color, LineCap cap, LineJoin join,
             float[] dashingPattern) throws IllegalArgumentException {
         if (width < 0.0f) {
-            throw new IllegalArgumentException("Width cannot be negative.");
+            throw new IllegalArgumentException("width cannot be negative");
         }
         
         if (dashingPattern != null) {
             for (float f : dashingPattern) {
                 if (f <= 0.0f) {
                     throw new IllegalArgumentException(
-                        "Cannot have a null or negative segment in the dashing pattern.");
+                        "cannot have a null or negative segment in the dashing pattern");
                 }
             }
         }

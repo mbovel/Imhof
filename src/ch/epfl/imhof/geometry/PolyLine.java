@@ -30,7 +30,7 @@ public abstract class PolyLine {
     
     public PolyLine(List<Point> points) throws IllegalArgumentException {
         if (points.isEmpty()) {
-            throw new IllegalArgumentException("Points list cannot be empty");
+            throw new IllegalArgumentException("points list cannot be empty");
         }
         
         this.points = Collections

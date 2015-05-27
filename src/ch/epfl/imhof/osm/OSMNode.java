@@ -76,7 +76,7 @@ public final class OSMNode extends OSMEntity {
         public OSMNode build() throws IllegalStateException {
             if (isIncomplete()) {
                 throw new IllegalStateException(
-                    "the OSMNode is not complete yet.");
+                    "the OSMNode is not complete yet");
             }
             
             return new OSMNode(id, position, attributes.build());

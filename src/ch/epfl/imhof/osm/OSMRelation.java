@@ -168,7 +168,7 @@ public final class OSMRelation extends OSMEntity {
         public OSMRelation build() throws IllegalStateException {
             if (isIncomplete()) {
                 throw new IllegalStateException(
-                    "The OSMRelation is not complete yet.");
+                    "The OSMRelation is not complete yet");
             }
             
             return new OSMRelation(id, members, attributes.build());

@@ -115,12 +115,12 @@ public final class Color {
         for (float color : colors) {
             if (color < 0) {
                 throw new IllegalArgumentException(
-                        "The color value must be at least 0.");
+                        "the color value must be at least 0");
             }
             
             if (color > 1) {
                 throw new IllegalArgumentException(
-                        "The color value must be at most 1.");
+                        "the color value must be at most 1");
             }
             
         }
@@ -139,12 +139,12 @@ public final class Color {
     public static Color rgb(int n) {
         if (n < 0) {
             throw new IllegalArgumentException(
-                    "The color value must be at least 0x000000.");
+                    "the color value must be at least 0x000000");
         }
         
         if (n > 0xFFFFFF) {
             throw new IllegalArgumentException(
-                    "The color value must be at most 0xFFFFFF.");
+                    "the color value must be at most 0xFFFFFF");
         }
         
         return rgb(((n & 0xFF0000) >> 16) / 255.0f,
