@@ -16,7 +16,7 @@ import ch.epfl.imhof.geometry.Vector3d;
  * @author Matthieu Bovel (250300)
  *
  */
-public class HGTDigitalElevationModel implements DigitalElevationModel {
+public final class HGTDigitalElevationModel implements DigitalElevationModel {
     private final PointGeo        southWest;
     private final int             rowLength;
     private final double          resolution;

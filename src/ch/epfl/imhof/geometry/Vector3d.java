@@ -6,7 +6,7 @@ package ch.epfl.imhof.geometry;
  * @author Matthieu Bovel (250300)
  *
  */
-public class Vector3d {
+public final class Vector3d {
     private final double x;
     private final double y;
     private final double z;

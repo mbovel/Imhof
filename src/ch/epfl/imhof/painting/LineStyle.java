@@ -14,7 +14,7 @@ package ch.epfl.imhof.painting;
  * 
  * @author Matteo Besançon (245826)
  */
-public class LineStyle {
+public final class LineStyle {
     /**
      * The different ways to join two segments of a line.
      *

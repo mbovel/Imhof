@@ -6,7 +6,7 @@ package ch.epfl.imhof.painting;
  * @author Matteo Besançon (245826)
  * @author Matthieu Bovel (250300)
  */
-public class Color {
+public final class Color {
     public static final Color RED   = rgb(1.0f, 0.0f, 0.0f);
     public static final Color GREEN = rgb(0.0f, 1.0f, 0.0f);
     public static final Color BLUE  = rgb(0.0f, 0.0f, 1.0f);

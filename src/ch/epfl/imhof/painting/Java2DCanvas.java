@@ -25,7 +25,7 @@ import ch.epfl.imhof.geometry.Polygon;
  *      documentation, Oracle</a>
  * @author Matteo Besançon (245826)
  */
-public class Java2DCanvas implements Canvas {
+public final class Java2DCanvas implements Canvas {
     private final Function<Point, Point> change;
     private final BufferedImage          image;
     private final Graphics2D             context;

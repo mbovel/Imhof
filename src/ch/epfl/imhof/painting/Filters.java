@@ -13,7 +13,7 @@ import ch.epfl.imhof.Attributed;
  * 
  * @author Matthieu Bovel (250300)
  */
-public class Filters {
+public final class Filters {
     private Filters() {
     }
     

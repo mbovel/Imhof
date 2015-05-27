@@ -17,7 +17,7 @@ import ch.epfl.imhof.projection.Projection;
  * 
  * @author Matthieu Bovel (250300)
  */
-public class ReliefShader {
+public final class ReliefShader {
     private final DigitalElevationModel dem;
     private final Projection            projection;
     private final Vector3d              sun;

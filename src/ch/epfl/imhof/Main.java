@@ -28,7 +28,7 @@ import ch.epfl.imhof.projection.CH1903Projection;
  * 
  * @author Matteo Besançon (245826)
  */
-public class Main {
+public final class Main {
     private static CH1903Projection projection = new CH1903Projection();
     
     /**

@@ -14,7 +14,7 @@ import ch.epfl.imhof.painting.LineStyle.LineJoin;
  * @author Matthieu Bovel (250300)
  * @author Matteo Besançon (245826)
  */
-public class RoadPainterGenerator {
+public final class RoadPainterGenerator {
     private RoadPainterGenerator() {
         
     }
