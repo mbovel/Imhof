@@ -1,8 +1,7 @@
 .DS_Store
 bin
 doc
-test/data/big/*
+test/data/big
 test_official/imhof_tests.zip
 test_official/data/OSMtestFiles
 test_official/test/ch
-*.png
