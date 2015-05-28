@@ -1,3 +1,0 @@
-ch.epfl.imhof.painting.RoadPainterGenerator.RoadSpec
-ch.epfl.imhof.painting.Painter
-ch.epfl.imhof.painting.Filters
